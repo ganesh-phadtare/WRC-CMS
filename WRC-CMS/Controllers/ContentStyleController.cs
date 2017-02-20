@@ -8,15 +8,15 @@ using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
 {
-    public class AddViewController : Controller
+    public class ContentStyleController : Controller
     {
-        public ActionResult AddView()
+        public ActionResult AddContentStyle()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult AddView(ViewModel ViewObject, HttpPostedFileBase file)
+        public ActionResult AddContentStyle(ContentStyleModel ContentStyleModelObject)
         {
             try
             {
@@ -24,9 +24,9 @@ namespace WRC_CMS.Controllers
                 {
                     BORepository SiteRepo = new BORepository();
 
-                    if (SiteRepo.AddRecord(ViewObject))
+                    if (SiteRepo.AddRecord(ContentStyleModelObject))
                     {
-                        ViewBag.Message = "View added successfully";
+                        ViewBag.Message = "Content Style added successfully";
                     }
                 }
 
@@ -37,5 +37,5 @@ namespace WRC_CMS.Controllers
                 return View();
             }
         }
-    }
+	}
 }

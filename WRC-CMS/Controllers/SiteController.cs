@@ -15,12 +15,18 @@ namespace WRC_CMS.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
-        public ActionResult AddSite(SiteModel SiteObject)
+        public ActionResult AddSite(SiteModel SiteObject, HttpPostedFileBase file)
         {
             try
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    SiteObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
+                }
+
                 if (ModelState.IsValid)
                 {
                     BORepository SiteRepo = new BORepository();
