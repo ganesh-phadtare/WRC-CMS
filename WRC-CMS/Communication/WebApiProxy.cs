@@ -18,7 +18,7 @@ namespace WRC_CMS.Communication
             {
                 __client = new HttpClient();
                 __client.Timeout = TimeSpan.FromMinutes(30);
-                __client.BaseAddress = new Uri("http://192.168.35.124/SensorWebAPI/");
+                __client.BaseAddress = new Uri("http://192.168.35.124/WRCWebAPI/");
             }
         }
 

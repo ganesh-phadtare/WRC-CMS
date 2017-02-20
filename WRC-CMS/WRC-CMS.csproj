@@ -216,6 +216,9 @@
     <Content Include="Views\Site\AddSite.cshtml" />
     <Content Include="Views\AddView\AddView.cshtml" />
     <Content Include="Views\ContentStyle\AddContentStyle.cshtml" />
+    <Content Include="Views\Site\GetSitesDetails.cshtml" />
+    <Content Include="Views\AddView\GetViewDetails.cshtml" />
+    <Content Include="Views\ContentStyle\GetContentsDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
