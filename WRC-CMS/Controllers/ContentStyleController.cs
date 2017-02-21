@@ -34,6 +34,12 @@ namespace WRC_CMS.Controllers
                         dicParams.Add("@IsActive", "0");
                     proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
                     ViewBag.Message = "Content Style added successfully";
+                    BORepository SiteRepo = new BORepository();
+
+                    if (SiteRepo.AddRecord(ContentStyleModelObject))
+                    {
+                        ViewBag.Message = "Content Style added successfully";
+                    }
                 }
 
                 return View();
@@ -62,4 +68,4 @@ namespace WRC_CMS.Controllers
             return ContentList;
         }
     }
-}
+	}
