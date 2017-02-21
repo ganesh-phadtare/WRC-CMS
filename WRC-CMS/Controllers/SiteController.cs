@@ -29,13 +29,6 @@ namespace WRC_CMS.Controllers
                     SiteObject.Logo = new byte[file.ContentLength];
                     file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
                 }
-
-                if (ModelState.IsValid)
-                {
-                    SiteObject.Logo = new byte[file.ContentLength];
-                    file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
-                }
-
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, string> dicParams = new Dictionary<string, string>();
