@@ -17,9 +17,7 @@ namespace WRC_CMS.Models
         public string URL { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
-
         [StringLength(250, ErrorMessage = "Name cannot be longer than 250 characters.")]
-
         public string Title { get; set; }
 
         //[Column(TypeName = "image")]
