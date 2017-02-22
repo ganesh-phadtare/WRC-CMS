@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GZipCompressDecompress">
-      <HintPath>..\..\GZipCompressDecompress\GZipCompressDecompress\bin\Debug\GZipCompressDecompress.dll</HintPath>
+      <HintPath>AReferences\GZipCompressDecompress.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
