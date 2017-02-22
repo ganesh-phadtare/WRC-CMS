@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WRC_CMS.Communication;
 using WRC_CMS.Models;
 using WRC_CMS.Repository;
+using System.Linq;
 
 namespace WRC_CMS.Controllers
 {
@@ -24,7 +27,7 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, string> dicParams = new Dictionary<string, string>();
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", "-1");
                     dicParams.Add("@Name", ContentStyleModelObject.Name);
                     dicParams.Add("@Descr", ContentStyleModelObject.Description);
@@ -34,11 +37,11 @@ namespace WRC_CMS.Controllers
                         dicParams.Add("@IsActive", "0");
                     proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
                     ViewBag.Message = "Content Style added successfully";
-                    BORepository SiteRepo = new BORepository();
-
+                    BORepository SiteRepo = new BORepository();                    
                     if (SiteRepo.AddRecord(ContentStyleModelObject))
                     {
-                        ViewBag.Message = "Content Style added successfully";
+                        //ViewBag.Message = "Content Style added successfully";
+                        ViewBag.Message = ContentStyleModelObject.Description;
                     }
                 }
 
@@ -50,6 +53,11 @@ namespace WRC_CMS.Controllers
             }
         }
 
+        public ActionResult ShowContent(ContentStyleModel ContentStyleModelObject)
+        {
+            ViewBag.Message = ContentStyleModelObject.Description;
+            return View("ShowContent");
+        }
 
         public ActionResult GetAllContentsDetails()
         {
@@ -59,13 +67,18 @@ namespace WRC_CMS.Controllers
 
         public List<ContentStyleModel> GetAllContents()
         {
-            List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
-            ContentStyleModel style = new ContentStyleModel();
-            style.Name = "My Site";
-            style.Description = "Description";
-            style.IsActive = true;
-            ContentList.Add(style);
-            return ContentList;
-        }
+            //List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
+            //int i = 10000;
+            //while (i > 0)
+            //{
+            //    ContentStyleModel style = new ContentStyleModel();
+            //    style.Name = "My Site";
+            //    style.Description = "<p><strong>this is</strong> <a href='https://www.google.com' title='g'>google</a> <em>site</em></p>";
+            //    style.IsActive = true;
+            //    ContentList.Add(style);
+            //    i--;
+            //}
+            //return ContentList;
+        }  
     }
 }
