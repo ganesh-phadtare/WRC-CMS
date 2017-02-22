@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GZipCompressDecompress">
+      <HintPath>..\..\GZipCompressDecompress\GZipCompressDecompress\bin\Debug\GZipCompressDecompress.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -160,6 +163,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Communication\WebApiProxy.cs" />
     <Compile Include="Controllers\BulkDataController.cs" />
+    <Compile Include="Controllers\ContentStyleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\AddViewController.cs" />
@@ -168,6 +172,7 @@
     </Compile>
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BulkDataModel.cs" />
+    <Compile Include="Models\ContentStyleModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,6 +218,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Site\AddSite.cshtml" />
     <Content Include="Views\AddView\AddView.cshtml" />
+    <Content Include="Views\ContentStyle\AddContentStyle.cshtml" />
+    <Content Include="Views\Site\GetSitesDetails.cshtml" />
+    <Content Include="Views\AddView\GetViewDetails.cshtml" />
+    <Content Include="Views\ContentStyle\GetContentsDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
