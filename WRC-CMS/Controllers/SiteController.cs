@@ -65,6 +65,69 @@ namespace WRC_CMS.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EditSiteDetails(SiteModel SiteObject, HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    SiteObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
+                }
+                if (ModelState.IsValid)
+                {
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", SiteObject.Oid);
+                    dicParams.Add("@Name", SiteObject.Name);
+                    dicParams.Add("@url", SiteObject.URL);
+                    dicParams.Add("@Logo", 0101);
+                    dicParams.Add("@Title", SiteObject.Title);
+                    if (SiteObject.IsActive)
+                        dicParams.Add("@IsActive", "1");
+                    else
+                        dicParams.Add("@IsActive", "0");
+                    proxy.ExecuteNonQuery("SP_SiteAddUp", dicParams);
+                    return RedirectToAction("GetAllSitesDetails");
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<ActionResult> EditSiteDetails(int id)
+        {
+            List<SiteModel> sites = new List<SiteModel>();
+            await Task.Run(() =>
+            {
+                sites.AddRange(GetAllSites().Result);
+            });
+            if (sites != null && sites.Count > 0)
+            {
+                SiteModel objetc = sites.FirstOrDefault(item => item.Oid == id);
+                return View(objetc);
+            }
+            return View();
+        }
+
+        public ActionResult DeleteSite(int id)
+        {
+            try
+            {
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Oid", id);
+                proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
+                ViewBag.AlertMsg = "Site details deleted successfully";
+                return RedirectToAction("GetAllSitesDetails");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
         public async Task<ActionResult> GetAllSitesDetails()
         {
@@ -88,7 +151,7 @@ namespace WRC_CMS.Controllers
             return (from DataRow row in dataSet.Tables[0].Rows
                     select new SiteModel
                     {
-                        //assign properties here
+                        Oid = Convert.ToInt32(row["Oid"].ToString()),
                         Name = row["Name"].ToString(),
                         Title = row["Title"].ToString(),
                         URL = row["url"].ToString(),
