@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -19,16 +20,17 @@ namespace WRC_CMS.Communication
                 __client = new HttpClient();
                 __client.Timeout = TimeSpan.FromMinutes(30);
                 __client.BaseAddress = new Uri("http://192.168.35.124/WRCWebAPI/");
+                //__client.BaseAddress = new Uri("http://localhost:51586/");
             }
         }
 
-        public void ExecuteNonQuery(string commandName, Dictionary<string, string> paramData)
+        public void ExecuteNonQuery(string commandName, Dictionary<string, object> paramData)
         {
             var json = ConvertToJsonString(paramData);
             Task.Run(() => CallAPIForExecuteNonQuery(commandName, json));
         }
 
-        public async Task<string> ExecuteDataset(string commandName, Dictionary<string, string> paramData)
+        public async Task<DataSet> ExecuteDataset(string commandName, Dictionary<string, object> paramData)
         {
             var json = ConvertToJsonString(paramData);
             return await CallAPIForExecuteDS(commandName, json);
@@ -64,14 +66,23 @@ namespace WRC_CMS.Communication
             }
         }
 
-        private async Task<string> CallAPIForExecuteDS(string commandName, string data)
+        private async Task<DataSet> CallAPIForExecuteDS(string commandName, string data)
         {
             HttpContent contentPost = new StringContent(data, Encoding.UTF8, "application/json");
 
             try
             {
                 var result = await __client.PostAsync(string.Format("view/ExecuteDS/{0}", commandName), contentPost);
-                return Convert.ToString(result);
+                var compressedResoponse = result.Content.ReadAsStringAsync().Result;
+                if (!string.IsNullOrEmpty(compressedResoponse))
+                {
+                    compressedResoponse = compressedResoponse.Substring(1).Substring(0, compressedResoponse.Length - 2);
+                    string unCompressedData = GZip.GZipCompressDecompress.UnZip(compressedResoponse);
+
+                    return JsonConvert.DeserializeObject<DataSet>(unCompressedData);
+
+                }
+                return new DataSet();
             }
             catch (Exception ex)
             {
