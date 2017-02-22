@@ -21,11 +21,10 @@ namespace WRC_CMS.Communication
                 __client.Timeout = TimeSpan.FromMinutes(30);
                 __client.BaseAddress = new Uri("http://192.168.35.124/WRCWebAPI/");
                 //__client.BaseAddress = new Uri("http://localhost:51586/");
-
             }
         }
 
-        public void ExecuteNonQuery(string commandName, Dictionary<string, string> paramData)
+        public void ExecuteNonQuery(string commandName, Dictionary<string, object> paramData)
         {
             var json = ConvertToJsonString(paramData);
             Task.Run(() => CallAPIForExecuteNonQuery(commandName, json));
