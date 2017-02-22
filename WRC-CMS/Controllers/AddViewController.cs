@@ -25,7 +25,7 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, string> dicParams = new Dictionary<string, string>();
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Name", ViewObject.Name);
                     dicParams.Add("@url", ViewObject.URL);
                     dicParams.Add("@Logo", ViewObject.Logo.ToString());
