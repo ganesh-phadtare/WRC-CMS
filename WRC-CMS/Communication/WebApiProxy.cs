@@ -25,7 +25,7 @@ namespace WRC_CMS.Communication
             }
         }
 
-        public void ExecuteNonQuery(string commandName, Dictionary<string, string> paramData)
+        public void ExecuteNonQuery(string commandName, Dictionary<string, object> paramData)
         {
             var json = ConvertToJsonString(paramData);
             Task.Run(() => CallAPIForExecuteNonQuery(commandName, json));
