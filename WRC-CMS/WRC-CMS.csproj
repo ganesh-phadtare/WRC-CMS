@@ -480,6 +480,7 @@
     <Content Include="Views\ContentStyle\ShowContent.cshtml" />
     <Content Include="Views\Site\EditSiteDetails.cshtml" />
     <Content Include="Views\AddView\EditViewDetails.cshtml" />
+    <Content Include="Views\ContentStyle\EditContentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

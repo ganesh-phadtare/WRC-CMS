@@ -30,9 +30,9 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "ShowContent", new { Description = item.Description }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "EditContentDetails", new { id = item.Oid }) |
+                @Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |
+                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
             </td>
         </tr>
     }
