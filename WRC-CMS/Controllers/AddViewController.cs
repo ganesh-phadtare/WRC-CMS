@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WRC_CMS.Communication;
@@ -11,10 +13,9 @@ namespace WRC_CMS.Controllers
 {
     public class AddViewController : Controller
     {
-        WebApiProxy proxy = null;
+        WebApiProxy proxy = new WebApiProxy();
         public ActionResult AddView()
         {
-            proxy = new WebApiProxy();
             return View();
         }
 
@@ -23,12 +24,19 @@ namespace WRC_CMS.Controllers
         {
             try
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    ViewObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
+                }
+
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", -1);
                     dicParams.Add("@Name", ViewObject.Name);
                     dicParams.Add("@url", ViewObject.URL);
-                    dicParams.Add("@Logo", ViewObject.Logo.ToString());
+                    dicParams.Add("@Logo", 1014);
                     dicParams.Add("@Title", ViewObject.Title);
                     if (ViewObject.IsActive)
                         dicParams.Add("@IsActive", "1");
@@ -56,23 +64,111 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public ActionResult GetAllViewDetails()
+
+        [HttpPost]
+        public ActionResult EditViewDetails(ViewModel ViewObject, HttpPostedFileBase file)
         {
-            ModelState.Clear();
-            return View("GetViewDetails", GetAllViews());
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    ViewObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
+                }
+                if (ModelState.IsValid)
+                {
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", ViewObject.Oid);
+                    dicParams.Add("@Name", ViewObject.Name);
+                    dicParams.Add("@url", ViewObject.URL);
+                    dicParams.Add("@Logo", 0101);
+                    dicParams.Add("@Title", ViewObject.Title);
+                    if (ViewObject.IsActive)
+                        dicParams.Add("@IsActive", "1");
+                    else
+                        dicParams.Add("@IsActive", "0");
+
+                    if (ViewObject.IsAuth)
+                        dicParams.Add("@IsAuth", "1");
+                    else
+                        dicParams.Add("@IsAuth", "0");
+
+                    if (ViewObject.IsDem)
+                        dicParams.Add("@IsDem", "1");
+                    else
+                        dicParams.Add("@IsDem", "0");
+
+                    proxy.ExecuteNonQuery("SP_ViewAddUp", dicParams);
+                    return RedirectToAction("GetAllViewDetails");
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        public List<ViewModel> GetAllViews()
+        public async Task<ActionResult> EditViewDetails(int id)
+        {
+            List<ViewModel> views = new List<ViewModel>();
+            await Task.Run(() =>
+            {
+                views.AddRange(GetAllViews().Result);
+            });
+            if (views != null && views.Count > 0)
+            {
+                ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
+                return View(objetc);
+            }
+            return View();
+        }
+
+        public ActionResult DeleteView(int id)
+        {
+            try
+            {
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Oid", id);
+                proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
+                return RedirectToAction("GetAllViewDetails");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<ActionResult> GetAllViewDetails()
+        {
+            ModelState.Clear();
+            List<ViewModel> views = new List<ViewModel>();
+            await Task.Run(() =>
+            {
+                views.AddRange(GetAllViews().Result);
+            });
+            return View("GetViewDetails", views);
+        }
+
+        public async Task<List<ViewModel>> GetAllViews()
         {
             List<ViewModel> SiteList = new List<ViewModel>();
-            ViewModel site = new ViewModel();
-            site.Name = "My Site";
-            site.URL = "My Site";
-            site.Title = "My Site";
-            site.Logo = null;
-            site.IsActive = true;
-            SiteList.Add(site);
-            return SiteList;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Oid", -1);
+            dict.Add("@LoadOnlyActive", 0);
+
+            var dataSet = await proxy.ExecuteDataset("SP_ViewSelect", dict);
+            return (from DataRow row in dataSet.Tables[0].Rows
+                    select new ViewModel
+                    {
+                        Oid = Convert.ToInt32(row["Oid"].ToString()),
+                        Name = row["Name"].ToString(),
+                        Title = row["Title"].ToString(),
+                        URL = row["url"].ToString(),
+                        IsActive = bool.Parse(row["IsActive"].ToString()),
+                        IsDem = bool.Parse(row["IsDem"].ToString()),
+                        IsAuth = bool.Parse(row["IsAuth"].ToString())
+                    }).ToList();
         }
     }
 }

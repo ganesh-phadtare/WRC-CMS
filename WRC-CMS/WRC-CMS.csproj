@@ -479,6 +479,7 @@
     <Content Include="Views\Shared\EditorTemplates\tinymce_full.cshtml" />
     <Content Include="Views\ContentStyle\ShowContent.cshtml" />
     <Content Include="Views\Site\EditSiteDetails.cshtml" />
+    <Content Include="Views\AddView\EditViewDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
