@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Policy;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WRC_CMS.Communication;
@@ -19,6 +22,16 @@ namespace WRC_CMS.Controllers
             return View();
         }
 
+        //public JsonResult SiteExists(string Name)
+        //{
+        //    var user = Name;
+        //    return user == null ?
+        //        Json(true, JsonRequestBehavior.AllowGet) :
+        //        Json(string.Format("{0} Already Exist.", Name),
+        //            JsonRequestBehavior.AllowGet);
+        //}
+
+
         [HttpPost]
         public ActionResult AddSite(SiteModel SiteObject, HttpPostedFileBase file)
         {
@@ -31,10 +44,11 @@ namespace WRC_CMS.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, string> dicParams = new Dictionary<string, string>();
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", -1);
                     dicParams.Add("@Name", SiteObject.Name);
                     dicParams.Add("@url", SiteObject.URL);
-                    dicParams.Add("@Logo", Convert.ToString(DBNull.Value));
+                    dicParams.Add("@Logo", 0101);
                     dicParams.Add("@Title", SiteObject.Title);
                     if (SiteObject.IsActive)
                         dicParams.Add("@IsActive", "1");
@@ -51,25 +65,35 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public ActionResult GetAllSitesDetails()
+
+        public async Task<ActionResult> GetAllSitesDetails()
         {
             ModelState.Clear();
-            return View("GetSitesDetails", GetAllSites());
+            List<SiteModel> sites = new List<SiteModel>();
+            await Task.Run(() =>
+            {
+                sites.AddRange(GetAllSites().Result);
+            });
+            return View("GetSitesDetails", sites);
         }
 
-        public List<SiteModel> GetAllSites()
+        public async Task<List<SiteModel>> GetAllSites()
         {
             List<SiteModel> SiteList = new List<SiteModel>();
-            SiteModel site = new SiteModel();
-            site.Name = "My Site";
-            site.URL = "My Site";
-            site.Title = "My Site";
-            site.Logo = null;
-            site.IsActive = true;
-            SiteList.Add(site);
-            return SiteList;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Oid", -1);
+            dict.Add("@LoadOnlyActive", 0);
 
-
+            var dataSet = await proxy.ExecuteDataset("SP_SiteSelect", dict);
+            return (from DataRow row in dataSet.Tables[0].Rows
+                    select new SiteModel
+                    {
+                        //assign properties here
+                        Name = row["Name"].ToString(),
+                        Title = row["Title"].ToString(),
+                        URL = row["url"].ToString(),
+                        IsActive = bool.Parse(row["IsActive"].ToString())
+                    }).ToList();
         }
     }
 }
