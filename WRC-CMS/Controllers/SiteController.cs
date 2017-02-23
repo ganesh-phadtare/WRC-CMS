@@ -103,7 +103,7 @@ namespace WRC_CMS.Controllers
             List<SiteModel> sites = new List<SiteModel>();
             await Task.Run(() =>
             {
-                sites.AddRange(GetAllSites().Result);
+                sites.AddRange(BORepository.GetAllSites(proxy).Result);
             });
             if (sites != null && sites.Count > 0)
             {
@@ -134,28 +134,9 @@ namespace WRC_CMS.Controllers
             List<SiteModel> sites = new List<SiteModel>();
             await Task.Run(() =>
             {
-                sites.AddRange(GetAllSites().Result);
+                sites.AddRange(BORepository.GetAllSites(proxy).Result);
             });
             return View("GetSitesDetails", sites);
-        }
-
-        public async Task<List<SiteModel>> GetAllSites()
-        {
-            List<SiteModel> SiteList = new List<SiteModel>();
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("@Oid", -1);
-            dict.Add("@LoadOnlyActive", 0);
-
-            var dataSet = await proxy.ExecuteDataset("SP_SiteSelect", dict);
-            return (from DataRow row in dataSet.Tables[0].Rows
-                    select new SiteModel
-                    {
-                        Oid = Convert.ToInt32(row["Oid"].ToString()),
-                        Name = row["Name"].ToString(),
-                        Title = row["Title"].ToString(),
-                        URL = row["url"].ToString(),
-                        IsActive = bool.Parse(row["IsActive"].ToString())
-                    }).ToList();
         }
     }
 }

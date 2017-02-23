@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WRC_CMS.Models.MenuModel>
+
+<p>
+    @Html.ActionLink("Create New", "AddMenu")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Oid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectSite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectView)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectView)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditMenuDetails", new { id = item.Oid }) |
+                @Html.ActionLink("Delete", "DeleteMenu", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
+            </td>
+        </tr>
+    }
+
+</table>
