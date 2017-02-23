@@ -165,6 +165,7 @@
     <Compile Include="Controllers\BulkDataController.cs" />
     <Compile Include="Controllers\ContentStyleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\AddViewController.cs" />
     <Compile Include="Global.asax.cs">
@@ -483,6 +484,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\BulkData\" />
+    <Folder Include="Views\Menu\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
