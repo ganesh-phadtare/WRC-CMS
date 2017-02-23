@@ -114,7 +114,7 @@ namespace WRC_CMS.Controllers
             List<ViewModel> views = new List<ViewModel>();
             await Task.Run(() =>
             {
-                views.AddRange(GetAllViews().Result);
+                views.AddRange(BORepository.GetAllViews(proxy).Result);
             });
             if (views != null && views.Count > 0)
             {
@@ -145,30 +145,9 @@ namespace WRC_CMS.Controllers
             List<ViewModel> views = new List<ViewModel>();
             await Task.Run(() =>
             {
-                views.AddRange(GetAllViews().Result);
+                views.AddRange(BORepository.GetAllViews(proxy).Result);
             });
             return View("GetViewDetails", views);
-        }
-
-        public async Task<List<ViewModel>> GetAllViews()
-        {
-            List<ViewModel> SiteList = new List<ViewModel>();
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("@Oid", -1);
-            dict.Add("@LoadOnlyActive", 0);
-
-            var dataSet = await proxy.ExecuteDataset("SP_ViewSelect", dict);
-            return (from DataRow row in dataSet.Tables[0].Rows
-                    select new ViewModel
-                    {
-                        Oid = Convert.ToInt32(row["Oid"].ToString()),
-                        Name = row["Name"].ToString(),
-                        Title = row["Title"].ToString(),
-                        URL = row["url"].ToString(),
-                        IsActive = bool.Parse(row["IsActive"].ToString()),
-                        IsDem = bool.Parse(row["IsDem"].ToString()),
-                        IsAuth = bool.Parse(row["IsAuth"].ToString())
-                    }).ToList();
         }
     }
 }
