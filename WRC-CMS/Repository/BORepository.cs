@@ -118,6 +118,7 @@ namespace WRC_CMS.Repository
 
         public static async Task<List<ViewModel>> GetAllViews(WebApiProxy proxy)
         {
+            List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ViewModel> ViewList = new List<ViewModel>();
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Oid", -1);
@@ -137,7 +138,8 @@ namespace WRC_CMS.Repository
                             IsDem = bool.Parse(row["IsDefault"].ToString()),
                             IsAuth = bool.Parse(row["IsAuth"].ToString()),
                             CreateMenu = bool.Parse(row["IsMenu"].ToString()),
-                            SiteID = row["Site"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["Site"].ToString())
+                            SiteID = row["Site"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["Site"].ToString()),
+                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Site"].ToString())).Name
                         }).ToList();
             }
             return ViewList;

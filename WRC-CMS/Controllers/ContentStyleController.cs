@@ -15,9 +15,17 @@ namespace WRC_CMS.Controllers
     public class ContentStyleController : Controller
     {
         WebApiProxy proxy = new WebApiProxy();
-        public ActionResult AddContentStyle()
+        public async Task<ActionResult> AddContentStyle()
         {
-            return View();
+            ContentStyleModel StyleObject = new ContentStyleModel();
+            if (StyleObject != null)
+            {
+                await Task.Run(() =>
+                {
+                    StyleObject.View = BORepository.GetAllViews(proxy).Result;
+                });
+            }
+            return View(StyleObject);
         }
 
         [HttpPost]
@@ -27,12 +35,15 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    ContentStyleModelObject.ViewID = 3;
+                    if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
+                        ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
+
                     int ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
                     if (ContentStyleID > 0)
                         ViewBag.Message = "Content Style added successfully.";
                     else
                         ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
+                    return RedirectToAction("GetAllContentsDetails");
                 }
                 return View();
             }
@@ -58,6 +69,11 @@ namespace WRC_CMS.Controllers
             if (contents != null && contents.Count > 0)
             {
                 ContentStyleModel objetc = contents.FirstOrDefault(item => item.Oid == id);
+                await Task.Run(() =>
+                {
+                    objetc.View = BORepository.GetAllViews(proxy).Result;
+                });
+                objetc.SelectView = objetc.ViewID.ToString();
                 return View(objetc);
             }
             return View();
@@ -70,7 +86,8 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    ContentStyleModelObject.ViewID = 3;
+                    if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
+                        ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", ContentStyleModelObject.Oid);
                     dicParams.Add("@Name", ContentStyleModelObject.Name);
@@ -129,7 +146,7 @@ namespace WRC_CMS.Controllers
         public async Task<List<ContentStyleModel>> GetAllContents()
         {
             List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
-
+            List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Oid", -1);
             dict.Add("@LoadOnlyActive", 0);
@@ -144,6 +161,7 @@ namespace WRC_CMS.Controllers
                         Description = row["Descr"].ToString(),
                         IsActive = bool.Parse(row["IsActive"].ToString()),
                         ViewID = Convert.ToInt32(row["Views"].ToString()),
+                        SelectView = Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name
                     }).ToList();
         }
     }
