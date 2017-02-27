@@ -14,13 +14,21 @@ namespace WRC_CMS.Controllers
     public class AddViewController : Controller
     {
         WebApiProxy proxy = new WebApiProxy();
-        public ActionResult AddView()
+        public async Task<ActionResult> AddView()
         {
-            return View();
+            ViewModel ViewObject = new ViewModel();
+            if (ViewObject != null)
+            {
+                await Task.Run(() =>
+                {
+                    ViewObject.Site = BORepository.GetAllSites(proxy).Result;
+                });
+            }
+            return View(ViewObject);
         }
 
         [HttpPost]
-        public ActionResult AddView(ViewModel ViewObject, HttpPostedFileBase file)
+        public async Task<ActionResult> AddView(ViewModel ViewObject, HttpPostedFileBase file)
         {
             try
             {
@@ -32,12 +40,18 @@ namespace WRC_CMS.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    ViewObject.SiteID = 3;
-                    int ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
+                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
+                    int ViewID = 0;
+                    await Task.Run(() =>
+                           {
+                               ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                           });
                     if (ViewID > 0)
                         ViewBag.Message = "View added successfully.";
                     else
                         ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
+                    return RedirectToAction("GetAllViewDetails");
                 }
 
                 return View();
@@ -50,7 +64,7 @@ namespace WRC_CMS.Controllers
 
 
         [HttpPost]
-        public ActionResult EditViewDetails(ViewModel ViewObject, HttpPostedFileBase file)
+        public async Task<ActionResult> EditViewDetails(ViewModel ViewObject, HttpPostedFileBase file)
         {
             try
             {
@@ -61,8 +75,15 @@ namespace WRC_CMS.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    BORepository.AddView(proxy, ViewObject);
-                    return RedirectToAction("GetAllViewDetails");
+                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
+                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
+                    int ViewID = 0;
+                    await Task.Run(() =>
+                    {
+                        ViewID = BORepository.AddView(proxy, ViewObject).Result;
+                    });
+                    if (ViewID > 0)
+                        return RedirectToAction("GetAllViewDetails");
                 }
                 return View();
             }
@@ -82,6 +103,14 @@ namespace WRC_CMS.Controllers
             if (views != null && views.Count > 0)
             {
                 ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
+                if (objetc != null)
+                {
+                    await Task.Run(() =>
+                    {
+                        objetc.Site = BORepository.GetAllSites(proxy).Result;
+                    });
+                    objetc.SelectSite = objetc.SiteID.ToString();
+                }
                 return View(objetc);
             }
             return View();
