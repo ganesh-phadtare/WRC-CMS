@@ -455,7 +455,9 @@
     <Content Include="Scripts\tinymce\utils\mctabs.js" />
     <Content Include="Scripts\tinymce\utils\validate.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -486,6 +488,9 @@
     <Content Include="Views\Menu\AddMenu.cshtml" />
     <Content Include="Views\Menu\GetMenuDetails.cshtml" />
     <Content Include="Views\Menu\EditMenuDetails.cshtml" />
+    <Content Include="Views\Shared\_AdminPanel.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Site\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

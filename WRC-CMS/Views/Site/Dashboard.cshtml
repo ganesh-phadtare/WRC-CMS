@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Dashboard Page";
+}
+<form name="datapluspics" method="Post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="row"></div>
+   
+    <div class="row">
+        <div class="row col-md-offset-1 col-md-11">
+            <div class="col-md-4">
+                <h2></h2>
+                @Html.TextBox("myTextBox", "This is value1", new { @class = "form-control" })               
+            </div>
+            <div class="col-md-4">
+                <h2></h2>
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+            <div class="col-md-4">
+                <h2></h2>
+                @Html.ActionLink("Create New", "AddSite")                
+            </div>
+        </div>
+    </div>
+   
+    <div>
+        &raquo;
+    </div>
+    <table border="1">
+        <tr>
+            <td>
+                <div class="col-md-4">
+                    <h2>Getting started</h2>
+                    <p>
+                        Site3
+                    </p>
+                    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @*<div class="col-md-4">
+                    <h2>Getting started</h2>
+                    <p>
+                        Site4
+                    </p>
+                    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                </div>*@
+            </td>
+        </tr>
+
+        @*<tr>
+            <trd></trd>
+            <div class="row">
+                <div class="col-md-4">
+                    <h2>Getting started</h2>
+                    <p>
+                        Site2
+                    </p>
+                    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Get more libraries</h2>
+                    <p>Site 2.</p>
+                    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+                </div>
+                <div class="col-md-4">
+                    <h2>Web Hosting</h2>
+                    <p>Site 3</p>
+                    <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+                </div>
+            </div>
+        </tr>*@
+    </table>    
+</form>

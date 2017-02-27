@@ -22,6 +22,10 @@ namespace WRC_CMS.Controllers
             return View();
         }
 
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
         //public JsonResult SiteExists(string Name)
         //{
         //    var user = Name;

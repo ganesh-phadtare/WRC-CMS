@@ -21,15 +21,18 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Sites", "GetAllSitesDetails", "Site")</li>
-                    <li>@Html.ActionLink("Views", "GetAllViewDetails", "AddView")</li>
-                    <li>@Html.ActionLink("Content Styles", "GetAllContentsDetails", "ContentStyle")</li>
-                    <li>@Html.ActionLink("Menus", "GetAllMenuDetails", "Menu")</li>
+                   <li>@Html.ActionLink("Home", "Dashboard", "Site")</li>
+                    @*<li>@Html.ActionLink("Sites", "GetAllSitesDetails", "Site")</li>
+    <li>@Html.ActionLink("Views", "GetAllViewDetails", "AddView")</li>
+    <li>@Html.ActionLink("Content Styles", "GetAllContentsDetails", "ContentStyle")</li>
+    <li>@Html.ActionLink("Menus", "GetAllMenuDetails", "Menu")</li>*@
                 </ul>
-                @*@Html.Partial("_LoginPartial")*@
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
+    </div>
+    <div id="sidebar">
+        <p>Default site bar content</p>
     </div>
     <div class="container body-content">
         @RenderBody()

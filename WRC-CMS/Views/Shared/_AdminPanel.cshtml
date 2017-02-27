@@ -2,10 +2,10 @@
 <div class="row">
     <div class="row  col-md-5">
         <div id="sidebar" class="col-md-4">
-            <ul >              
+            <ul>
                 <li>@Html.ActionLink("Sites", "AddSite", "Site")</li>
-            <li>@Html.ActionLink("Views", "AddView", "AddView")</li>
-            <li>@Html.ActionLink("Content Styles", "AddContentStyle", "ContentStyle")</li>           
+                <li>@Html.ActionLink("Views", "AddView", "AddView")</li>
+                <li>@Html.ActionLink("Content Styles", "AddContentStyle", "ContentStyle")</li>
             </ul>
         </div>
         <div class="col-md-4">
@@ -73,11 +73,11 @@
             </form>
         </div>
     </div>
-    </div>
-    <div>
-        @Html.ActionLink("Back to List", "GetAllSitesDetails")
-    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "GetAllSitesDetails")
+</div>
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
