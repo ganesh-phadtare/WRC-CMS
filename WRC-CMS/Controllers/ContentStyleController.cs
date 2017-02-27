@@ -27,24 +27,13 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", "-1");
-                    dicParams.Add("@Name", ContentStyleModelObject.Name);
-                    dicParams.Add("@Descr", ContentStyleModelObject.Description);
-                    if (ContentStyleModelObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
+                    ContentStyleModelObject.ViewID = 3;
+                    int ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
+                    if (ContentStyleID > 0)
+                        ViewBag.Message = "Content Style added successfully.";
                     else
-                        dicParams.Add("@IsActive", "0");
-                    proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
-                    ViewBag.Message = "Content Style added successfully";
-                    BORepository SiteRepo = new BORepository();
-                    if (SiteRepo.AddRecord(ContentStyleModelObject))
-                    {
-                        //ViewBag.Message = "Content Style added successfully";
-                        ViewBag.Message = ContentStyleModelObject.Description;
-                    }
+                        ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
                 }
-
                 return View();
             }
             catch
@@ -81,10 +70,12 @@ namespace WRC_CMS.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    ContentStyleModelObject.ViewID = 3;
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", ContentStyleModelObject.Oid);
                     dicParams.Add("@Name", ContentStyleModelObject.Name);
                     dicParams.Add("@Descr", ContentStyleModelObject.Description);
+                    dicParams.Add("@View", ContentStyleModelObject.ViewID);
                     if (ContentStyleModelObject.IsActive)
                         dicParams.Add("@IsActive", "1");
                     else
@@ -101,13 +92,20 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public ActionResult DeleteView(int id)
+        public ActionResult DeleteContent(int id, bool IsDefault)
         {
             try
             {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
-                proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);
+                if (!IsDefault)
+                {
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", id);
+                    proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);
+                }
+                else
+                {
+                    ViewBag.Message = "Site must have atleast one content.";
+                }
                 return RedirectToAction("GetAllContentsDetails");
             }
             catch
@@ -145,6 +143,7 @@ namespace WRC_CMS.Controllers
                         Name = row["Name"].ToString(),
                         Description = row["Descr"].ToString(),
                         IsActive = bool.Parse(row["IsActive"].ToString()),
+                        ViewID = Convert.ToInt32(row["Views"].ToString()),
                     }).ToList();
         }
     }

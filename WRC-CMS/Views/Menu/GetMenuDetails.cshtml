@@ -6,9 +6,6 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Oid)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.SelectSite)
         </th>
         <th>
@@ -20,9 +17,6 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Oid)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.SelectSite)
             </td>

@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.IsAuth)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateMenu)
+        </th>
         <th></th>
     </tr>
 
@@ -46,6 +49,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsAuth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateMenu)
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditViewDetails", new { id = item.Oid }) |

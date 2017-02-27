@@ -32,28 +32,12 @@ namespace WRC_CMS.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", -1);
-                    dicParams.Add("@Name", ViewObject.Name);
-                    dicParams.Add("@url", ViewObject.URL);
-                    dicParams.Add("@Logo", 1014);
-                    dicParams.Add("@Title", ViewObject.Title);
-                    if (ViewObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
+                    ViewObject.SiteID = 3;
+                    int ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                    if (ViewID > 0)
+                        ViewBag.Message = "View added successfully.";
                     else
-                        dicParams.Add("@IsActive", "0");
-
-                    if (ViewObject.IsAuth)
-                        dicParams.Add("@IsAuth", "1");
-                    else
-                        dicParams.Add("@IsAuth", "0");
-
-                    if (ViewObject.IsDem)
-                        dicParams.Add("@IsDem", "1");
-                    else
-                        dicParams.Add("@IsDem", "0");
-                    proxy.ExecuteNonQuery("SP_ViewAddUp", dicParams);
-                    ViewBag.Message = "View added successfully";
+                        ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
                 }
 
                 return View();
@@ -77,28 +61,7 @@ namespace WRC_CMS.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", ViewObject.Oid);
-                    dicParams.Add("@Name", ViewObject.Name);
-                    dicParams.Add("@url", ViewObject.URL);
-                    dicParams.Add("@Logo", 0101);
-                    dicParams.Add("@Title", ViewObject.Title);
-                    if (ViewObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
-                    else
-                        dicParams.Add("@IsActive", "0");
-
-                    if (ViewObject.IsAuth)
-                        dicParams.Add("@IsAuth", "1");
-                    else
-                        dicParams.Add("@IsAuth", "0");
-
-                    if (ViewObject.IsDem)
-                        dicParams.Add("@IsDem", "1");
-                    else
-                        dicParams.Add("@IsDem", "0");
-
-                    proxy.ExecuteNonQuery("SP_ViewAddUp", dicParams);
+                    BORepository.AddView(proxy, ViewObject);
                     return RedirectToAction("GetAllViewDetails");
                 }
                 return View();
