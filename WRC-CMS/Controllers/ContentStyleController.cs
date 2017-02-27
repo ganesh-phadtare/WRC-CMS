@@ -121,7 +121,7 @@ namespace WRC_CMS.Controllers
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", id);
-                    proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);
+                    proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);  
                 }
                 else
                 {

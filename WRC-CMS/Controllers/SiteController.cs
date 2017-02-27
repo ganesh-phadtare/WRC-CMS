@@ -231,12 +231,15 @@ namespace WRC_CMS.Controllers
         }
 
         public ActionResult DeleteSite(int id)
-        {
+        {        
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
                 dicParams.Add("@Oid", id);
-                proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
+                //proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
+                var strMessage = proxy.ExecuteDataset("SP_SiteDel", dicParams);               
+                if (!string.IsNullOrEmpty(strMessage.ToString()))
+                    ViewBag.Message = "You can not delete this site. Some view's are depending on it.";
                 return RedirectToAction("GetAllSitesDetails");
             }
             catch
