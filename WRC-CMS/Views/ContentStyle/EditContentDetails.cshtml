@@ -6,9 +6,24 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Add Content Style</h4>
+        <h4>Edit Content</h4>
         <hr />
         @Html.ValidationSummary(true)
+        <div class="form-group" hidden="hidden">
+            @Html.LabelFor(model => model.ViewID, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ViewID)
+                @Html.ValidationMessageFor(model => model.ViewID)
+            </div>
+        </div>
+
+        <div class="form-group" hidden="hidden">
+            @Html.LabelFor(model => model.Oid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Oid)
+                @Html.ValidationMessageFor(model => model.Oid)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.SelectView, new { @class = "control-label col-md-2" })
@@ -44,21 +59,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
-        @*<div class="form-group">
-                <div class="col-md-offset-2 col-md-10" style="color:green">
-                    @Html.Raw(@ViewBag.Message)
-
-                </div>
-            </div>*@
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "GetAllContentsDetails")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

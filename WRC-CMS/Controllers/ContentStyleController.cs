@@ -15,36 +15,40 @@ namespace WRC_CMS.Controllers
     public class ContentStyleController : Controller
     {
         WebApiProxy proxy = new WebApiProxy();
-        public ActionResult AddContentStyle()
+        public async Task<ActionResult> AddContentStyle()
         {
-            return View();
+            ContentStyleModel StyleObject = new ContentStyleModel();
+            if (StyleObject != null)
+            {
+                await Task.Run(() =>
+                {
+                    StyleObject.View = BORepository.GetAllViews(proxy).Result;
+                });
+            }
+            return View(StyleObject);
         }
 
         [HttpPost]
-        public ActionResult AddContentStyle(ContentStyleModel ContentStyleModelObject)
+        public async Task<ActionResult> AddContentStyle(ContentStyleModel ContentStyleModelObject)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", "-1");
-                    dicParams.Add("@Name", ContentStyleModelObject.Name);
-                    dicParams.Add("@Descr", ContentStyleModelObject.Description);
-                    if (ContentStyleModelObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
-                    else
-                        dicParams.Add("@IsActive", "0");
-                    proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
-                    ViewBag.Message = "Content Style added successfully";
-                    BORepository SiteRepo = new BORepository();
-                    if (SiteRepo.AddRecord(ContentStyleModelObject))
-                    {
-                        //ViewBag.Message = "Content Style added successfully";
-                        ViewBag.Message = ContentStyleModelObject.Description;
-                    }
-                }
+                    if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
+                        ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
 
+                    int ContentStyleID = 0;
+                    await Task.Run(() =>
+                         {
+                             ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
+                         });
+                    if (ContentStyleID > 0)
+                        ViewBag.Message = "Content Style added successfully.";
+                    else
+                        ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
+                    return RedirectToAction("GetAllContentsDetails");
+                }
                 return View();
             }
             catch
@@ -59,26 +63,110 @@ namespace WRC_CMS.Controllers
             return View("ShowContent");
         }
 
-        public ActionResult GetAllContentsDetails()
+        public async Task<ActionResult> EditContentDetails(int id)
         {
-            ModelState.Clear();
-            return View("GetContentsDetails", GetAllContents());
+            List<ContentStyleModel> contents = new List<ContentStyleModel>();
+            await Task.Run(() =>
+            {
+                contents.AddRange(GetAllContents().Result);
+            });
+            if (contents != null && contents.Count > 0)
+            {
+                ContentStyleModel objetc = contents.FirstOrDefault(item => item.Oid == id);
+                await Task.Run(() =>
+                {
+                    objetc.View = BORepository.GetAllViews(proxy).Result;
+                });
+                objetc.SelectView = objetc.ViewID.ToString();
+                return View(objetc);
+            }
+            return View();
         }
 
-        public List<ContentStyleModel> GetAllContents()
+        [HttpPost]
+        public ActionResult EditContentDetails(ContentStyleModel ContentStyleModelObject)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
+                        ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", ContentStyleModelObject.Oid);
+                    dicParams.Add("@Name", ContentStyleModelObject.Name);
+                    dicParams.Add("@Descr", ContentStyleModelObject.Description);
+                    dicParams.Add("@View", ContentStyleModelObject.ViewID);
+                    if (ContentStyleModelObject.IsActive)
+                        dicParams.Add("@IsActive", "1");
+                    else
+                        dicParams.Add("@IsActive", "0");
+                    proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
+                    return RedirectToAction("GetAllContentsDetails");
+                }
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult DeleteContent(int id, bool IsDefault)
+        {
+            try
+            {
+                if (!IsDefault)
+                {
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", id);
+                    proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);
+                }
+                else
+                {
+                    ViewBag.Message = "Site must have atleast one content.";
+                }
+                return RedirectToAction("GetAllContentsDetails");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        public async Task<ActionResult> GetAllContentsDetails()
+        {
+            ModelState.Clear();
+            List<ContentStyleModel> views = new List<ContentStyleModel>();
+            await Task.Run(() =>
+            {
+                views.AddRange(GetAllContents().Result);
+            });
+            return View("GetContentsDetails", views);
+        }
+
+        public async Task<List<ContentStyleModel>> GetAllContents()
         {
             List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
-            //int i = 10000;
-            //while (i > 0)
-            //{
-            //    ContentStyleModel style = new ContentStyleModel();
-            //    style.Name = "My Site";
-            //    style.Description = "<p><strong>this is</strong> <a href='https://www.google.com' title='g'>google</a> <em>site</em></p>";
-            //    style.IsActive = true;
-            //    ContentList.Add(style);
-            //    i--;
-            //}
-            return ContentList;
+            List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Oid", -1);
+            dict.Add("@LoadOnlyActive", 0);
+
+            var dataSet = await proxy.ExecuteDataset("SP_StaticContentsSelect", dict);
+
+            return (from DataRow row in dataSet.Tables[0].Rows
+                    select new ContentStyleModel
+                    {
+                        Oid = Convert.ToInt32(row["Oid"].ToString()),
+                        Name = row["Name"].ToString(),
+                        Description = row["Descr"].ToString(),
+                        IsActive = bool.Parse(row["IsActive"].ToString()),
+                        ViewID = Convert.ToInt32(row["Views"].ToString()),
+                        SelectView = Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name
+                    }).ToList();
         }
     }
 }

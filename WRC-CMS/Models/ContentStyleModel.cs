@@ -21,5 +21,16 @@ namespace WRC_CMS.Models
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
+
+        public int ViewID { get; set; }
+
+        public bool IsDefault { get; set; }
+
+        [Required(ErrorMessage = "View is required.")]
+        [StringLength(100, ErrorMessage = "View cannot be longer than 100 characters.")]
+        [Display(Name = "View")]
+        public string SelectView { get; set; }
+        public List<ViewModel> View { get; set; }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using WRC_CMS.Communication;
@@ -11,41 +13,45 @@ namespace WRC_CMS.Controllers
 {
     public class AddViewController : Controller
     {
-        WebApiProxy proxy = null;
-        public ActionResult AddView()
+        WebApiProxy proxy = new WebApiProxy();
+        public async Task<ActionResult> AddView()
         {
-            proxy = new WebApiProxy();
-            return View();
+            ViewModel ViewObject = new ViewModel();
+            if (ViewObject != null)
+            {
+                await Task.Run(() =>
+                {
+                    ViewObject.Site = BORepository.GetAllSites(proxy).Result;
+                });
+            }
+            return View(ViewObject);
         }
 
         [HttpPost]
-        public ActionResult AddView(ViewModel ViewObject, HttpPostedFileBase file)
+        public async Task<ActionResult> AddView(ViewModel ViewObject, HttpPostedFileBase file)
         {
             try
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    ViewObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
+                }
+
                 if (ModelState.IsValid)
                 {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Name", ViewObject.Name);
-                    dicParams.Add("@url", ViewObject.URL);
-                    dicParams.Add("@Logo", ViewObject.Logo.ToString());
-                    dicParams.Add("@Title", ViewObject.Title);
-                    if (ViewObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
+                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
+                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
+                    int ViewID = 0;
+                    await Task.Run(() =>
+                           {
+                               ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                           });
+                    if (ViewID > 0)
+                        ViewBag.Message = "View added successfully.";
                     else
-                        dicParams.Add("@IsActive", "0");
-
-                    if (ViewObject.IsAuth)
-                        dicParams.Add("@IsAuth", "1");
-                    else
-                        dicParams.Add("@IsAuth", "0");
-
-                    if (ViewObject.IsDem)
-                        dicParams.Add("@IsDem", "1");
-                    else
-                        dicParams.Add("@IsDem", "0");
-                    proxy.ExecuteNonQuery("SP_ViewAddUp", dicParams);
-                    ViewBag.Message = "View added successfully";
+                        ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
+                    return RedirectToAction("GetAllViewDetails");
                 }
 
                 return View();
@@ -56,23 +62,84 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public ActionResult GetAllViewDetails()
+
+        [HttpPost]
+        public async Task<ActionResult> EditViewDetails(ViewModel ViewObject, HttpPostedFileBase file)
         {
-            ModelState.Clear();
-            return View("GetViewDetails", GetAllViews());
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    ViewObject.Logo = new byte[file.ContentLength];
+                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
+                }
+                if (ModelState.IsValid)
+                {
+                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
+                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
+                    int ViewID = 0;
+                    await Task.Run(() =>
+                    {
+                        ViewID = BORepository.AddView(proxy, ViewObject).Result;
+                    });
+                    if (ViewID > 0)
+                        return RedirectToAction("GetAllViewDetails");
+                }
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        public List<ViewModel> GetAllViews()
+        public async Task<ActionResult> EditViewDetails(int id)
         {
-            List<ViewModel> SiteList = new List<ViewModel>();
-            ViewModel site = new ViewModel();
-            site.Name = "My Site";
-            site.URL = "My Site";
-            site.Title = "My Site";
-            site.Logo = null;
-            site.IsActive = true;
-            SiteList.Add(site);
-            return SiteList;
+            List<ViewModel> views = new List<ViewModel>();
+            await Task.Run(() =>
+            {
+                views.AddRange(BORepository.GetAllViews(proxy).Result);
+            });
+            if (views != null && views.Count > 0)
+            {
+                ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
+                if (objetc != null)
+                {
+                    await Task.Run(() =>
+                    {
+                        objetc.Site = BORepository.GetAllSites(proxy).Result;
+                    });
+                    objetc.SelectSite = objetc.SiteID.ToString();
+                }
+                return View(objetc);
+            }
+            return View();
+        }
+
+        public ActionResult DeleteView(int id)
+        {
+            try
+            {
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Oid", id);
+                proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
+                return RedirectToAction("GetAllViewDetails");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<ActionResult> GetAllViewDetails()
+        {
+            ModelState.Clear();
+            List<ViewModel> views = new List<ViewModel>();
+            await Task.Run(() =>
+            {
+                views.AddRange(BORepository.GetAllViews(proxy).Result);
+            });
+            return View("GetViewDetails", views);
         }
     }
 }

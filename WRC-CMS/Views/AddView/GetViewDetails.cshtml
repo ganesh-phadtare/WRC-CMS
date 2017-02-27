@@ -6,6 +6,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.SelectSite)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
@@ -23,35 +26,44 @@
         <th>
             @Html.DisplayNameFor(model => model.IsAuth)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateMenu)
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.URL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDem)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsAuth)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.URL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAuth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateMenu)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditViewDetails", new { id = item.Oid }) |
+                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
+            </td>
+        </tr>
+    }
 
 </table>

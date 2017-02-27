@@ -3,8 +3,16 @@
 <p>
     @Html.ActionLink("Create New", "AddContentStyle")
 </p>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10" style="color:green">
+        @ViewBag.Message
+    </div>
+</div>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SelectView)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -14,12 +22,14 @@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SelectView)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -30,9 +40,9 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "ShowContent", new { Description = item.Description }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "EditContentDetails", new { id = item.Oid }) |
+                @Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |
+                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
             </td>
         </tr>
     }
