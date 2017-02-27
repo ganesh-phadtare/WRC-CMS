@@ -29,7 +29,7 @@ namespace WRC_CMS.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddContentStyle(ContentStyleModel ContentStyleModelObject)
+        public async Task<ActionResult> AddContentStyle(ContentStyleModel ContentStyleModelObject)
         {
             try
             {
@@ -38,7 +38,11 @@ namespace WRC_CMS.Controllers
                     if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
                         ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
 
-                    int ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
+                    int ContentStyleID = 0;
+                    await Task.Run(() =>
+                         {
+                             ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
+                         });
                     if (ContentStyleID > 0)
                         ViewBag.Message = "Content Style added successfully.";
                     else
