@@ -178,14 +178,17 @@ function MM_swapImage() {
                 <tr>
                     @foreach (var item in Model.ViewList)
                     {
-                        <td>
-                            @Html.ActionLink(item.Name, "ShowViewContent", new { SiteID = item.SiteID, ViewID = item.Oid })
-                        </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
-                        <td> </td>
+                        if (item.CreateMenu)
+                        {
+                            <td>
+                                @Html.ActionLink(item.Name, "ShowViewContent", new { SiteID = item.SiteID, ViewID = item.Oid })
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        }
                     }
                 </tr>
             </table>
@@ -200,7 +203,7 @@ function MM_swapImage() {
         <div style="position:absolute;left:89px;top:100px;z-index:999">
             @Html.Raw(@ViewBag.Message)
 
-        </div>        
+        </div>
     </div>
 
 
