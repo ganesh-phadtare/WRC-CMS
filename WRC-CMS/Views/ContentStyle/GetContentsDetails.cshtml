@@ -3,6 +3,11 @@
 <p>
     @Html.ActionLink("Create New", "AddContentStyle")
 </p>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10" style="color:green">
+        @ViewBag.Message
+    </div>
+</div>
 <table class="table">
     <tr>
         <th>
@@ -14,7 +19,7 @@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
-        <th></th>
+        <th>ViewBag.Message</th>
     </tr>
 
     @foreach (var item in Model)
@@ -32,7 +37,7 @@
             <td>
                 @Html.ActionLink("Edit", "EditContentDetails", new { id = item.Oid }) |
                 @Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |
-                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
             </td>
         </tr>
     }

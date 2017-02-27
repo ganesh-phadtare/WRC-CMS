@@ -21,5 +21,9 @@ namespace WRC_CMS.Models
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
+
+        public int ViewID { get; set; }
+
+        public bool IsDefault { get; set; }
     }
 }

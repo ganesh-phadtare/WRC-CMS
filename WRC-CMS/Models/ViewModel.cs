@@ -9,5 +9,11 @@ namespace WRC_CMS.Models
     {
         public bool IsDem { get; set; }
         public bool IsAuth { get; set; }
+        public bool CreateMenu { get; set; }
+        public int SiteID { get; set; }
+
+        public bool IsDefault { get; set; }
+
+        public List<ContentStyleModel> Contents { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace WRC_CMS.Controllers
             if (MenuObject != null)
             {
                 await Task.Run(() =>
-                {
+                {                    
                     MenuObject.Site = BORepository.GetAllSites(proxy).Result;
                     MenuObject.View = BORepository.GetAllViews(proxy).Result;
                 });
