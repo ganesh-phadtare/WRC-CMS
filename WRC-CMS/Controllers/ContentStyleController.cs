@@ -151,6 +151,7 @@ namespace WRC_CMS.Controllers
         {
             List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
             List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
+            List<SiteModel> Sites = BORepository.GetAllSites(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Oid", -1);
             dict.Add("@LoadOnlyActive", 0);
@@ -165,7 +166,7 @@ namespace WRC_CMS.Controllers
                         Description = row["Descr"].ToString(),
                         IsActive = bool.Parse(row["IsActive"].ToString()),
                         ViewID = Convert.ToInt32(row["Views"].ToString()),
-                        SelectView = Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name
+                        SelectView = Sites.FirstOrDefault(sit => sit.Oid == Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).SiteID).Name + " - " + Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name,
                     }).ToList();
         }
     }
