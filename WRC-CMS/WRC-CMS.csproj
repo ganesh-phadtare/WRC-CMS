@@ -167,6 +167,7 @@
     <Compile Include="Communication\WebApiProxy.cs" />
     <Compile Include="Controllers\BulkDataController.cs" />
     <Compile Include="Controllers\ContentStyleController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
@@ -188,6 +189,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\materialize.css" />
+    <Content Include="Content\splash_screen.css" />
+    <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -500,6 +505,13 @@
     <Content Include="Scripts\tinymce\utils\mctabs.js" />
     <Content Include="Scripts\tinymce\utils\validate.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="VW-Refresh_files\4379.jpg" />
+    <Content Include="VW-Refresh_files\font-awesome.min.css" />
+    <Content Include="VW-Refresh_files\india-flag.png" />
+    <Content Include="VW-Refresh_files\logo-img.png" />
+    <Content Include="VW-Refresh_files\materialize.css" />
+    <Content Include="VW-Refresh_files\splash_screen.css" />
+    <Content Include="VW-Refresh_files\styles.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -533,6 +545,17 @@
     <Content Include="Views\Menu\EditMenuDetails.cshtml" />
     <Content Include="Views\Site\PreviewSite.cshtml" />
     <Content Include="Views\BulkData\BulkData.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="VW-Refresh_files\analytics.js.download" />
+    <Content Include="VW-Refresh_files\Chart.min.js.download" />
+    <Content Include="VW-Refresh_files\hammer.min.js.download" />
+    <Content Include="VW-Refresh_files\icon" />
+    <Content Include="VW-Refresh_files\inline.bundle.js.download" />
+    <Content Include="VW-Refresh_files\jquery-3.1.1.min.js.download" />
+    <Content Include="VW-Refresh_files\main.bundle.js.download" />
+    <Content Include="VW-Refresh_files\materialize.min.js.download" />
+    <Content Include="VW-Refresh_files\styles.bundle.js.download" />
+    <Content Include="VW-Refresh_files\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

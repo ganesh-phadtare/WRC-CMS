@@ -26,5 +26,10 @@ namespace WRC_CMS.Models
         //public bool IsActive { get; set; }
 
         public List<ViewModel> ViewList { get; set; }
+        //public IEnumerable<List<ViewModel>> ViewLists { get; set; }
+    }
+    public class SiteModel1 : BaseModel
+    {
+        public IEnumerable<List<ViewModel>> ViewLists { get; set; }
     }
 }
