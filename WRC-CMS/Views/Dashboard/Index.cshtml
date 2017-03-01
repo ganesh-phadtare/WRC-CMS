@@ -1,0 +1,445 @@
+﻿@model IEnumerable<WRC_CMS.Models.SiteModel>
+
+@*@{
+        ViewBag.Title = "Index";
+    }*@
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>VW-Refresh</title>
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+    <script async="" src="./VW-Refresh_files/analytics.js.download"></script>
+    <script src="./VW-Refresh_files/jquery-3.1.1.min.js.download"></script>
+    <script src="./VW-Refresh_files/hammer.min.js.download"></script>
+    <script src="./VW-Refresh_files/Chart.min.js.download"></script>
+    <script src="./VW-Refresh_files/materialize.min.js.download"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+				m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-91282708-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!--<base href="/">-->
+    <base href=".">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./VW-Refresh_files/icon" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="./VW-Refresh_files/font-awesome.min.css" media="screen,projection">
+    <link rel="stylesheet" href="./VW-Refresh_files/materialize.css">
+    <link rel="stylesheet" href="./VW-Refresh_files/styles.css">
+    <link rel="stylesheet" href="./VW-Refresh_files/splash_screen.css">
+    <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
+    <style type="text/css">
+        /* You can add global styles to this file, and also import other style files */
+    </style>
+    <style></style>
+    <style>
+        .loading-wrapper[_ngcontent-kxb-11] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            display: flexbox;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+        }
+
+        .clear-loading[_ngcontent-kxb-11] {
+            text-align: center;
+            margin: 0 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .loading-effect-1[_ngcontent-kxb-11] {
+            width: 60px;
+            height: 60px;
+        }
+
+            .loading-effect-1[_ngcontent-kxb-11] span[_ngcontent-kxb-11] {
+                display: block;
+                -webit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+                border: 4px solid #fff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+                .loading-effect-1[_ngcontent-kxb-11] span[_ngcontent-kxb-11]:first-child {
+                    width: 100%;
+                    height: 100%;
+                    border-color: #2d81af;
+                    border-left-color: transparent;
+                    top: 0;
+                    left: 0;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-kxb-11] span[_ngcontent-kxb-11]:nth-child(2) {
+                    width: 65%;
+                    height: 65%;
+                    border-color: #f15a24;
+                    border-right-color: transparent;
+                    top: 17.5%;
+                    left: 17.5%;
+                    -webkit-animation: effect-1-2 3s infinite linear;
+                    -moz-animation: effect-1-2 3s infinite linear;
+                    -ms-animation: effect-1-2 3s infinite linear;
+                    -o-animation: effect-1-2 3s infinite linear;
+                    animation: effect-1-2 3s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-kxb-11] span[_ngcontent-kxb-11]:last-child {
+                    width: 30%;
+                    height: 30%;
+                    border-color: #888489;
+                    border-bottom-color: transparent;
+                    top: 35%;
+                    left: 35%;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+        @@-webkit-keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-webkit-keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+
+        @@keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+    <style>
+        .modal-custom[_ngcontent-kxb-13] {
+            z-index: 1003;
+            display: block;
+            opacity: 1;
+            transform: scaleX(1);
+            top: 10%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: #fafafa;
+            max-height: 80%;
+            width: 40%;
+            margin: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-radius: 2px;
+            /*will-change: top, opacity;*/
+            box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+            .modal-custom[_ngcontent-kxb-13] .modal-header[_ngcontent-kxb-13] {
+                padding: 10px 10px 15px 10px;
+                border-bottom: solid 1px #f15a24;
+                clear: both;
+            }
+
+                .modal-custom[_ngcontent-kxb-13] .modal-header[_ngcontent-kxb-13] h4[_ngcontent-kxb-13] {
+                    font-family: 'Lato-Bold';
+                    font-size: 16px;
+                    color: #000000;
+                    margin: 0;
+                    display: inline-block;
+                }
+
+            .modal-custom[_ngcontent-kxb-13] .modal-content[_ngcontent-kxb-13] .modal-footer[_ngcontent-kxb-13] {
+                border-radius: 0 0 2px 2px;
+                background-color: #fafafa;
+                padding: 0 10px 0 0;
+                height: 40px;
+                width: 100%;
+            }
+
+                .modal-custom[_ngcontent-kxb-13] .modal-content[_ngcontent-kxb-13] .modal-footer[_ngcontent-kxb-13] .btn[_ngcontent-kxb-13] {
+                    float: right;
+                    background: #f15a24;
+                    margin: 0 10px 0 0;
+                }
+
+            .modal-custom[_ngcontent-kxb-13] i[_ngcontent-kxb-13] {
+                color: #494342;
+                vertical-align: middle;
+                font-size: 20px;
+            }
+
+            .modal-custom[_ngcontent-kxb-13] h4[_ngcontent-kxb-13] {
+                font-family: 'Lato-Bold';
+                color: #000000;
+                display: inline-block;
+            }
+
+        .modal-overlay[_ngcontent-kxb-13] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            z-index: 1002;
+            display: block;
+            opacity: 0.5;
+            will-change: opacity;
+        }
+
+        .modal-custom[_ngcontent-kxb-13] .modal-close[_ngcontent-kxb-13] {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
+        <div class="navigation-div">
+            <nav class="dark-gray">
+                <ul class="right right-nav">
+                    <li class="date-time-text">
+
+                    </li>
+                    <li class="hide-on-small-and-down"><span></span></li>
+                    <li><a><i class="fa fa-power-off"></i></a></li>
+
+                </ul>
+                <sidenav-button>
+                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="">
+                        <i aria-hidden="true" class="fa fa-bars"></i>
+                    </a>
+                </sidenav-button>
+                <h5 class="header-title">
+                    <a href=""><img class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
+                </h5>
+            </nav>
+        </div>
+    </div>
+
+    <main class="attendance-main">
+        <router-outlet></router-outlet><dashboard>
+            <div class="breadcrumb-nav">
+                <div class="row margin-zero">
+                    <div class="col s12">
+                        <h5>
+                            Dashboard
+                            <a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>
+                            <span class="right mandatory-message">
+                                <span>IND<img class="flag-img" src="./VW-Refresh_files/india-flag.png"></span>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-container">
+                <div class="row"></div>
+                <div class="row">
+                    <div "col s12 padding-zero">
+                        <div class="col  m2">
+                            @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post))
+                            {
+                                <input id="Name" type="text" value="" style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" />
+                            }
+                        </div>
+                    </div>
+                    @*<div class="col  m2">
+                            <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                        </div>*@
+                    <div class="col  m6">
+                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" />
+                        @*<input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />*@
+                        @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
+                        @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
+                    </div>
+                    <div class="data-footer">
+                        <div class="btn-flat">
+                            @Html.ActionLink("Create New", "AddSite", "Site")
+                        </div>
+                        @*<a class="btn-flat" href="#/my/profile/professional">Create New</a>*@
+                    </div>
+                </div>
+            </div>
+            <div class="row p-reset margin-zero">
+                <div class="col s12">
+                    <div class="dashboard-data-container">
+                        @foreach (var item in Model)
+                        {
+                            <div class="card white emp-dashboard-data">
+                                <div class="col s12 blue-bg-section padding15 emp-wrapper right-align">
+                                    <div><img alt="" class="circle responsive-img" src="/images/rsz_1rsz_no-image.png"></div>
+                                    <div>
+                                        <h5>@Html.ActionLink(item.Oid.ToString(), "")</h5>
+                                        <h5>@Html.ActionLink(item.Title, "EditSiteDetails", "Site", new { id = item.Oid }, "") </h5>
+                                    </div>
+                                </div>
+                                <div class="row m-bottom0">
+                                    <div class="col s12 right-align padding15">
+                                        @*<h6>@Html.ActionLink(item.Title.ToString(), "")</h6>
+                                            <h6>@Html.ActionLink(item.URL.ToString(), "")</h6>*@
+                                        <h6>@Html.ActionLink(item.URL.ToString(), "")</h6>
+                                        <h6>m : 099544855445</h6>
+                                    </div>
+                                </div>
+                                <div class="data-footer">
+                                    <a class="btn-flat" href="">No. Of Views:</a>
+                                    <a class="btn-flat" href="">No. Of Content:</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="holiday-modal">
+                <ui-custom-model _nghost-kxb-13="">
+                </ui-custom-model>
+            </div>
+        </dashboard>
+    </main>
+    <footer class="page-footer">
+        <div class="row footer-copyright m-bottom0">
+            <div class="col s6 m6 l6 right-align m-top20 branding">
+                © 2016 V2Solutions, Inc.
+            </div>
+            <div class="col s6 m6 l6 right-align" id="browsers">
+                <ul class="right">
+                    <li>
+                        <i aria-hidden="true" class="fa fa-chrome"></i>
+                        <h6 class="margin-zero">Ver 50+</h6>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-firefox"></i>
+                        <h6 class="margin-zero">Ver 46+ (64-bit)</h6>
+                    </li>
+                    <li>
+                        <i aria-hidden="true" class="fa fa-safari"></i>
+                        <h6 class="margin-zero">Ver 10+</h6>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <loader-component _nghost-kxb-11="">
+    </loader-component>
+    <script type="text/javascript" src="./VW-Refresh_files/inline.bundle.js.download"></script>
+    <script type="text/javascript" src="./VW-Refresh_files/styles.bundle.js.download"></script>
+    <script type="text/javascript" src="./VW-Refresh_files/main.bundle.js.download"></script>
+    <div class="hiddendiv common"></div>
+
+</body>
+</html>
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#submit').unbind('click');
+            $('#submit').on('click', function () {
+                //alert($("#Name").val());
+                $.ajax({
+                    url: "/Dashboard/Index",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        viewObject: $("#Name").val()
+                    }),
+                    async: false
+                });
+                //$('#Index').load(url, { searchText: $("#Name").val() });
+            });
+        });*@
+    </script>
+}

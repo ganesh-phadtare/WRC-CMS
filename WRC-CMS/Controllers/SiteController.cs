@@ -157,7 +157,10 @@ namespace WRC_CMS.Controllers
                             {
                                 ContentStyleModel DefaultContent = new ContentStyleModel();
                                 DefaultContent.Name = "Welcome";
-                                DefaultContent.Description = "Welcome to our site";
+                                string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
+<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
+                                DefaultContent.Description = welcomebody;
+
                                 DefaultContent.IsActive = true;
                                 DefaultContent.ViewID = ViewID;
                                 DefaultContent.IsDefault = true;
@@ -252,7 +255,7 @@ namespace WRC_CMS.Controllers
             await Task.Run(() =>
             {
                 sites.AddRange(BORepository.GetAllSites(proxy).Result);
-            });
+            });           
             return View("GetSitesDetails", sites);
         }
     }
