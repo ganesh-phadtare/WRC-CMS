@@ -1,0 +1,688 @@
+﻿@model WRC_CMS.Models.CombineModel
+
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>VW-Refresh</title>
+    <script async="" src="~/VW-Refresh_files/analytics.js.download"></script>
+    <script src="~/VW-Refresh_files/jquery-3.1.1.min.js.download" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="~/VW-Refresh_files/hammer.min.js.download"></script>
+    <script src="~/VW-Refresh_files/Chart.min.js.download"></script>
+    <script src="~/VW-Refresh_files/materialize.min.js.download"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-91282708-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!--<base href="/">-->
+    <base href=".">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/VW-Refresh_files/icon" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/VW-Refresh_files/font-awesome.min.css" media="screen,projection">
+    <link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">
+    <link rel="stylesheet" href="~/VW-Refresh_files/styles.css">
+    <link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">
+    <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
+    <style type="text/css">
+        /* You can add global styles to this file, and also import other style files */
+    </style>
+    <style></style>
+    <style>
+        .loading-wrapper[_ngcontent-xlf-11] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+        }
+
+        .clear-loading[_ngcontent-xlf-11] {
+            text-align: center;
+            margin: 0 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .loading-effect-1[_ngcontent-xlf-11] {
+            width: 60px;
+            height: 60px;
+        }
+
+            .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11] {
+                display: block;
+                -webit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+                border: 4px solid #fff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:first-child {
+                    width: 100%;
+                    height: 100%;
+                    border-color: #2d81af;
+                    border-left-color: transparent;
+                    top: 0;
+                    left: 0;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:nth-child(2) {
+                    width: 65%;
+                    height: 65%;
+                    border-color: #f15a24;
+                    border-right-color: transparent;
+                    top: 17.5%;
+                    left: 17.5%;
+                    -webkit-animation: effect-1-2 3s infinite linear;
+                    -moz-animation: effect-1-2 3s infinite linear;
+                    -ms-animation: effect-1-2 3s infinite linear;
+                    -o-animation: effect-1-2 3s infinite linear;
+                    animation: effect-1-2 3s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:last-child {
+                    width: 30%;
+                    height: 30%;
+                    border-color: #888489;
+                    border-bottom-color: transparent;
+                    top: 35%;
+                    left: 35%;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+        @@-webkit-keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-webkit-keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+
+        @@keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+    <style>
+        .modal-custom[_ngcontent-xlf-13] {
+            z-index: 1003;
+            display: block;
+            opacity: 1;
+            transform: scaleX(1);
+            top: 10%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: #fafafa;
+            max-height: 80%;
+            width: 40%;
+            margin: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-radius: 2px;
+            will-change: top, opacity;
+            box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+            .modal-custom[_ngcontent-xlf-13] .modal-header[_ngcontent-xlf-13] {
+                padding: 10px 10px 15px 10px;
+                border-bottom: solid 1px #f15a24;
+                clear: both;
+            }
+
+                .modal-custom[_ngcontent-xlf-13] .modal-header[_ngcontent-xlf-13] h4[_ngcontent-xlf-13] {
+                    font-family: 'Lato-Bold';
+                    font-size: 16px;
+                    color: #000000;
+                    margin: 0;
+                    display: inline-block;
+                }
+
+            .modal-custom[_ngcontent-xlf-13] .modal-content[_ngcontent-xlf-13] .modal-footer[_ngcontent-xlf-13] {
+                border-radius: 0 0 2px 2px;
+                background-color: #fafafa;
+                padding: 0 10px 0 0;
+                height: 40px;
+                width: 100%;
+            }
+
+                .modal-custom[_ngcontent-xlf-13] .modal-content[_ngcontent-xlf-13] .modal-footer[_ngcontent-xlf-13] .btn[_ngcontent-xlf-13] {
+                    float: right;
+                    background: #f15a24;
+                    margin: 0 10px 0 0;
+                }
+
+            .modal-custom[_ngcontent-xlf-13] i[_ngcontent-xlf-13] {
+                color: #494342;
+                vertical-align: middle;
+                font-size: 20px;
+            }
+
+            .modal-custom[_ngcontent-xlf-13] h4[_ngcontent-xlf-13] {
+                font-family: 'Lato-Bold';
+                color: #000000;
+                display: inline-block;
+            }
+
+        .modal-overlay[_ngcontent-xlf-13] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            z-index: 1002;
+            display: block;
+            opacity: 0.5;
+            will-change: opacity;
+        }
+
+        /*.dark-gray {
+                height: 106px !important;
+            }*/
+
+        .leave-tbody {
+            max-height: 800px !important;
+        }
+    </style>
+    <style>
+        .chart[_ngcontent-xlf-9] {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
+    <app-root ng-version="2.4.6" _nghost-xlf-78="">
+        <div _ngcontent-xlf-78="" class="navbar-fixed">
+            <!--style="height: 106px;"-->
+            <div _ngcontent-xlf-78="" class="navigation-div">
+                <div _ngcontent-xlf-78="" id="top-div-msg">
+                    <!--<div _ngcontent-xlf-78="" class="row m-bottom0 card-heading">
+                        <div _ngcontent-xlf-78="" class="col s11 card-title">To reset Domain &amp; Office 365 password, <a _ngcontent-xlf-78="" class="waves-effect waves-light btn action-btn" href="https://passwordreset.microsoftonline.com/" target="_blank"> <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-external-link"></i> Click here</a> Ensure your Mobile &amp; alternate Email ID verification details are updated <a _ngcontent-xlf-78="" class="waves-effect waves-light btn action-btn" href="http://aka.ms/ssprsetup" target="_blank"><i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-external-link"></i> Click here</a></div>
+                        <div _ngcontent-xlf-78="" class="col s1 card-activity center-align padding-zero">
+                            <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-times icon-btn add-skill-btn cancel close-div" title="Cancel"></i>
+                        </div>
+                    </div>-->
+                </div>
+                <nav _ngcontent-xlf-78="" class="dark-gray">
+                    <sidenav-panel _ngcontent-xlf-78="">
+                        <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
+                            <!--style="margin-top: 106px;"-->
+
+                            <li routerlinkactive="active" class="no-padding first">
+                                <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="http://localhost:49791/dashboard">
+                                    <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg"></i> Dashboard
+                                </a>
+
+                                <div class="collapsible-body" id="childNav" style="display: block;">
+
+                                </div>
+                            </li>
+                            <li routerlinkactive="active" class="no-padding third">
+                                <a class="collapsible-header" routerlinkactive="active" title="Views" href="http://localhost:49791/AddView/GetAllViewDetails">
+                                    <i class="fa fa-file-text" title="Views"></i> Views
+                                </a>
+                                <div class="collapsible-body" id="childNav" style="display: none;">
+
+                                </div>
+                            </li>
+                            <li routerlinkactive="active" class="no-padding fifth">
+                                <a class="collapsible-header" routerlinkactive="active" title="Expense" href="https://my.v2solutions.com/#/my/expense/new">
+                                    <i class="fa fa-money" title="Expense"></i> Expense
+                                </a>
+
+                                <div class="collapsible-body" id="childNav" style="display: none;">
+
+                                </div>
+                            </li>
+                            <!--<li routerlinkactive="active" class="no-padding sixth">
+                                <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
+                                    <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
+                                </a>
+
+                                <div class="collapsible-body" id="childNav" style="display: none;">
+
+                                </div>
+                            </li>-->
+                        </ul>
+
+                    </sidenav-panel>
+
+                    <ul _ngcontent-xlf-78="" class="right right-nav">
+                        <!--<li _ngcontent-xlf-78="" class="date-time-text">27 Feb 2017</li>-->
+                        <!--<li _ngcontent-xlf-78="" class="hide-on-small-and-down"><span _ngcontent-xlf-78="">Lad, Virendra (4378)</span></li>-->
+                        <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
+
+                    </ul>
+                    <sidenav-button _ngcontent-xlf-78="">
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>
+                    <h5 _ngcontent-xlf-78="" class="header-title" style=" height: 100%; ">
+                        <a href=""><img class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
+                    </h5>
+                </nav>
+            </div>
+        </div>
+        <main _ngcontent-xlf-78="" class="attendance-main">
+            <router-outlet _ngcontent-xlf-78=""></router-outlet><leave>
+                <div class="breadcrumb-nav">
+                    <div class="row margin-zero">
+                        <div class="col s12">
+                            <h5>
+                                Site Management
+                                <a class="help-btn" href="" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>
+                                <span class="right mandatory-message">
+                                    <span>IND<img class="flag-img" src="./VW-Refresh_files/india-flag.png"></span>
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="tab-container">
+                        <div class="row">
+
+                            <router-outlet></router-outlet><app-leave _nghost-xlf-80="">
+                                <div _ngcontent-xlf-80="" class="attendance-wrapper p-top20" style="width: 100%;float: left;">
+                                    <div _ngcontent-xlf-80="" class="row attendance-data">
+
+                                        <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 40% !important; ">
+                                            <div _ngcontent-xlf-80="" class="col s12 padding-zero">
+                                                <div _ngcontent-xlf-80="" class="apply-for-leave-container">
+                                                    <div _ngcontent-xlf-80="" class="header">
+                                                        <h4 _ngcontent-xlf-80="">Create View</h4>
+
+                                                    </div>
+                                                    <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
+                                                        <div _ngcontent-xlf-80="">
+                                                            <ui-form _ngcontent-xlf-80="" columnorientation="3" controlcss="" formcss="">
+
+                                                                <div class="">
+                                                                    <form class="form-element ng-untouched ng-pristine ng-invalid" name="datapluspics" method="Post" enctype="multipart/form-data">
+                                                                        @*<div class="row">
+                                                                                <div>
+                                                                                    <ui-input class="ng-untouched ng-pristine ng-valid">
+
+                                                                                        <div class="view-form-info ui-input">
+                                                                                            <div class="col s6 m-top15">
+                                                                                                <select class=" browser-default validControl ng-untouched ng-pristine ng-valid" style="position:relative">
+                                                                                                    <option value="2">Leave Without Pay (LWP)</option>
+                                                                                                    <option value="1">Leave</option>
+                                                                                                </select>
+                                                                                                <div>
+                                                                                                    <span>
+                                                                                                        <h6 class="active">Leave Type</h6>
+                                                                                                    </span>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </ui-input>
+                                                                                </div><div>
+                                                                                    <ui-input class="ng-untouched ng-pristine ng-valid">
+                                                                                        <div class="view-form-info ui-input">
+                                                                                            <div class="col s3 m-top15">
+                                                                                                <input materialize="pickadate" style="position:relative" type="text" updatematerializeparams="" class="validControl ng-untouched ng-pristine ng-valid picker__input" placeholder="" readonly="" id="P1438141263" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1438141263_root"><div class="picker" id="P1438141263_root" tabindex="0" aria-hidden="true"><div class="picker__holder"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__date-display"><div class="picker__weekday-display">Monday</div><div class="picker__month-display"><div>Feb</div></div><div class="picker__day-display"><div>27</div></div><div class="picker__year-display"><div>2017</div></div></div><div class="picker__calendar-container"><div class="picker__header"><div class="picker__month">February</div><select class="picker__select--year browser-default" disabled="" aria-controls="P1438141263_table" title="Select a year"><option value="2016">2016</option><option value="2017" selected="">2017</option><option value="2018">2018</option></select><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="P1438141263_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="P1438141263_table" title="Next month"> </div></div><table class="picker__table" id="P1438141263_table" role="grid" aria-controls="P1438141263" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">S</th><th class="picker__weekday" scope="col" title="Monday">M</th><th class="picker__weekday" scope="col" title="Tuesday">T</th><th class="picker__weekday" scope="col" title="Wednesday">W</th><th class="picker__weekday" scope="col" title="Thursday">T</th><th class="picker__weekday" scope="col" title="Friday">F</th><th class="picker__weekday" scope="col" title="Saturday">S</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485628200000" role="gridcell" aria-label="01/29/2017" aria-disabled="true">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1485714600000" role="gridcell" aria-label="01/30/2017">30</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1485801000000" role="gridcell" aria-label="01/31/2017">31</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1485887400000" role="gridcell" aria-label="02/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1485973800000" role="gridcell" aria-label="02/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486060200000" role="gridcell" aria-label="02/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486146600000" role="gridcell" aria-label="02/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486233000000" role="gridcell" aria-label="02/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486319400000" role="gridcell" aria-label="02/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486405800000" role="gridcell" aria-label="02/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486492200000" role="gridcell" aria-label="02/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486578600000" role="gridcell" aria-label="02/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486665000000" role="gridcell" aria-label="02/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486751400000" role="gridcell" aria-label="02/11/2017" aria-disabled="true">11</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486837800000" role="gridcell" aria-label="02/12/2017" aria-disabled="true">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486924200000" role="gridcell" aria-label="02/13/2017">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487010600000" role="gridcell" aria-label="02/14/2017">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487097000000" role="gridcell" aria-label="02/15/2017">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487183400000" role="gridcell" aria-label="02/16/2017">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487269800000" role="gridcell" aria-label="02/17/2017">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487356200000" role="gridcell" aria-label="02/18/2017" aria-disabled="true">18</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487442600000" role="gridcell" aria-label="02/19/2017" aria-disabled="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487529000000" role="gridcell" aria-label="02/20/2017">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487615400000" role="gridcell" aria-label="02/21/2017">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487701800000" role="gridcell" aria-label="02/22/2017">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487788200000" role="gridcell" aria-label="02/23/2017">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487874600000" role="gridcell" aria-label="02/24/2017">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487961000000" role="gridcell" aria-label="02/25/2017" aria-disabled="true">25</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1488047400000" role="gridcell" aria-label="02/26/2017" aria-disabled="true">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1488133800000" role="gridcell" aria-label="02/27/2017" aria-activedescendant="true">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1488220200000" role="gridcell" aria-label="02/28/2017">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488306600000" role="gridcell" aria-label="03/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488393000000" role="gridcell" aria-label="03/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488479400000" role="gridcell" aria-label="03/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488565800000" role="gridcell" aria-label="03/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488652200000" role="gridcell" aria-label="03/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488738600000" role="gridcell" aria-label="03/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488825000000" role="gridcell" aria-label="03/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488911400000" role="gridcell" aria-label="03/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488997800000" role="gridcell" aria-label="03/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1489084200000" role="gridcell" aria-label="03/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1489170600000" role="gridcell" aria-label="03/11/2017" aria-disabled="true">11</div></td></tr></tbody></table></div><div class="picker__footer"><button class="btn-flat picker__clear" type="button" data-clear="1" disabled="" aria-controls="P1438141263">Clear</button><button class="btn-flat picker__close" type="button" data-close="true" disabled="" aria-controls="P1438141263">Close</button></div></div></div></div></div></div>
+                                                                                                <div>
+                                                                                                    <span>
+                                                                                                        <h6 class="active">From Date</h6>
+                                                                                                    </span>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </ui-input>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <ui-input class="ng-untouched ng-pristine ng-invalid">
+                                                                                        <div class="view-form-info ui-input">
+                                                                                            <div class="col s3 m-top15">
+                                                                                                <input materialize="pickadate" style="position:relative" type="text" updatematerializeparams="" class="invalidControl ng-untouched ng-pristine ng-valid picker__input" placeholder="" readonly="" id="P1006151855" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1006151855_root"><div class="picker" id="P1006151855_root" tabindex="0" aria-hidden="true"><div class="picker__holder"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__date-display"><div class="picker__weekday-display">Monday</div><div class="picker__month-display"><div>Feb</div></div><div class="picker__day-display"><div>27</div></div><div class="picker__year-display"><div>2017</div></div></div><div class="picker__calendar-container"><div class="picker__header"><div class="picker__month">February</div><select class="picker__select--year browser-default" disabled="" aria-controls="P1006151855_table" title="Select a year"><option value="2017" selected="">2017</option><option value="2018">2018</option></select><div class="picker__nav--prev picker__nav--disabled" data-nav="-1" role="button" aria-controls="P1006151855_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="P1006151855_table" title="Next month"> </div></div><table class="picker__table" id="P1006151855_table" role="grid" aria-controls="P1006151855" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">S</th><th class="picker__weekday" scope="col" title="Monday">M</th><th class="picker__weekday" scope="col" title="Tuesday">T</th><th class="picker__weekday" scope="col" title="Wednesday">W</th><th class="picker__weekday" scope="col" title="Thursday">T</th><th class="picker__weekday" scope="col" title="Friday">F</th><th class="picker__weekday" scope="col" title="Saturday">S</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485628200000" role="gridcell" aria-label="01/29/2017" aria-disabled="true">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485714600000" role="gridcell" aria-label="01/30/2017" aria-disabled="true">30</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485801000000" role="gridcell" aria-label="01/31/2017" aria-disabled="true">31</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1485887400000" role="gridcell" aria-label="02/01/2017" aria-disabled="true">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1485973800000" role="gridcell" aria-label="02/02/2017" aria-disabled="true">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486060200000" role="gridcell" aria-label="02/03/2017" aria-disabled="true">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486146600000" role="gridcell" aria-label="02/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486233000000" role="gridcell" aria-label="02/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486319400000" role="gridcell" aria-label="02/06/2017" aria-disabled="true">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486405800000" role="gridcell" aria-label="02/07/2017" aria-disabled="true">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486492200000" role="gridcell" aria-label="02/08/2017" aria-disabled="true">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486578600000" role="gridcell" aria-label="02/09/2017" aria-disabled="true">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486665000000" role="gridcell" aria-label="02/10/2017" aria-disabled="true">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486751400000" role="gridcell" aria-label="02/11/2017" aria-disabled="true">11</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486837800000" role="gridcell" aria-label="02/12/2017" aria-disabled="true">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486924200000" role="gridcell" aria-label="02/13/2017" aria-disabled="true">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487010600000" role="gridcell" aria-label="02/14/2017" aria-disabled="true">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487097000000" role="gridcell" aria-label="02/15/2017" aria-disabled="true">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487183400000" role="gridcell" aria-label="02/16/2017" aria-disabled="true">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487269800000" role="gridcell" aria-label="02/17/2017" aria-disabled="true">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487356200000" role="gridcell" aria-label="02/18/2017" aria-disabled="true">18</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487442600000" role="gridcell" aria-label="02/19/2017" aria-disabled="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487529000000" role="gridcell" aria-label="02/20/2017" aria-disabled="true">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487615400000" role="gridcell" aria-label="02/21/2017" aria-disabled="true">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487701800000" role="gridcell" aria-label="02/22/2017" aria-disabled="true">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487788200000" role="gridcell" aria-label="02/23/2017" aria-disabled="true">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487874600000" role="gridcell" aria-label="02/24/2017" aria-disabled="true">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487961000000" role="gridcell" aria-label="02/25/2017" aria-disabled="true">25</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1488047400000" role="gridcell" aria-label="02/26/2017" aria-disabled="true">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1488133800000" role="gridcell" aria-label="02/27/2017" aria-activedescendant="true">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1488220200000" role="gridcell" aria-label="02/28/2017">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488306600000" role="gridcell" aria-label="03/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488393000000" role="gridcell" aria-label="03/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488479400000" role="gridcell" aria-label="03/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488565800000" role="gridcell" aria-label="03/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488652200000" role="gridcell" aria-label="03/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488738600000" role="gridcell" aria-label="03/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488825000000" role="gridcell" aria-label="03/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488911400000" role="gridcell" aria-label="03/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488997800000" role="gridcell" aria-label="03/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1489084200000" role="gridcell" aria-label="03/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1489170600000" role="gridcell" aria-label="03/11/2017" aria-disabled="true">11</div></td></tr></tbody></table></div><div class="picker__footer"><button class="btn-flat picker__clear" type="button" data-clear="1" disabled="" aria-controls="P1006151855">Clear</button><button class="btn-flat picker__close" type="button" data-close="true" disabled="" aria-controls="P1006151855">Close</button></div></div></div></div></div></div>
+                                                                                                <div class="errorMessage"></div>
+                                                                                                <div>
+                                                                                                    <span>
+                                                                                                        <h6 class="active">To Date</h6>
+                                                                                                    </span>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </ui-input>
+                                                                                </div>
+                                                                            </div>*@
+                                                                        <div class="row">
+                                                                            <div>
+                                                                                <ui-input class="ng-untouched ng-pristine ng-invalid">
+
+                                                                                    <div class="view-form-info ui-input">
+                                                                                        <div class="col s12">
+                                                                                            @*<input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
+                                                                                                <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
+                                                                                                <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
+                                                                                                <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
+                                                                                                <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
+                                                                                                <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">*@
+                                                                                            @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
+
+
+                                                                                            @Html.AntiForgeryToken()
+
+                                                                                            <div class="form-horizontal">
+                                                                                                @*<h4>Add View</h4>
+                                                                                                    <hr />*@
+                                                                                                @Html.ValidationSummary(true)
+
+                                                                                                @*<div class="form-group">
+                                                                                                        @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
+                                                                                                        <div class="col-md-10">
+                                                                                                            @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
+                                                                                                            @Html.ValidationMessageFor(model => model.SelectSite)
+                                                                                                        </div>
+                                                                                                    </div>*@
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.Name)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.Name)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.URL, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.URL)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.URL)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.Title, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.Title)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.Title)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @*@Html.TextBoxFor(model => model.Logo, new { type = "file"} )*@
+                                                                                                        <input type="file" name="file" />
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.Logo)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.IsActive, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.IsActive)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.IsActive)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.IsDem, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.IsDem)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.IsDem)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.IsAuth, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.IsAuth)
+                                                                                                        @Html.ValidationMessageFor(model => model.NewView.IsAuth)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.CreateMenu)
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    <div class="col-md-offset-2 col-md-10">
+                                                                                                        <input type="submit" value="Create" class="btn btn-default" id="vv" />
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="form-group">
+                                                                                                    <div class="col-md-offset-2 col-md-10" style="color:green">
+                                                                                                        @ViewBag.Message
+
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                            @*<div class="errorMessage"></div>
+                                                                                                <div>
+                                                                                                    <span>
+                                                                                                        <h6 class="active">Narration</h6>
+                                                                                                    </span>
+                                                                                                </div>*@
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </ui-input>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </ui-form>
+                                                        </div>
+                                                        <div _ngcontent-xlf-80="" class="row m-bottom0">
+                                                            <div _ngcontent-xlf-80="" class="col s12 m6 leave-action table-note left-align">
+                                                                <!--<h6 _ngcontent-xlf-80="">To apply Long Leave/Paternity Leave contact HR.</h6>-->
+                                                            </div>
+                                                            <div _ngcontent-xlf-80="" class="col s12 m6 leave-action right-align">
+                                                                <a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn submit" title="Submit">Submit</a>
+                                                                <a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn reset" title="Cancel">Cancel</a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 58%; ">
+                                            <div _ngcontent-xlf-80="" class="">
+                                                <div _ngcontent-xlf-80="" class="table-container padding-zero">
+                                                    <div _ngcontent-xlf-80="" class="row m-bottom5">
+                                                        <div _ngcontent-xlf-80="" class="col s12 padding-zero">
+                                                            <div _ngcontent-xlf-80="" class="table-responsive">
+                                                                <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
+                                                                    <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
+                                                                        <tr _ngcontent-xlf-80="">
+                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
+                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
+                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
+                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
+                                                                            @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.CreateMenu)</th>*@
+                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody _ngcontent-xlf-80="" class="leave-tbody">
+
+                                                                        @*Swapnali*@
+
+
+                                                                       
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div _ngcontent-xlf-80="" class="row">
+                                                <!--<div _ngcontent-xlf-80="" class="col s12 table-note">
+                                                    <span _ngcontent-xlf-80=""><i _ngcontent-xlf-80="" class="pending-msg fa fa-pencil"></i>Only future date pending entries will be editable.</span>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div _ngcontent-xlf-80="" class="holiday-modal">
+                                    <ui-custom-model _ngcontent-xlf-80="" _nghost-xlf-13="">
+                                    </ui-custom-model>
+                                </div>
+                                <div _ngcontent-xlf-80="" class="holiday-modal">
+                                    <ui-custom-model _ngcontent-xlf-80="" _nghost-xlf-13="">
+                                    </ui-custom-model>
+                                </div>
+                                <loader-component _ngcontent-xlf-80="" _nghost-xlf-11="">
+                                </loader-component>
+                            </app-leave>
+                        </div>
+                    </div>
+                </div>
+            </leave>
+        </main>
+        <footer _ngcontent-xlf-78="" class="page-footer">
+            <div _ngcontent-xlf-78="" class="row footer-copyright m-bottom0">
+                <div _ngcontent-xlf-78="" class="col s6 m6 l6 right-align m-top20 branding">
+                    © 2016 V2Solutions, Inc.
+                </div>
+                <div _ngcontent-xlf-78="" class="col s6 m6 l6 right-align" id="browsers">
+                    <ul _ngcontent-xlf-78="" class="right">
+                        <!--<li _ngcontent-xlf-78="">
+                            <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-chrome"></i>
+                            <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 50+</h6>
+                        </li>-->
+                        <!--<li _ngcontent-xlf-78="">
+                            <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-firefox"></i>
+                            <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 46+ (64-bit)</h6>
+                        </li>-->
+                        <!--<li _ngcontent-xlf-78="">
+                            <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-safari"></i>
+                            <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 10+</h6>
+                        </li>-->
+                    </ul>
+                </div>
+            </div>
+        </footer>
+        <loader-component _ngcontent-xlf-78="" _nghost-xlf-11="">
+
+
+        </loader-component>
+    </app-root>
+    <script type="text/javascript" src="./VW-Refresh_files/inline.bundle.js.download"></script>
+    <script type="text/javascript" src="./VW-Refresh_files/styles.bundle.js.download"></script>
+    <script type="text/javascript" src="./VW-Refresh_files/main.bundle.js.download"></script>
+
+    <div class="hiddendiv common"></div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</body>
+</html>

@@ -557,6 +557,8 @@
     <Content Include="VW-Refresh_files\styles.bundle.js.download" />
     <Content Include="VW-Refresh_files\Thumbs.db" />
     <Content Include="Views\Dashboard\NewIndex.cshtml" />
+    <Content Include="Views\Shared\PageLayout.cshtml" />
+    <Content Include="Views\Site\AddSite1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

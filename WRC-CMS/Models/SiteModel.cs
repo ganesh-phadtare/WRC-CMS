@@ -27,5 +27,11 @@ namespace WRC_CMS.Models
 
         public List<ViewModel> ViewList { get; set; }    
     }
+
+    public class CombineSiteModel
+    {
+        public List<ViewModel> SiteList { get; set; }
+        public ViewModel NewView { get; set; }
+    }
    
 }

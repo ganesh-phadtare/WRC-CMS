@@ -23,6 +23,13 @@ namespace WRC_CMS.Controllers
             return View();
         }
 
+        public ActionResult AddSite1()
+        {
+
+            return View();
+        }
+
+
         public async Task<ActionResult> PreviewSite(int id)
         {
             List<SiteModel> sites = new List<SiteModel>();

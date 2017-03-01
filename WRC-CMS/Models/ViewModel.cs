@@ -23,4 +23,10 @@ namespace WRC_CMS.Models
         [Display(Name = "Site")]
         public string SelectSite { get; set; }
     }
+
+    public class CombineModel
+    {
+        public List<ViewModel> views { get; set; }
+        public ViewModel NewView { get; set; }
+    }
 }
