@@ -27,6 +27,53 @@ namespace WRC_CMS.Controllers
             return View(ViewObject);
         }
 
+        public async Task<ActionResult> Test(string Name, string URL, string Title, string IsActive, string IsDem, string IsAuth, string CreateMenu, object Logo)
+        {
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
+                return RedirectToAction("GetAllViewDetails");
+            ViewModel ViewObject = new ViewModel();
+            ViewObject.Name = Name.ToString();
+            ViewObject.URL = URL.ToString();
+            ViewObject.Title = Title.ToString();
+            ViewObject.IsActive = Convert.ToBoolean(IsActive);
+            ViewObject.IsDem = Convert.ToBoolean(IsDem);
+            ViewObject.IsAuth = Convert.ToBoolean(IsAuth);
+            ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
+            ViewObject.SiteID = 2078;
+            try
+            {
+                //if (file != null && file.ContentLength > 0)
+                //{
+                //    ViewObject.Logo = new byte[file.ContentLength];
+                //    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
+                //}
+
+                if (ModelState.IsValid)
+                {
+                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
+                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
+                    int ViewID = 0;
+                    await Task.Run(() =>
+                    {
+                        ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                    });
+                    if (ViewID > 0)
+                        ViewBag.Message = "View added successfully.";
+                    else
+                        ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
+                    return RedirectToAction("GetAllViewDetails");
+                }
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
         [HttpPost]
         public async Task<ActionResult> AddView(ViewModel ViewObject, HttpPostedFileBase file)
         {
@@ -139,7 +186,10 @@ namespace WRC_CMS.Controllers
             {
                 views.AddRange(BORepository.GetAllViews(proxy).Result);
             });
-            return View("GetViewDetails", views);
+            CombineModel com = new CombineModel();
+            com.NewView = new ViewModel();
+            com.views = views;
+            return View("ViewsLV", com);
         }
     }
 }
