@@ -340,9 +340,7 @@
                             <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
                         </div>*@
                     <div class="col  m6">
-                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />
-                        @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
-                        @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
+                        <input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />
                     </div>
                     <div class="data-footer">
                         <div class="btn-flat">
@@ -439,7 +437,7 @@
                     }),
                     async: false
                 });
-                //$('#Index').load(url, { searchText: $("#Name").val() });
+               
             });
         });
     </script>

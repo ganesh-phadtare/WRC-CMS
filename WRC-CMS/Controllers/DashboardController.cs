@@ -26,16 +26,17 @@ namespace WRC_CMS.Controllers
             return View("Index", sites);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Index(SiteModel viewObject)
+        //[HttpPost]
+        public async Task<ActionResult> Index1(string viewObject)       
         {
             ModelState.Clear();
             List<SiteModel> sites = new List<SiteModel>();
             await Task.Run(() =>
             {
                 sites.AddRange(BORepository.GetSearchSite(proxy, viewObject).Result);
-            });
+           });
             return View("Index", sites);
+            //return RedirectToAction()
         }
 	}
 }

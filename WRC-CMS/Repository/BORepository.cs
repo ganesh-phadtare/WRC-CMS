@@ -192,11 +192,11 @@ namespace WRC_CMS.Repository
             return Menus;
         }
 
-        public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy,SiteModel viewObject)
+        public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy,string viewObject)
         {
             List<SiteModel> SearchList = new List<SiteModel>();
             Dictionary<string, object> dicParams = new Dictionary<string, object>();
-            dicParams.Add("@Name", viewObject.Name );
+            dicParams.Add("@Name", viewObject );
 
             var dataSet = await proxy.ExecuteDataset("SP_GetSearchList", dicParams);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
