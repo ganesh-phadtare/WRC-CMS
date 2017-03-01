@@ -255,8 +255,7 @@ namespace WRC_CMS.Controllers
             await Task.Run(() =>
             {
                 sites.AddRange(BORepository.GetAllSites(proxy).Result);
-            });
-            ViewBag["Data"] = sites;
+            });           
             return View("GetSitesDetails", sites);
         }
     }

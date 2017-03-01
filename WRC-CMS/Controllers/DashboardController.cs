@@ -25,8 +25,7 @@ namespace WRC_CMS.Controllers
             });
             return View("Index", sites);
         }
-
-        //[HttpPost]
+       
         public async Task<ActionResult> Index1(string viewObject)       
         {
             ModelState.Clear();
@@ -35,8 +34,7 @@ namespace WRC_CMS.Controllers
             {
                 sites.AddRange(BORepository.GetSearchSite(proxy, viewObject).Result);
            });
-            return View("Index", sites);
-            //return RedirectToAction()
+            return View("Index", sites);          
         }
 	}
 }

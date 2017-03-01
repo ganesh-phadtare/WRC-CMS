@@ -1,6 +1,4 @@
-﻿@*@model WRC_CMS.Models.SiteModel*@
-@*@model Tuple<System.Collections.Generic.IEnumerable<WRC_CMS.Models.SiteModel>, WRC_CMS.Models.SiteModel>*@
-@model IEnumerable<WRC_CMS.Models.SiteModel>
+﻿@model IEnumerable<WRC_CMS.Models.SiteModel>
 
 @*@{
         ViewBag.Title = "Index";
@@ -340,7 +338,8 @@
                             <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
                         </div>*@
                     <div class="col  m6">
-                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />
+                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" />
+                        @*<input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />*@
                         @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
                         @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
                     </div>
@@ -369,13 +368,13 @@
                                     <div class="col s12 right-align padding15">
                                         @*<h6>@Html.ActionLink(item.Title.ToString(), "")</h6>
                                             <h6>@Html.ActionLink(item.URL.ToString(), "")</h6>*@
-                                        <h6>swapnali.angre@v2solutions.com</h6>
+                                        <h6>@Html.ActionLink(item.URL.ToString(), "")</h6>
                                         <h6>m : 099544855445</h6>
                                     </div>
                                 </div>
                                 <div class="data-footer">
-                                    <a class="btn-flat" href="https://my.v2solutions.com/#/my/profile/professional">PROFESSIONAL</a>
-                                    <a class="btn-flat" href="https://my.v2solutions.com/#/my/profile/personal">PERSONAL</a>
+                                    <a class="btn-flat" href="">No. Of Views:</a>
+                                    <a class="btn-flat" href="">No. Of Content:</a>
                                 </div>
                             </div>
                         }
@@ -423,7 +422,7 @@
 </html>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
             $('#submit').unbind('click');
@@ -441,6 +440,6 @@
                 });
                 //$('#Index').load(url, { searchText: $("#Name").val() });
             });
-        });
+        });*@
     </script>
 }
