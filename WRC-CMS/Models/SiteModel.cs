@@ -25,6 +25,7 @@ namespace WRC_CMS.Models
 
         //public bool IsActive { get; set; }
 
-        public List<ViewModel> ViewList { get; set; }
+        public List<ViewModel> ViewList { get; set; }    
     }
+   
 }
