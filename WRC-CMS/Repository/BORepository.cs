@@ -191,5 +191,27 @@ namespace WRC_CMS.Repository
             }
             return Menus;
         }
+
+        public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy,string viewObject)
+        {
+            List<SiteModel> SearchList = new List<SiteModel>();
+            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+            dicParams.Add("@Name", viewObject );
+
+            var dataSet = await proxy.ExecuteDataset("SP_GetSearchList", dicParams);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                return (from DataRow row in dataSet.Tables[0].Rows
+                        select new SiteModel
+                        {
+                            Oid = Convert.ToInt32(row["Oid"].ToString()),
+                            Name = row["Name"].ToString(),
+                            Title = row["Title"].ToString(),
+                            URL = row["url"].ToString(),
+                            IsActive = bool.Parse(row["IsActive"].ToString())
+                        }).ToList();
+            }
+            return SearchList;
+        }
     }
 }
