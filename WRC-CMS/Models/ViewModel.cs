@@ -17,10 +17,18 @@ namespace WRC_CMS.Models
 
         public List<ContentStyleModel> Contents { get; set; }
 
-        public List<SiteModel> Site { get; set; }       
+        public List<SiteModel> Site { get; set; }
         [Required(ErrorMessage = "Site is required.")]
         [StringLength(100, ErrorMessage = "Site cannot be longer than 100 characters.")]
         [Display(Name = "Site")]
         public string SelectSite { get; set; }
+    }
+
+    public class CombineModel
+    {
+        public List<ViewModel> views { get; set; }
+        public ViewModel NewView { get; set; }
+        public string SiteName { get; set; }
+        public int ID { get; set; }
     }
 }

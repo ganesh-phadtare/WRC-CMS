@@ -139,7 +139,7 @@ namespace WRC_CMS.Repository
                             IsAuth = bool.Parse(row["IsAuth"].ToString()),
                             CreateMenu = bool.Parse(row["IsMenu"].ToString()),
                             SiteID = row["Site"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["Site"].ToString()),
-                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Site"].ToString())).Name
+                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Site"].ToString())).Title
                         }).ToList();
             }
             return ViewList;
@@ -192,11 +192,11 @@ namespace WRC_CMS.Repository
             return Menus;
         }
 
-        public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy,string viewObject)
+        public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy, string viewObject)
         {
             List<SiteModel> SearchList = new List<SiteModel>();
             Dictionary<string, object> dicParams = new Dictionary<string, object>();
-            dicParams.Add("@Name", viewObject );
+            dicParams.Add("@Name", viewObject);
 
             var dataSet = await proxy.ExecuteDataset("SP_GetSearchList", dicParams);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
