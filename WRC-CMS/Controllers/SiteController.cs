@@ -218,19 +218,26 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditSiteDetails(int id)
+        public async Task<ActionResult> EditSiteDetails(int id, int tid=0)
         {
             ModelState.Clear();
-            List<SiteModel> sites = new List<SiteModel>();                      
-            await Task.Run(() =>
-            {
-                sites.AddRange(BORepository.GetSelectedSites(proxy, id).Result);
-            });
-            CombineSiteModel siteObject = new CombineSiteModel();
-            siteObject.SiteList = sites;
-            siteObject.SiteView = new SiteModel();
 
-            return View("AddSite1", siteObject);
+            if (tid !=0)
+            {
+                List<SiteModel> sites = new List<SiteModel>();
+                await Task.Run(() =>
+                {
+                    sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                });
+                CombineSiteModel siteObject = new CombineSiteModel();
+                siteObject.SiteView = sites.FirstOrDefault(site => site.Oid == id);
+                siteObject.SiteList = sites;
+                return View("AddSite1", siteObject);
+            }
+            else
+            {
+                return RedirectToAction("GetAllSite");
+            }
         }
 
         public ActionResult DeleteSite(int id)
@@ -256,7 +263,7 @@ namespace WRC_CMS.Controllers
             await Task.Run(() =>
             {
                 sites.AddRange(BORepository.GetAllSites(proxy).Result);
-            });           
+            });
             return View("GetSitesDetails", sites);
         }
 
@@ -272,26 +279,28 @@ namespace WRC_CMS.Controllers
             CombineSiteModel siteObject = new CombineSiteModel();
             siteObject.SiteList = sites;
             siteObject.SiteView = new SiteModel();
-
             return View("AddSite1", siteObject);
         }
 
-        public async Task<ActionResult> CreateSite(string Name, string URL, string Title, string IsActive,object Logo)
+        public async Task<ActionResult> CreateSite(int Oid, string Name, string URL, string Title, string IsActive, object Logo)
         {
+            if (Oid == 0)
+                Oid = -1;
+
             if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
                 return RedirectToAction("GetAllSite");
-                  try
+            try
             {
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", -1);
+                    dicParams.Add("@Oid", Oid);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@url", URL);
                     dicParams.Add("@Logo", 0101);
                     dicParams.Add("@Title", Title);
                     dicParams.Add("@IsActive", 1);
-                  
+
                     DataSet dataSet = null;
                     await Task.Run(() =>
                     {
@@ -343,6 +352,17 @@ namespace WRC_CMS.Controllers
                         ViewBag.Message = "Site added successfully.";
                     else
                         ViewBag.Message = "Problem occured while creating site, kindly contact our support team.";
+
+                    List<SiteModel> sites = new List<SiteModel>();
+                    await Task.Run(() =>
+                    {
+                        sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                    });
+
+                    CombineSiteModel siteObject = new CombineSiteModel();
+                    siteObject.SiteList = sites;                   
+                    siteObject.SiteView = new SiteModel();
+                    return View("AddSite1", siteObject);
                 }
 
                 return View();
@@ -352,37 +372,5 @@ namespace WRC_CMS.Controllers
                 return View();
             }
         }
-
-        //public ActionResult EditSite(string Name, string URL, string Title, string IsActive, object Logo)
-        //{
-        //    try
-        //    {
-        //        if (file != null && file.ContentLength > 0)
-        //        {
-        //            SiteObject.Logo = new byte[file.ContentLength];
-        //            file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
-        //        }
-        //        if (ModelState.IsValid)
-        //        {
-        //            Dictionary<string, object> dicParams = new Dictionary<string, object>();
-        //            dicParams.Add("@Oid", SiteObject.Oid);
-        //            dicParams.Add("@Name", SiteObject.Name);
-        //            dicParams.Add("@url", SiteObject.URL);
-        //            dicParams.Add("@Logo", 0101);
-        //            dicParams.Add("@Title", SiteObject.Title);
-        //            if (SiteObject.IsActive)
-        //                dicParams.Add("@IsActive", "1");
-        //            else
-        //                dicParams.Add("@IsActive", "0");
-        //            proxy.ExecuteNonQuery("SP_SiteAddUp", dicParams);
-        //            return RedirectToAction("GetAllSitesDetails");
-        //        }
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
     }
 }
