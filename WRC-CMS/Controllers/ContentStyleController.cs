@@ -9,6 +9,7 @@ using WRC_CMS.Communication;
 using WRC_CMS.Models;
 using WRC_CMS.Repository;
 using System.Linq;
+using HtmlAgilityPack;
 
 namespace WRC_CMS.Controllers
 {
@@ -37,6 +38,8 @@ namespace WRC_CMS.Controllers
                 {
                     if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
                         ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
+
+                    ContentStyleModelObject.Description = RepairLinks(ContentStyleModelObject.Description);
 
                     int ContentStyleID = 0;
                     await Task.Run(() =>
@@ -95,7 +98,7 @@ namespace WRC_CMS.Controllers
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", ContentStyleModelObject.Oid);
                     dicParams.Add("@Name", ContentStyleModelObject.Name);
-                    dicParams.Add("@Descr", ContentStyleModelObject.Description);
+                    dicParams.Add("@Descr", RepairLinks(ContentStyleModelObject.Description));
                     dicParams.Add("@View", ContentStyleModelObject.ViewID);
                     if (ContentStyleModelObject.IsActive)
                         dicParams.Add("@IsActive", "1");
@@ -111,6 +114,35 @@ namespace WRC_CMS.Controllers
             {
                 return View();
             }
+        }
+        string RepairLinks(string value)
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(value);
+
+            int i = doc.DocumentNode.SelectNodes("//a[@href]").Count;
+            foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
+            {
+                HtmlAttribute att = link.Attributes["href"];
+                att.Value = FixLink(att);
+            }
+
+            System.IO.StringWriter srw = new System.IO.StringWriter();
+            doc.Save(srw as System.IO.TextWriter);
+
+            if (srw != null)
+                return srw.ToString();
+
+            return value;
+        }
+
+        public string FixLink(HtmlAttribute att)
+        {
+            if (!string.IsNullOrEmpty(att.Value) && !att.Value.StartsWith(AppKeys.DefaultRespondURL))
+            {
+                return string.Concat(AppKeys.DefaultRespondURL, att.Value);
+            }
+            return att.Value;
         }
 
         public ActionResult DeleteContent(int id, bool IsDefault)

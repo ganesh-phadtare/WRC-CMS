@@ -1,3 +1,18 @@
-﻿@{
+﻿@*@{
+        var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+        string cLayout = "";
+        if (controller == "Dashboard")
+        {
+            cLayout = "~/Views/Shared/_Layout.cshtml";
+        }
+        else
+        {
+            cLayout = "~/Views/Shared/PageLayout.cshtml";
+        }
+        Layout = cLayout;
+    }*@
+
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
