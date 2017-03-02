@@ -300,7 +300,7 @@
                     <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="">
                         <i aria-hidden="true" class="fa fa-bars"></i>
                     </a>
-                </sidenav-button>               
+                </sidenav-button>
                 <h5 class="header-title">
                     <a href=""><img class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
                 </h5>
@@ -330,7 +330,7 @@
                         <div class="col  m2">
                             @using (Html.BeginForm("Index", "Dashboard", FormMethod.Post))
                             {
-                                <input id="Name" type="text" value="" style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" />
+                                <input id="Name" type="text" value="" style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" title="Enter Site Title" />
                             }
                         </div>
                     </div>
@@ -338,14 +338,14 @@
                             <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
                         </div>*@
                     <div class="col  m6">
-                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" />
+                        <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" title="Search Site Title" />
                         @*<input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />*@
                         @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
                         @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
                     </div>
                     <div class="data-footer">
                         <div class="btn-flat">
-                            @Html.ActionLink("Create/Edit Site", "GetAllSite", "Site")
+                            @Html.ActionLink("Create / Edit Site", "GetAllSite", "Site")
                         </div>
                         @*<a class="btn-flat" href="#/my/profile/professional">Create New</a>*@
                     </div>
@@ -423,23 +423,23 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#submit').unbind('click');
-            $('#submit').on('click', function () {
-                //alert($("#Name").val());
-                $.ajax({
-                    url: "/Dashboard/Index",
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        viewObject: $("#Name").val()
-                    }),
-                    async: false
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#submit').unbind('click');
+                $('#submit').on('click', function () {
+                    //alert($("#Name").val());
+                    $.ajax({
+                        url: "/Dashboard/Index",
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            viewObject: $("#Name").val()
+                        }),
+                        async: false
+                    });
+                    //$('#Index').load(url, { searchText: $("#Name").val() });
                 });
-                //$('#Index').load(url, { searchText: $("#Name").val() });
-            });
-        });*@
+            });*@
     </script>
 }

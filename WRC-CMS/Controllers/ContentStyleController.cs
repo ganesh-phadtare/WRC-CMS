@@ -201,5 +201,23 @@ namespace WRC_CMS.Controllers
                         SelectView = Sites.FirstOrDefault(sit => sit.Oid == Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).SiteID).Name + " - " + Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name,
                     }).ToList();
         }
+
+        public async Task<ActionResult> GetContentPage(int ViewId=0)
+        {
+            ModelState.Clear();
+            List<ContentStyleModel> contents = new List<ContentStyleModel>();
+            await Task.Run(() =>
+            {
+                contents.AddRange(GetAllContents().Result);
+            });
+            CombineContentModel combineContentModel = new CombineContentModel();
+            combineContentModel.ContentView = new ContentStyleModel();
+            combineContentModel.ContentList = contents;
+
+            if (contents.Count > 0)
+                combineContentModel.SelectView = contents[0].SelectView;
+
+            return View("ContentPanel", combineContentModel);          
+        }
     }
 }
