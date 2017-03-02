@@ -27,11 +27,14 @@ namespace WRC_CMS.Controllers
             return View(ViewObject);
         }
 
-        public async Task<ActionResult> Test(string Name, string URL, string Title, string IsActive, string IsDem, string IsAuth, string CreateMenu, object Logo)
+        public async Task<ActionResult> Test(string Name, string URL, string Title, string IsActive, string IsDem, string IsAuth, string CreateMenu, object Logo, int Oid, int SiteID)
         {
             if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
                 return RedirectToAction("GetAllViewDetails");
+
             ViewModel ViewObject = new ViewModel();
+            if (Oid > 0)
+                ViewObject.Oid = Oid;
             ViewObject.Name = Name.ToString();
             ViewObject.URL = URL.ToString();
             ViewObject.Title = Title.ToString();
@@ -39,7 +42,7 @@ namespace WRC_CMS.Controllers
             ViewObject.IsDem = Convert.ToBoolean(IsDem);
             ViewObject.IsAuth = Convert.ToBoolean(IsAuth);
             ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
-            ViewObject.SiteID = 2078;
+            ViewObject.SiteID = SiteID;
             try
             {
                 //if (file != null && file.ContentLength > 0)
@@ -50,18 +53,35 @@ namespace WRC_CMS.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
-                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
                     int ViewID = 0;
+
                     await Task.Run(() =>
                     {
-                        ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                        if (Oid == 0)
+                            ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
+                        else
+                            ViewID = BORepository.AddView(proxy, ViewObject, false).Result;
                     });
                     if (ViewID > 0)
                         ViewBag.Message = "View added successfully.";
                     else
                         ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
-                    return RedirectToAction("GetAllViewDetails");
+
+                    List<ViewModel> views = new List<ViewModel>();
+                    await Task.Run(() =>
+                    {
+                        views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
+                    });
+                    CombineModel com = new CombineModel();
+                    com.NewView = new ViewModel();
+                    com.views = views;
+                    if (views.Count > 0)
+                    {
+                        com.SiteName = views[0].SelectSite;
+                        com.SiteID = views[0].SiteID;
+                    }
+                    return View("ViewsLV", com);
+
                 }
 
                 return View();
@@ -140,37 +160,74 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditViewDetails(int id)
+        public async Task<ActionResult> EditViewDetails(int ViewID = 0, int SiteID = 0)
         {
-            List<ViewModel> views = new List<ViewModel>();
-            await Task.Run(() =>
+            //List<ViewModel> views = new List<ViewModel>();
+            //await Task.Run(() =>
+            //{
+            //    views.AddRange(BORepository.GetAllViews(proxy).Result);
+            //});
+            //if (views != null && views.Count > 0)
+            //{
+            //    ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
+            //    if (objetc != null)
+            //    {
+            //        await Task.Run(() =>
+            //        {
+            //            objetc.Site = BORepository.GetAllSites(proxy).Result;
+            //        });
+            //        objetc.SelectSite = objetc.SiteID.ToString();
+            //    }
+            //    return View(objetc);
+            //}
+            //return View();
+            if (ViewID != 0)
             {
-                views.AddRange(BORepository.GetAllViews(proxy).Result);
-            });
-            if (views != null && views.Count > 0)
-            {
-                ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
-                if (objetc != null)
+                List<ViewModel> views = new List<ViewModel>();
+                await Task.Run(() =>
                 {
-                    await Task.Run(() =>
-                    {
-                        objetc.Site = BORepository.GetAllSites(proxy).Result;
-                    });
-                    objetc.SelectSite = objetc.SiteID.ToString();
+                    views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
+                });
+                CombineModel com = new CombineModel();
+                com.NewView = views.FirstOrDefault(view => view.Oid == ViewID);
+                com.views = views;
+                if (views.Count > 0)
+                {
+                    com.SiteName = views[0].SelectSite;
+                    com.SiteID = views[0].SiteID;
                 }
-                return View(objetc);
+                return View("ViewsLV", com);
             }
-            return View();
+            else
+            {
+                return RedirectToAction("GetAllViewDetails", new { id = SiteID });
+            }
         }
 
-        public ActionResult DeleteView(int id)
+        public async Task<ActionResult> DeleteView(int id, int SiteID)
         {
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
                 dicParams.Add("@Oid", id);
                 proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
-                return RedirectToAction("GetAllViewDetails");
+
+                ModelState.Clear();
+                List<ViewModel> views = new List<ViewModel>();
+                await Task.Run(() =>
+                {
+                    views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
+                });
+                CombineModel com = new CombineModel();
+                com.NewView = new ViewModel();
+                com.views = views;
+                if (views.Count > 0)
+                {
+                    com.SiteName = views[0].SelectSite;
+                    com.SiteID = views[0].SiteID;
+                }
+                return View("ViewsLV", com);
+
             }
             catch
             {
@@ -192,7 +249,7 @@ namespace WRC_CMS.Controllers
             if (views.Count > 0)
             {
                 com.SiteName = views[0].SelectSite;
-                com.ID = views[0].SiteID;
+                com.SiteID = views[0].SiteID;
             }
             return View("ViewsLV", com);
         }

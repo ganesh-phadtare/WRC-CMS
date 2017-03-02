@@ -29,6 +29,6 @@ namespace WRC_CMS.Models
         public List<ViewModel> views { get; set; }
         public ViewModel NewView { get; set; }
         public string SiteName { get; set; }
-        public int ID { get; set; }
+        public int SiteID { get; set; }
     }
 }
