@@ -72,86 +72,16 @@ namespace WRC_CMS.Controllers
                     {
                         views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
                     });
-                    CombineModel com = new CombineModel();
-                    com.NewView = new ViewModel();
-                    com.views = views;
-                    if (views.Count > 0)
-                    {
-                        com.SiteName = views[0].SelectSite;
-                        com.SiteID = views[0].SiteID;
-                    }
-                    return View("ViewsLV", com);
 
-                }
-
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-
-        [HttpPost]
-        public async Task<ActionResult> AddView(ViewModel ViewObject, HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file != null && file.ContentLength > 0)
-                {
-                    ViewObject.Logo = new byte[file.ContentLength];
-                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
-                }
-
-                if (ModelState.IsValid)
-                {
-                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
-                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
-                    int ViewID = 0;
-                    await Task.Run(() =>
-                           {
-                               ViewID = BORepository.AddView(proxy, ViewObject, true).Result;
-                           });
-                    if (ViewID > 0)
-                        ViewBag.Message = "View added successfully.";
-                    else
-                        ViewBag.Message = "Problem occured while adding view, kindly contact our support team.";
-                    return RedirectToAction("GetAllViewDetails");
-                }
-
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        [HttpPost]
-        public async Task<ActionResult> EditViewDetails(ViewModel ViewObject, HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file != null && file.ContentLength > 0)
-                {
-                    ViewObject.Logo = new byte[file.ContentLength];
-                    file.InputStream.Read(ViewObject.Logo, 0, file.ContentLength);
-                }
-                if (ModelState.IsValid)
-                {
-                    if (!string.IsNullOrEmpty(ViewObject.SelectSite))
-                        ViewObject.SiteID = Convert.ToInt32(ViewObject.SelectSite.ToString());
-                    int ViewID = 0;
+                    ActionResult MainView = null;
                     await Task.Run(() =>
                     {
-                        ViewID = BORepository.AddView(proxy, ViewObject).Result;
+                        MainView = ReturnToMainView(SiteID).Result;
                     });
-                    if (ViewID > 0)
-                        return RedirectToAction("GetAllViewDetails");
+                    return MainView;
+
                 }
+
                 return View();
             }
             catch
@@ -162,25 +92,6 @@ namespace WRC_CMS.Controllers
 
         public async Task<ActionResult> EditViewDetails(int ViewID = 0, int SiteID = 0)
         {
-            //List<ViewModel> views = new List<ViewModel>();
-            //await Task.Run(() =>
-            //{
-            //    views.AddRange(BORepository.GetAllViews(proxy).Result);
-            //});
-            //if (views != null && views.Count > 0)
-            //{
-            //    ViewModel objetc = views.FirstOrDefault(item => item.Oid == id);
-            //    if (objetc != null)
-            //    {
-            //        await Task.Run(() =>
-            //        {
-            //            objetc.Site = BORepository.GetAllSites(proxy).Result;
-            //        });
-            //        objetc.SelectSite = objetc.SiteID.ToString();
-            //    }
-            //    return View(objetc);
-            //}
-            //return View();
             if (ViewID != 0)
             {
                 List<ViewModel> views = new List<ViewModel>();
@@ -218,15 +129,12 @@ namespace WRC_CMS.Controllers
                 {
                     views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
                 });
-                CombineModel com = new CombineModel();
-                com.NewView = new ViewModel();
-                com.views = views;
-                if (views.Count > 0)
+                ActionResult View = null;
+                await Task.Run(() =>
                 {
-                    com.SiteName = views[0].SelectSite;
-                    com.SiteID = views[0].SiteID;
-                }
-                return View("ViewsLV", com);
+                    View = ReturnToMainView(SiteID).Result;
+                });
+                return View;
 
             }
             catch
@@ -235,7 +143,7 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> GetAllViewDetails(int id)
+        public async Task<ActionResult> ReturnToMainView(int id)
         {
             ModelState.Clear();
             List<ViewModel> views = new List<ViewModel>();
@@ -252,6 +160,16 @@ namespace WRC_CMS.Controllers
                 com.SiteID = views[0].SiteID;
             }
             return View("ViewsLV", com);
+        }
+
+        public async Task<ActionResult> GetAllViewDetails(int id)
+        {
+            ActionResult View = null;
+            await Task.Run(() =>
+             {
+                 View = ReturnToMainView(id).Result;
+             });
+            return View;
         }
     }
 }

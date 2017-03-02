@@ -408,7 +408,9 @@
                                         <div _ngcontent-xlf-80="" class="col s12 padding-zero">
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
-                                                    <h4 _ngcontent-xlf-80="">Create View</h4>
+                                                    <h4 _ngcontent-xlf-80="">
+                                                        @Html.ActionLink("Create View", "GetAllViewDetails", new { id = @Model.SiteID })
+                                                    </h4>
 
                                                 </div>
                                                 <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
@@ -834,7 +836,6 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    alert(document.getElementById("NewView_IsActive").value);
                     document.getElementById("NewView_Name").value = "";
                     document.getElementById("NewView_URL").value = "";
                     document.getElementById("NewView_Title").value = "";
