@@ -178,17 +178,22 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> GetAllViewDetails()
+        public async Task<ActionResult> GetAllViewDetails(int id)
         {
             ModelState.Clear();
             List<ViewModel> views = new List<ViewModel>();
             await Task.Run(() =>
             {
-                views.AddRange(BORepository.GetAllViews(proxy).Result);
+                views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == id));
             });
             CombineModel com = new CombineModel();
             com.NewView = new ViewModel();
             com.views = views;
+            if (views.Count > 0)
+            {
+                com.SiteName = views[0].SelectSite;
+                com.ID = views[0].SiteID;
+            }
             return View("ViewsLV", com);
         }
     }
