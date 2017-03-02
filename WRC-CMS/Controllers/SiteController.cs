@@ -218,21 +218,26 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditSiteDetails(int id)
+        public async Task<ActionResult> EditSiteDetails(int id, int tid=0)
         {
             ModelState.Clear();
-            List<SiteModel> sites = new List<SiteModel>();
-            List<SiteModel> sites1 = new List<SiteModel>();
-            await Task.Run(() =>
+
+            if (tid !=0)
             {
-                sites.AddRange(BORepository.GetSelectedSites(proxy, id).Result);
-                sites1.AddRange(BORepository.GetAllSites(proxy).Result);
-            });
-            CombineSiteModel siteObject = new CombineSiteModel();
-            siteObject.SiteList = sites1;
-            siteObject.SiteEditList = sites;
-            siteObject.SiteView = new ViewModel();
-            return View("AddSite1", siteObject);
+                List<SiteModel> sites = new List<SiteModel>();
+                await Task.Run(() =>
+                {
+                    sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                });
+                CombineSiteModel siteObject = new CombineSiteModel();
+                siteObject.SiteView = sites.FirstOrDefault(site => site.Oid == id);
+                siteObject.SiteList = sites;
+                return View("AddSite1", siteObject);
+            }
+            else
+            {
+                return RedirectToAction("GetAllSite");
+            }
         }
 
         public ActionResult DeleteSite(int id)
@@ -273,20 +278,18 @@ namespace WRC_CMS.Controllers
 
             CombineSiteModel siteObject = new CombineSiteModel();
             siteObject.SiteList = sites;
-            siteObject.SiteEditList = null;
-            siteObject.SiteView = new ViewModel();
-
+            siteObject.SiteView = new SiteModel();
             return View("AddSite1", siteObject);
         }
 
         public async Task<ActionResult> CreateSite(int Oid, string Name, string URL, string Title, string IsActive, object Logo)
         {
-            if (Oid ==0)
-             Oid=-1;
+            if (Oid == 0)
+                Oid = -1;
 
             if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
                 return RedirectToAction("GetAllSite");
-                  try
+            try
             {
                 if (ModelState.IsValid)
                 {
@@ -297,7 +300,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Logo", 0101);
                     dicParams.Add("@Title", Title);
                     dicParams.Add("@IsActive", 1);
-                  
+
                     DataSet dataSet = null;
                     await Task.Run(() =>
                     {
@@ -349,6 +352,17 @@ namespace WRC_CMS.Controllers
                         ViewBag.Message = "Site added successfully.";
                     else
                         ViewBag.Message = "Problem occured while creating site, kindly contact our support team.";
+
+                    List<SiteModel> sites = new List<SiteModel>();
+                    await Task.Run(() =>
+                    {
+                        sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                    });
+
+                    CombineSiteModel siteObject = new CombineSiteModel();
+                    siteObject.SiteList = sites;                   
+                    siteObject.SiteView = new SiteModel();
+                    return View("AddSite1", siteObject);
                 }
 
                 return View();
@@ -358,44 +372,5 @@ namespace WRC_CMS.Controllers
                 return View();
             }
         }
-
-        //public async Task<ActionResult> EditSiteDetails(int SiteID = 0)
-        //{
-        //    ModelState.Clear();
-        //    List<SiteModel> sites = new List<SiteModel>();
-        //    List<SiteModel> sites1 = new List<SiteModel>();
-        //    await Task.Run(() =>
-        //    {
-        //        sites.AddRange(BORepository.GetSelectedSites(proxy, id).Result);
-        //        sites1.AddRange(BORepository.GetAllSites(proxy).Result);
-        //    });
-        //    CombineSiteModel siteObject = new CombineSiteModel();
-        //    siteObject.SiteList = sites1;
-        //    siteObject.SiteEditList = sites;
-        //    siteObject.SiteView = new ViewModel();
-        //    return View("AddSite1", siteObject);
-
-        //    if (SiteID != 0)
-        //    {
-        //        List<SiteModel> sites = new List<SiteModel>();
-        //        await Task.Run(() =>
-        //        {
-        //            sites.AddRange(BORepository.GetAllSites(proxy).Result.Where(item => item.Oid == SiteID));
-        //        });
-        //        CombineSiteModel com = new CombineSiteModel();
-        //        com.SiteView = sites.FirstOrDefault(site => site.Oid == SiteID);
-        //        com.SiteList = sites;
-        //        if (sites.Count > 0)
-        //        {
-        //            com.SiteName = sites[0].SelectSite;
-        //            com.SiteID = sites[0].SiteID;
-        //        }
-        //        return View("ViewsLV", com);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("GetAllViewDetails", new { id = SiteID });
-        //    }
-        //}
     }
 }

@@ -8,20 +8,14 @@ namespace WRC_CMS.Models
 {
     public class SiteModel : BaseModel
     {  
-        //[Display(Name = "Site")]
-        //public string SelectSite { get; set; }
-
-        public List<ViewModel> ViewList { get; set; }
-        //public ViewModel SiteView { get; set; }
+        //[Display(Name = "Site")]       
+        public List<ViewModel> ViewList { get; set; }     
     }
 
     public class CombineSiteModel
     {
-        public List<SiteModel> SiteList { get; set; }
-        public List<SiteModel> SiteEditList { get; set; }
-        public ViewModel SiteView { get; set; }
-        //public string SiteName { get; set; }
-        //public int SiteID { get; set; }
+        public List<SiteModel> SiteList { get; set; }       
+        public SiteModel SiteView { get; set; }
     }
    
 }

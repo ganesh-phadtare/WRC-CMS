@@ -474,113 +474,60 @@
                                                                                             @Html.ValidationSummary(true)
 
                                                                                             @*<div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
+                                                                                                    @Html.LabelFor(model => model.SiteView.SelectSite, new { @class = "control-label col-md-2" })
                                                                                                     <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
-                                                                                                        @Html.ValidationMessageFor(model => model.SelectSite)
+                                                                                                        @Html.DropDownListFor(model => model.SiteView.SelectSite, new SelectList(Model.SiteView., "Oid", "Name", null))
+                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.SelectSite)
                                                                                                     </div>
                                                                                                 </div>*@
-                                                                                            @if (Model.SiteEditList != null)
-                                                                                            {
-                                                                                                foreach (var item in Model.SiteEditList)
-                                                                                                {
+                                                                                           
                                                                                                     <div class="form-group" hidden="hidden">
-                                                                                                        @Html.LabelFor(model => item.Oid, new { @class = "control-label col-md-2" })
+                                                                                                        @Html.LabelFor(model => model.SiteView.Oid, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.EditorFor(model => item.Oid)
+                                                                                                            @Html.EditorFor(model => model.SiteView.Oid)
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="form-group">
-                                                                                                        @Html.LabelFor(model => item.Name, new { @class = "control-label col-md-2" })
+                                                                                                        @Html.LabelFor(model => model.SiteView.Name, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.EditorFor(model => item.Name)
-                                                                                                            @Html.ValidationMessageFor(model => item.Name)
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                    <div class="form-group">
-                                                                                                        @Html.LabelFor(model => item.URL, new { @class = "control-label col-md-2" })
-                                                                                                        <div class="col-md-10">
-                                                                                                            @Html.EditorFor(model => item.URL)
-                                                                                                            @Html.ValidationMessageFor(model => item.URL)
+                                                                                                            @Html.EditorFor(model => model.SiteView.Name)
+                                                                                                            @Html.ValidationMessageFor(model => model.SiteView.Name)
                                                                                                         </div>
                                                                                                     </div>
 
                                                                                                     <div class="form-group">
-                                                                                                        @Html.LabelFor(model => item.Title, new { @class = "control-label col-md-2" })
+                                                                                                        @Html.LabelFor(model => model.SiteView.URL, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.EditorFor(model => item.Title)
-                                                                                                            @Html.ValidationMessageFor(model => item.Title)
+                                                                                                            @Html.EditorFor(model => model.SiteView.URL)
+                                                                                                            @Html.ValidationMessageFor(model => model.SiteView.URL)
                                                                                                         </div>
                                                                                                     </div>
 
                                                                                                     <div class="form-group">
-                                                                                                        @Html.LabelFor(model => item.Logo, new { @class = "control-label col-md-2" })
+                                                                                                        @Html.LabelFor(model => model.SiteView.Title, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.TextBoxFor(model => item.Logo, new { type = "file" })
+                                                                                                            @Html.EditorFor(model => model.SiteView.Title)
+                                                                                                            @Html.ValidationMessageFor(model => model.SiteView.Title)
+                                                                                                        </div>
+                                                                                                    </div>
+
+                                                                                                    <div class="form-group">
+                                                                                                        @Html.LabelFor(model => model.SiteView.Logo, new { @class = "control-label col-md-2" })
+                                                                                                        <div class="col-md-10">
+                                                                                                            @Html.TextBoxFor(model => model.SiteView.Logo, new { type = "file" })
                                                                                                             @*<input type="file" name="file" />*@
-                                                                                                            @Html.ValidationMessageFor(model => item.Logo)
+                                                                                                            @Html.ValidationMessageFor(model => model.SiteView.Logo)
                                                                                                         </div>
                                                                                                     </div>
 
                                                                                                     <div class="form-group">
-                                                                                                        @Html.LabelFor(model => item.IsActive, new { @class = "control-label col-md-2" })
+                                                                                                        @Html.LabelFor(model => model.SiteView.IsActive, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.EditorFor(model => item.IsActive)
-                                                                                                            @Html.ValidationMessageFor(model => item.IsActive)
+                                                                                                            @Html.EditorFor(model => model.SiteView.IsActive)
+                                                                                                            @Html.ValidationMessageFor(model => model.SiteView.IsActive)
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                }
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <div class="form-group" hidden="hidden">
-                                                                                                    @Html.LabelFor(model => model.SiteView.Oid, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.SiteView.Oid)
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SiteView.Name, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.SiteView.Name)
-                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.Name)
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SiteView.URL, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.SiteView.URL)
-                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.URL)
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SiteView.Title, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.SiteView.Title)
-                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.Title)
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SiteView.Logo, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.TextBoxFor(model => model.SiteView.Logo, new { type = "file" })
-                                                                                                        @*<input type="file" name="file" />*@
-                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.Logo)
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SiteView.IsActive, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.SiteView.IsActive)
-                                                                                                        @Html.ValidationMessageFor(model => model.SiteView.IsActive)
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            }
+                                                                                              
                                                                                             <div class="form-group">
                                                                                                 <div class="col-md-offset-2 col-md-10">
                                                                                                     <input type="submit" value="Create" class="btn btn-default" id="Submit" />
@@ -670,17 +617,8 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.IsDem)
-                                                                                </td>
-                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.IsAuth)
-                                                                                </td>*@
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.CreateMenu)
-                                                                                </td>*@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditSiteDetails", new { id = item.Oid }) |
+                                                                                @Html.ActionLink("Edit", "EditSiteDetails", new { id = item.Oid, tid = 1 }) |
                                                                                 @Html.ActionLink("Delete", "DeleteSite", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
