@@ -7,25 +7,18 @@ using System.Web;
 namespace WRC_CMS.Models
 {
     public class SiteModel : BaseModel
+    {  
+        //[Display(Name = "Site")]
+        //public string SelectSite { get; set; }
+
+        public List<ViewModel> ViewList { get; set; }
+        //public ViewModel SiteView { get; set; }
+    }
+
+    public class CombineSiteModel
     {
-        ////[Display(Name = "ID")]
-        ////public int Empid { get; set; }
-
-        //[Required(ErrorMessage = "Name is required.")]
-        //public string Name { get; set; }
-
-        //[Required(ErrorMessage = "URL is required.")]
-        //public string URL { get; set; }
-
-        ////[Required(ErrorMessage = "Address is required.")]
-        ////public string Logo { get; set; }  
-
-        //[Required(ErrorMessage = "Titile is required.")]
-        //public string Title { get; set; }
-
-        //public bool IsActive { get; set; }
-
-        public List<ViewModel> ViewList { get; set; }    
+        public List<SiteModel> SiteList { get; set; }
+        public SiteModel SiteView { get; set; }
     }
    
 }

@@ -220,17 +220,17 @@ namespace WRC_CMS.Controllers
 
         public async Task<ActionResult> EditSiteDetails(int id)
         {
-            List<SiteModel> sites = new List<SiteModel>();
+            ModelState.Clear();
+            List<SiteModel> sites = new List<SiteModel>();                      
             await Task.Run(() =>
             {
-                sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                sites.AddRange(BORepository.GetSelectedSites(proxy, id).Result);
             });
-            if (sites != null && sites.Count > 0)
-            {
-                SiteModel objetc = sites.FirstOrDefault(item => item.Oid == id);
-                return View(objetc);
-            }
-            return View();
+            CombineSiteModel siteObject = new CombineSiteModel();
+            siteObject.SiteList = sites;
+            siteObject.SiteView = new SiteModel();
+
+            return View("AddSite1", siteObject);
         }
 
         public ActionResult DeleteSite(int id)
@@ -240,7 +240,8 @@ namespace WRC_CMS.Controllers
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
                 dicParams.Add("@Oid", id);
                 proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
-                return RedirectToAction("GetAllSitesDetails");
+                //return RedirectToAction("GetAllSitesDetails");
+                return RedirectToAction("GetAllSite");
             }
             catch
             {
@@ -258,5 +259,130 @@ namespace WRC_CMS.Controllers
             });           
             return View("GetSitesDetails", sites);
         }
+
+        public async Task<ActionResult> GetAllSite()
+        {
+            ModelState.Clear();
+            List<SiteModel> sites = new List<SiteModel>();
+            await Task.Run(() =>
+            {
+                sites.AddRange(BORepository.GetAllSites(proxy).Result);
+            });
+
+            CombineSiteModel siteObject = new CombineSiteModel();
+            siteObject.SiteList = sites;
+            siteObject.SiteView = new SiteModel();
+
+            return View("AddSite1", siteObject);
+        }
+
+        public async Task<ActionResult> CreateSite(string Name, string URL, string Title, string IsActive,object Logo)
+        {
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
+                return RedirectToAction("GetAllSite");
+                  try
+            {
+                if (ModelState.IsValid)
+                {
+                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    dicParams.Add("@Oid", -1);
+                    dicParams.Add("@Name", Name);
+                    dicParams.Add("@url", URL);
+                    dicParams.Add("@Logo", 0101);
+                    dicParams.Add("@Title", Title);
+                    dicParams.Add("@IsActive", 1);
+                  
+                    DataSet dataSet = null;
+                    await Task.Run(() =>
+                    {
+                        dataSet = proxy.ExecuteDataset("SP_SiteAddUp", dicParams).Result;
+                    });
+
+                    int SiteID = 0;
+                    if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+                    {
+                        if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                        {
+                            SiteID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+
+                            ViewModel DefaultView = new ViewModel();
+                            DefaultView.Name = "Home";
+                            DefaultView.URL = "Home";
+                            DefaultView.Title = "Home";
+                            DefaultView.IsActive = true;
+                            DefaultView.IsDem = true;
+                            DefaultView.IsAuth = true;
+                            DefaultView.SiteID = SiteID;
+                            DefaultView.CreateMenu = true;
+                            DefaultView.IsDefault = true;
+                            int ViewID = 0;
+                            await Task.Run(() =>
+                            {
+                                ViewID = BORepository.AddView(proxy, DefaultView, true).Result;
+                            });
+                            if (ViewID > 0)
+                            {
+                                ContentStyleModel DefaultContent = new ContentStyleModel();
+                                DefaultContent.Name = "Welcome";
+                                string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
+<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
+                                DefaultContent.Description = welcomebody;
+
+                                DefaultContent.IsActive = true;
+                                DefaultContent.ViewID = ViewID;
+                                DefaultContent.IsDefault = true;
+                                int ContentID = 0;
+                                await Task.Run(() =>
+                                {
+                                    ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
+                                });
+                            }
+                        }
+                    }
+                    if (SiteID != 0)
+                        ViewBag.Message = "Site added successfully.";
+                    else
+                        ViewBag.Message = "Problem occured while creating site, kindly contact our support team.";
+                }
+
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //public ActionResult EditSite(string Name, string URL, string Title, string IsActive, object Logo)
+        //{
+        //    try
+        //    {
+        //        if (file != null && file.ContentLength > 0)
+        //        {
+        //            SiteObject.Logo = new byte[file.ContentLength];
+        //            file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
+        //        }
+        //        if (ModelState.IsValid)
+        //        {
+        //            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //            dicParams.Add("@Oid", SiteObject.Oid);
+        //            dicParams.Add("@Name", SiteObject.Name);
+        //            dicParams.Add("@url", SiteObject.URL);
+        //            dicParams.Add("@Logo", 0101);
+        //            dicParams.Add("@Title", SiteObject.Title);
+        //            if (SiteObject.IsActive)
+        //                dicParams.Add("@IsActive", "1");
+        //            else
+        //                dicParams.Add("@IsActive", "0");
+        //            proxy.ExecuteNonQuery("SP_SiteAddUp", dicParams);
+        //            return RedirectToAction("GetAllSitesDetails");
+        //        }
+        //        return View();
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
