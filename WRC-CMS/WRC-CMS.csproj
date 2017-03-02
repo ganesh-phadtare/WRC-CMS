@@ -546,6 +546,7 @@
     <Content Include="Views\Site\PreviewSite.cshtml" />
     <Content Include="Views\BulkData\BulkData.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\AddView\ViewsLV.cshtml" />
     <Content Include="VW-Refresh_files\analytics.js.download" />
     <Content Include="VW-Refresh_files\Chart.min.js.download" />
     <Content Include="VW-Refresh_files\hammer.min.js.download" />
