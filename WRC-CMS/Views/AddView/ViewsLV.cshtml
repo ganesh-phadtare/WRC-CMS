@@ -29,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/VW-Refresh_files/icon" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="~/VW-Refresh_files/font-awesome.min.css" media="screen,projection">
-    <link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">
+    @*<link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">*@
     <link rel="stylesheet" href="~/VW-Refresh_files/styles.css">
     <link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">
     <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
@@ -529,7 +529,6 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @*@Html.TextBoxFor(model => model.Logo, new { type = "file"} )*@
                                                                                                     <input type="file" name="file" class="text-box single-line" />
                                                                                                     @Html.ValidationMessageFor(model => model.NewView.Logo)
                                                                                                 </div>
@@ -539,7 +538,6 @@
                                                                                                 @Html.LabelFor(model => model.NewView.IsActive, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.IsActive)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.IsActive)
                                                                                                 </div>
                                                                                             </div>
 
@@ -547,8 +545,6 @@
                                                                                                 @Html.LabelFor(model => model.NewView.IsDem, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.IsDem)
-                                                                                                    @*<input type="checkbox" id="IsDemvv" />*@
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.IsDem)
                                                                                                 </div>
                                                                                             </div>
 
@@ -556,7 +552,6 @@
                                                                                                 @Html.LabelFor(model => model.NewView.IsAuth, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.IsAuth)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.IsAuth)
                                                                                                 </div>
                                                                                             </div>
 
@@ -574,7 +569,7 @@
                                                                                                 <div _ngcontent-xlf-80="" class="col s12 m6 leave-action right-align">
                                                                                                     <div class="form-group">
                                                                                                         <div class="col-md-offset-2 col-md-10">
-                                                                                                            <input type="submit" value="Create" class="btn btn-default" id="Submit" />
+                                                                                                            <input type="submit" value="Submit" class="btn btn-default" id="Submit" />
                                                                                                             <a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn reset" id="cancel" title="Cancel">Cancel</a>
                                                                                                         </div>
                                                                                                     </div>
@@ -832,6 +827,7 @@
         @Scripts.Render("~/bundles/jqueryval")
         <script type="text/javascript">
             $(document).ready(function () {
+
                 $('#Submit').unbind('click');
                 $('#cancel').unbind('click');
 
@@ -856,10 +852,10 @@
                             Name: $("#NewView_Name").val(),
                             URL: $("#NewView_URL").val(),
                             Title: $("#NewView_Title").val(),
-                            IsActive: $("#NewView_IsActive").val(),
-                            IsDem: $("#NewView_IsDem").val(),
-                            IsAuth: $("#NewView_IsAuth").val(),
-                            CreateMenu: $("#NewView_CreateMenu").val(),
+                            IsActive: $('#NewView_IsActive').prop("checked"),
+                            IsDem: $('#NewView_IsDem').prop("checked"),
+                            IsAuth: $('#NewView_IsAuth').prop("checked"),
+                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
                             Logo: $("#file").val(),
                             Oid: $("#Oid").val(),
                             SiteID: $("#SiteID").val(),
@@ -875,7 +871,6 @@
                 });
             });
         </script>
-
     }
 </body>
 </html>
