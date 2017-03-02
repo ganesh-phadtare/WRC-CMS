@@ -61,9 +61,9 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditViewDetails", new { id = item.Oid }) |
-                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid }, new { onclick = "return confirm('This will also delete all Contents belongs to this site, Are sure wants to delete?');" })
             </td>
         </tr>
     }
 
-</table>
+</table>k

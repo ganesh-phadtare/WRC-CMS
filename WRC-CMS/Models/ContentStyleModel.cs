@@ -15,6 +15,7 @@ namespace WRC_CMS.Models
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; }
 
+        private string _Description { get; set; }
         [Required(ErrorMessage = "Description is required.")]
         [AllowHtml]
         [UIHint("tinymce_full")]

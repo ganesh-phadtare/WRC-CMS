@@ -42,6 +42,9 @@
     <Reference Include="GZipCompressDecompress">
       <HintPath>AReferences\GZipCompressDecompress.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>AReferences\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MockData">
       <HintPath>AReferences\MockData.dll</HintPath>
@@ -183,6 +186,7 @@
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AppKeys.cs" />
     <Compile Include="Repository\BORepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
