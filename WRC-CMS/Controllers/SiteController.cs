@@ -220,17 +220,17 @@ namespace WRC_CMS.Controllers
 
         public async Task<ActionResult> EditSiteDetails(int id)
         {
-            List<SiteModel> sites = new List<SiteModel>();
+            ModelState.Clear();
+            List<SiteModel> sites = new List<SiteModel>();                      
             await Task.Run(() =>
             {
-                sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                sites.AddRange(BORepository.GetSelectedSites(proxy, id).Result);
             });
-            if (sites != null && sites.Count > 0)
-            {
-                SiteModel objetc = sites.FirstOrDefault(item => item.Oid == id);
-                return View(objetc);
-            }
-            return View();
+            CombineSiteModel siteObject = new CombineSiteModel();
+            siteObject.SiteList = sites;
+            siteObject.SiteView = new SiteModel();
+
+            return View("AddSite1", siteObject);
         }
 
         public ActionResult DeleteSite(int id)
