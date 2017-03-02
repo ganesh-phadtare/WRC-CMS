@@ -18,7 +18,10 @@ namespace WRC_CMS.Models
     public class CombineSiteModel
     {
         public List<SiteModel> SiteList { get; set; }
-        public SiteModel SiteView { get; set; }
+        public List<SiteModel> SiteEditList { get; set; }
+        public ViewModel SiteView { get; set; }
+        //public string SiteName { get; set; }
+        //public int SiteID { get; set; }
     }
    
 }
