@@ -218,11 +218,11 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditSiteDetails(int id, int tid=0)
+        public async Task<ActionResult> EditSiteDetails(int id, int tid = 0)
         {
             ModelState.Clear();
 
-            if (tid !=0)
+            if (tid != 0)
             {
                 List<SiteModel> sites = new List<SiteModel>();
                 await Task.Run(() =>
@@ -299,7 +299,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@url", URL);
                     dicParams.Add("@Logo", 0101);
                     dicParams.Add("@Title", Title);
-                    dicParams.Add("@IsActive", 1);
+                    dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
 
                     DataSet dataSet = null;
                     await Task.Run(() =>
@@ -360,7 +360,7 @@ namespace WRC_CMS.Controllers
                     });
 
                     CombineSiteModel siteObject = new CombineSiteModel();
-                    siteObject.SiteList = sites;                   
+                    siteObject.SiteList = sites;
                     siteObject.SiteView = new SiteModel();
                     return View("AddSite1", siteObject);
                 }
