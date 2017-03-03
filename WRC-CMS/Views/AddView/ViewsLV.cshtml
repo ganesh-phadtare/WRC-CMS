@@ -33,7 +33,6 @@
     <link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">
     <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
     <style type="text/css">
-
     </style>
     <style></style>
     <style>
@@ -296,10 +295,10 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">        
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
         <div _ngcontent-xlf-78="" class="navigation-div">
             <div _ngcontent-xlf-78="" id="top-div-msg">
-                
+
             </div>
             <nav _ngcontent-xlf-78="" class="dark-gray">
                 <sidenav-panel _ngcontent-xlf-78="">
@@ -333,9 +332,12 @@
                                 </div>
                             </li>*@
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Expense" href="#">
-                                <i class="fa fa-money" title="Expense"></i> Contents
-                            </a>
+                            <div class="collapsible-header" routerlinkactive="active" title="Content Style">
+                                <h5>@Html.ActionLink("Content Style", "GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
+                            </div>
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
+                                    <i class="fa fa-money" title="Content Style"></i> Content Style
+                                </a>*@
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
 

@@ -164,6 +164,7 @@ namespace WRC_CMS.Controllers
 
         public async Task<ActionResult> GetAllViewDetails(int id)
         {
+            ViewBag.CurrSiteID = id;
             ActionResult View = null;
             await Task.Run(() =>
              {
