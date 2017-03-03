@@ -29,9 +29,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="~/VW-Refresh_files/icon" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="~/VW-Refresh_files/font-awesome.min.css" media="screen,projection">
-    <link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">
-    <link rel="stylesheet" href="~/VW-Refresh_files/styles.css">
-    <link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">
+    @*<link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">*@
+    @*<link rel="stylesheet" href="~/VW-Refresh_files/styles.css">*@
+    @*<link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">*@
     <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
     <style type="text/css">
         /* You can add global styles to this file, and also import other style files */
@@ -406,21 +406,17 @@
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
 
-                                                                                            @*<div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
-                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.SelectView)
-                                                                                                    </div>
-                                                                                                </div>*@
                                                                                             <div class="form-group">
-                                                                                                @*@Html.DropDownListFor(model => model.ContentView, new SelectList(ViewBag.ViewList, "Oid", "Name"), "Select view", new { @class = "form-control" })*@
-
                                                                                                 @*@Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
                                                                                                     <div class="col-md-10">
                                                                                                         @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.ContentView.SelectView)
                                                                                                     </div>*@
+                                                                                                @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)
+                                                                                                </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
@@ -430,6 +426,31 @@
                                                                                                     @Html.ValidationMessageFor(model => model.ContentView.Name)
                                                                                                 </div>
                                                                                             </div>
+
+                                                                                            <div class="form-group">
+                                                                                                @{
+                                                                                                    List<SelectListItem> listItems = new List<SelectListItem>();
+                                                                                                    listItems.Add(new SelectListItem
+                                                                                                         {
+                                                                                                             Text = "Static Content",
+                                                                                                             Value = "1"
+                                                                                                         });
+                                                                                                    listItems.Add(new SelectListItem
+                                                                                                         {
+                                                                                                             Text = "Content Of Page",
+                                                                                                             Value = "2",
+                                                                                                             Selected = true
+                                                                                                         });
+                                                                                                    listItems.Add(new SelectListItem
+                                                                                                         {
+                                                                                                             Text = "Search Content",
+                                                                                                             Value = "3"
+                                                                                                         });
+                                                                                                }
+
+                                                                                                @Html.DropDownList("Exemplo", new SelectList(listItems, "Value", "Text"))
+                                                                                            </div>
+
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.Description, new { @class = "control-label col-md-1" })
@@ -526,25 +547,25 @@
                                                                     @foreach (var item in Model.ContentList)
                                                                     {
 
-                                                                    <tr _ngcontent-xlf-80="">
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectView)</span></div>
-                                                                        </td>
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Name)</span></div>
-                                                                        </td>
-                                                                        @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Description)
-                                                                            </td>*@
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.DisplayFor(modelItem => item.IsActive)
-                                                                        </td>
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.ActionLink("Edit", "GetEdiContentPage", new { id = item.Oid }) |
-                                                                            @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
-                                                                            @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
-                                                                        </td>
-                                                                    </tr>
+                                                                        <tr _ngcontent-xlf-80="">
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectView)</span></div>
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Name)</span></div>
+                                                                            </td>
+                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                                                </td>*@
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.IsActive)
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, tid = 1 }) |
+                                                                                @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
+                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                            </td>
+                                                                        </tr>
                                                                     }
                                                                 </tbody>
                                                             </table>
@@ -621,13 +642,15 @@
                     //alert(document.getElementById("ContentView_IsActive").value);
                     document.getElementById("ContentView_Name").value = "";
                     document.getElementById("ContentView_Description").value = "";
-                    document.getElementById("ContentView_SelectView").value = "";
+                    document.getElementById("ContentView_ViewID").value = "";
                     document.getElementById("ContentView_IsActive").value = false;
                 });
 
                 $('#Submit').on('click', function () {
+
+                    alert('iu');
                     $.ajax({
-                        url: "/Site/CreateSite",
+                        url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
@@ -635,7 +658,7 @@
                             Oid: $("#ContentView_Oid").val(),
                             Name: $("#ContentView_Name").val(),
                             URL: $("#ContentView_Description").val(),
-                            Title: $("#ContentView_SelectView").val(),
+                            Title: $("#ContentView_ViewID").val(),
                             IsActive: $("#ContentView_IsActive").val(),
                         }),
                         async: false,
