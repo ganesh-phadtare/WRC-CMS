@@ -32,7 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./VW-Refresh_files/icon" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="./VW-Refresh_files/font-awesome.min.css" media="screen,projection">
-    <link rel="stylesheet" href="./VW-Refresh_files/materialize.css">
+    @*<link rel="stylesheet" href="./VW-Refresh_files/materialize.css">*@
     <link rel="stylesheet" href="./VW-Refresh_files/styles.css">
     <link rel="stylesheet" href="./VW-Refresh_files/splash_screen.css">
     <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
@@ -293,16 +293,17 @@
 
                     </li>
                     <li class="hide-on-small-and-down"><span></span></li>
-                    <li><a><i class="fa fa-power-off"></i></a></li>
+                    @*<li><a><i class="fa fa-power-off"></i></a></li>*@
+                    <li><a><img src=""></a></li>
 
                 </ul>
-                <sidenav-button>
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>               
+                @*<sidenav-button>
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 class="header-title">
-                    <a href=""><img class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
+                    <a href=""><img class="header-logo responsive-img" src="/VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
                 </h5>
             </nav>
         </div>
@@ -317,14 +318,14 @@
                             Dashboard
                             <a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>
                             <span class="right mandatory-message">
-                                <span>IND<img class="flag-img" src="./VW-Refresh_files/india-flag.png"></span>
+                                <span>IND<img class="flag-img" src="/VW-Refresh_files/india-flag.png"></span>
                             </span>
                         </h5>
                     </div>
                 </div>
             </div>
             <div class="grid-container">
-                <div class="row"></div>
+                <div class="row" style="margin-left: -15px;margin-right: -15px;"></div>
                 <div class="row">
                     <div "col s12 padding-zero">
                         <div class="col  m2">
@@ -337,15 +338,15 @@
                     @*<div class="col  m2">
                             <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
                         </div>*@
-                    <div class="col  m6">
+                    <div class="col  m6" style="width: 70%;">
                         <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" />
                         @*<input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />*@
                         @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
                         @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
                     </div>
-                    <div class="data-footer">
-                        <div class="btn-flat">
-                            @Html.ActionLink("Create/Edit Site", "GetAllSite", "Site")
+                    <div class="data-footer" style=" width: 100%;">
+                        <div class="right mandatory-message btn-flat">
+                            @Html.ActionLink("Manage Sites", "GetAllSite", "Site")
                         </div>
                         @*<a class="btn-flat" href="#/my/profile/professional">Create New</a>*@
                     </div>
@@ -393,22 +394,22 @@
             <div class="col s6 m6 l6 right-align m-top20 branding">
                 © 2016 V2Solutions, Inc.
             </div>
-            <div class="col s6 m6 l6 right-align" id="browsers">
-                <ul class="right">
-                    <li>
-                        <i aria-hidden="true" class="fa fa-chrome"></i>
-                        <h6 class="margin-zero">Ver 50+</h6>
-                    </li>
-                    <li>
-                        <i aria-hidden="true" class="fa fa-firefox"></i>
-                        <h6 class="margin-zero">Ver 46+ (64-bit)</h6>
-                    </li>
-                    <li>
-                        <i aria-hidden="true" class="fa fa-safari"></i>
-                        <h6 class="margin-zero">Ver 10+</h6>
-                    </li>
-                </ul>
-            </div>
+            @*<div class="col s6 m6 l6 right-align" id="browsers">
+                    <ul class="right">
+                        <li>
+                            <i aria-hidden="true" class="fa fa-chrome"></i>
+                            <h6 class="margin-zero">Ver 50+</h6>
+                        </li>
+                        <li>
+                            <i aria-hidden="true" class="fa fa-firefox"></i>
+                            <h6 class="margin-zero">Ver 46+ (64-bit)</h6>
+                        </li>
+                        <li>
+                            <i aria-hidden="true" class="fa fa-safari"></i>
+                            <h6 class="margin-zero">Ver 10+</h6>
+                        </li>
+                    </ul>
+                </div>*@
         </div>
     </footer>
     <loader-component _nghost-kxb-11="">
@@ -423,23 +424,23 @@
 
 @section Scripts {
     @*@Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#submit').unbind('click');
-            $('#submit').on('click', function () {
-                //alert($("#Name").val());
-                $.ajax({
-                    url: "/Dashboard/Index",
-                    type: 'POST',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        viewObject: $("#Name").val()
-                    }),
-                    async: false
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#submit').unbind('click');
+                $('#submit').on('click', function () {
+                    //alert($("#Name").val());
+                    $.ajax({
+                        url: "/Dashboard/Index",
+                        type: 'POST',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            viewObject: $("#Name").val()
+                        }),
+                        async: false
+                    });
+                    //$('#Index').load(url, { searchText: $("#Name").val() });
                 });
-                //$('#Index').load(url, { searchText: $("#Name").val() });
-            });
-        });*@
+            });*@
     </script>
 }

@@ -291,11 +291,8 @@
     </style>
 </head>
 
-<body>
-    @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
-
-    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
-        <!--style="height: 106px;"-->
+<body>   
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">        
         <div _ngcontent-xlf-78="" class="navigation-div">
             <div _ngcontent-xlf-78="" id="top-div-msg">
                 <!--<div _ngcontent-xlf-78="" class="row m-bottom0 card-heading">
@@ -309,8 +306,10 @@
                 <sidenav-panel _ngcontent-xlf-78="">
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
                         <li routerlinkactive="active" class="no-padding first">
-                            <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="http://localhost:49791/dashboard">
-                                <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg"></i> Dashboard
+                            <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
+                                <i title=" dashboard">
+                                    <img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg">
+                                </i> Dashboard
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: block;">
