@@ -25,16 +25,21 @@ namespace WRC_CMS.Controllers
             });
             return View("Index", sites);
         }
-       
-        public async Task<ActionResult> Index1(string viewObject)       
+
+        public ActionResult Home()
+        {
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Index1(string viewObject)
         {
             ModelState.Clear();
             List<SiteModel> sites = new List<SiteModel>();
             await Task.Run(() =>
             {
                 sites.AddRange(BORepository.GetSearchSite(proxy, viewObject).Result);
-           });
-            return View("Index", sites);          
+            });
+            return View("Index", sites);
         }
-	}
+    }
 }
