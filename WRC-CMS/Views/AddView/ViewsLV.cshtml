@@ -315,7 +315,7 @@
                         <!--style="margin-top: 106px;"-->
 
                         <li routerlinkactive="active" class="no-padding first">
-                            <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="#">
+                            <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="http://localhost:49791/Dashboard">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg"></i> Dashboard
                             </a>
 
@@ -341,9 +341,12 @@
                                 </div>
                             </li>*@
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Expense" href="#">
-                                <i class="fa fa-money" title="Expense"></i> Contents
-                            </a>
+                            <div class="collapsible-header" routerlinkactive="active" title="Content Style">
+                                <h5>@Html.ActionLink("Content Style", "GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
+                            </div>
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
+                                <i class="fa fa-money" title="Content Style"></i> Content Style
+                            </a>*@
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
 
