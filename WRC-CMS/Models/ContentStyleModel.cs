@@ -32,6 +32,9 @@ namespace WRC_CMS.Models
         [Display(Name = "View")]
         public string SelectView { get; set; }
         public List<ViewModel> View { get; set; }
+        //public List<ViewModel> ViewList { get; set; }
+        public int SiteID { get; set; }
+        public string SiteName { get; set; }
     }
 
     public class CombineContentModel
@@ -39,5 +42,8 @@ namespace WRC_CMS.Models
         public List<ContentStyleModel> ContentList { get; set; }
         public ContentStyleModel ContentView { get; set; }
         public string SelectView { get; set; }
+        public string SiteName { get; set; }
+        public int SiteID { get; set; }
+        public List<ViewModel> ViewList { get; set; }
     }
 }

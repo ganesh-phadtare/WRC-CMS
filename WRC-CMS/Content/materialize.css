@@ -4866,8 +4866,8 @@ small {
 
 .backdrop {
   position: absolute;
-  opacity: 0;
-  display: none;
+  opacity: 1;
+  /*display: none;*/
   height: 7px;
   width: 14px;
   border-radius: 0 0 50% 50%;
@@ -5164,11 +5164,11 @@ button.btn-floating {
 .dropdown-content {
   background-color: #fff;
   margin: 0;
-  display: none;
+  /*display: none;*/
   min-width: 100px;
   max-height: 650px;
   overflow-y: auto;
-  opacity: 0;
+  opacity: 1;
   position: absolute;
   z-index: 999;
   will-change: width, height;
@@ -6545,9 +6545,10 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
 
 /* Select Field
    ========================================================================== */
-select {
+/*Commented by Swapnali to show Dropdown list*/
+/*select {
   display: none;
-}
+}*/
 
 select.browser-default {
   display: block;
