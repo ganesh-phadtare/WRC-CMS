@@ -6545,9 +6545,10 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
 
 /* Select Field
    ========================================================================== */
-select {
+/*Commented by Swapnali to show Dropdown list*/
+/*select {
   display: none;
-}
+}*/
 
 select.browser-default {
   display: block;
