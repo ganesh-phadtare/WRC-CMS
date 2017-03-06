@@ -102,7 +102,7 @@ namespace WRC_CMS.Repository
             //DataSet dataSet = null;
             //await Task.Run(() =>
             //{
-            DataSet dataSet = await proxy.ExecuteDataset("SP_StaticContentsAddUp", dicParams);
+            DataSet dataSet = await proxy.ExecuteDataset("SP_ContentsAddUp", dicParams);
             //});
 
             if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
@@ -153,7 +153,7 @@ namespace WRC_CMS.Repository
             dict.Add("@Oid", -1);
             dict.Add("@LoadOnlyActive", 0);
 
-            var dataSet = await proxy.ExecuteDataset("SP_StaticContentsSelect", dict);
+            var dataSet = await proxy.ExecuteDataset("SP_ContentsSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
             {
                 return (from DataRow row in dataSet.Tables[0].Rows
@@ -212,6 +212,6 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return SearchList;
-        }      
+        }
     }
 }
