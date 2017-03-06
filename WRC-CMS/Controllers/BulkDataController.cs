@@ -118,7 +118,7 @@ namespace WRC_CMS.Controllers
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@Descr", MockData.Address.SecondaryAddress());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
-                proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
+                proxy.ExecuteNonQuery("SP_ContentsAddUp", dicParams);
             }
         }
 

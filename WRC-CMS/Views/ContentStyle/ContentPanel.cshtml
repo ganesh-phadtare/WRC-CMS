@@ -316,14 +316,14 @@
                             <div class="collapsible-body" id="childNav" style="display: block;"></div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/@Model.SiteID">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/@Model.ContentView.SiteID">
                                 <i class="fa fa-money" title="Views"></i> Views
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;"></div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID" style="display:block ">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.ContentView.SiteID">
                                 <i class="fa fa-money" title="Content Style"></i> Content Style
                             </a>
 
@@ -411,15 +411,34 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("View List", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))
+                                                                                                    @Html.DropDownList("DDLList", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))
                                                                                                     @* @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.ContentView.SelectView)*@
                                                                                                 </div>
-                                                                                                @* @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.ContentView.ViewID)
-                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.ViewID)
-                                                                                                    </div>*@
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.Oid, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Oid)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Oid)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.SiteID, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.SiteID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.SiteID)
+                                                                                                </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
@@ -431,6 +450,15 @@
                                                                                             </div>
 
                                                                                             <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.ListBox("View List", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))
+                                                                                                    @* @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
+                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.SelectView)*@
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
                                                                                                 <label id="lblContType" class="control-label col-md-2">Content Type</label>
                                                                                                 <div class="col-md-10">
                                                                                                     @{
@@ -438,18 +466,18 @@
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Static Content",
-                                                                                                                 Value = "1"
+                                                                                                                 Value = "0"
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Content Of Page",
-                                                                                                                 Value = "2",
+                                                                                                                 Value = "1",
                                                                                                                  Selected = true
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Search Content",
-                                                                                                                 Value = "3"
+                                                                                                                 Value = "2"
                                                                                                              });
                                                                                                     }
 
@@ -474,18 +502,18 @@
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Alphabetical Search",
-                                                                                                                 Value = "1"
+                                                                                                                 Value = "0"
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Quick Search",
-                                                                                                                 Value = "2",
+                                                                                                                 Value = "1",
                                                                                                                  Selected = true
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Advance Search",
-                                                                                                                 Value = "3"
+                                                                                                                 Value = "2"
                                                                                                              });
                                                                                                     }
 
@@ -594,7 +622,7 @@
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, tid = 1 }) |
+                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
                                                                                 @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
@@ -663,7 +691,7 @@
     <script type="text/javascript" src="./VW-Refresh_files/main.bundle.js.download"></script>
 
     <div class="hiddendiv common"></div>
-    @*@section Scripts {
+    @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
 
         <script type="text/javascript">
@@ -677,6 +705,7 @@
                     document.getElementById("ContentView_Description").value = "";
                     document.getElementById("ContentView_ViewID").value = "";
                     document.getElementById("ContentView_IsActive").value = false;
+                    document.getElementById("ContentView_Oid").value = "";
                 });
 
                 $('#Submit').on('click', function () {
@@ -691,11 +720,16 @@
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({                            
+                        data: JSON.stringify({
                             Name: $("#ContentView_Name").val(),
                             Description: $("#ContentView_Description").val(),
-                            ViewID: $("#ContentView_ViewID").val(),
+                            //ViewID: $("#ContentView_ViewID").val(),
+                            ViewID: $("#DDLList option:selected").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
+                            SiteId: $("#ContentView_SiteID").val(),
+                            CType: $("select#Exemple option:selected").val(),
+                            SearchType: $("select#SearchType option:selected").val(),
+                            Oid: $("#ContentView_Oid").val()
                         }),
                         async: false,
                         success: function (data) {
@@ -710,11 +744,11 @@
 
             function toggleDIvDisplay(e) {
                 //alert("Dropdown");
-                if (e == 1) {
+                if (e == 0) {
                     $('#StaticContentPanel').show();
                     $('#SearchPanel').hide();
                 }
-                else if (e == 3) {
+                else if (e == 2) {
                     $('#SearchPanel').show();
                     $('#StaticContentPanel').hide();
                 }
@@ -725,44 +759,44 @@
             }
 
         </script>
-    }*@
+    }
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/javascript">
-            $(document).ready(function () {
+    @*@section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script type="text/javascript">
+                $(document).ready(function () {
 
-                $('#Submit').unbind('click');                
+                    $('#Submit').unbind('click');
 
-                $('#Submit').on('click', function () {
-                    $.ajax({
-                        url: "/AddView/Test",
-                        type: 'POST',
-                        contentType: "application/json; charset=utf-8",
-                        dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            URL: $("#NewView_URL").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDem: $('#NewView_IsDem').prop("checked"),
-                            IsAuth: $('#NewView_IsAuth').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#file").val(),
-                            Oid: $("#Oid").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
-                        async: false,
-                        success: function (data) {
-                            alert("Success");
-                        },
-                        failure: function (data) {
-                            alert("Fail");
-                        },
+                    $('#Submit').on('click', function () {
+                        $.ajax({
+                            url: "/AddView/Test",
+                            type: 'POST',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                Name: $("#NewView_Name").val(),
+                                URL: $("#NewView_URL").val(),
+                                Title: $("#NewView_Title").val(),
+                                IsActive: $('#NewView_IsActive').prop("checked"),
+                                IsDem: $('#NewView_IsDem').prop("checked"),
+                                IsAuth: $('#NewView_IsAuth').prop("checked"),
+                                CreateMenu: $('#NewView_CreateMenu').prop("checked"),
+                                Logo: $("#file").val(),
+                                Oid: $("#Oid").val(),
+                                SiteID: $("#SiteID").val(),
+                            }),
+                            async: false,
+                            success: function (data) {
+                                alert("Success");
+                            },
+                            failure: function (data) {
+                                alert("Fail");
+                            },
+                        });
                     });
                 });
-            });
-        </script>
-    }
+            </script>
+        }*@
 </body>
 </html>
