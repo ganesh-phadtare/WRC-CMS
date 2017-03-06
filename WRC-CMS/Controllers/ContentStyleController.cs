@@ -120,7 +120,7 @@ namespace WRC_CMS.Controllers
         //                dicParams.Add("@IsActive", "1");
         //            else
         //                dicParams.Add("@IsActive", "0");
-        //            proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
+        //            proxy.ExecuteNonQuery("SP_ContentsAddUp", dicParams);
         //            return RedirectToAction("GetAllContentsDetails");
         //        }
 
@@ -170,7 +170,7 @@ namespace WRC_CMS.Controllers
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", id);
-                    proxy.ExecuteNonQuery("SP_StaticContentsDel", dicParams);
+                    proxy.ExecuteNonQuery("SP_ContentsDel", dicParams);
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace WRC_CMS.Controllers
             dict.Add("@SiteId", SiteId);
             dict.Add("@ViewId", ViewId);
 
-            var dataSet = await proxy.ExecuteDataset("SP_StaticContentsSelect", dict);
+            var dataSet = await proxy.ExecuteDataset("SP_ContentsSelect", dict);
             //ViewBag.ViewList = dataSet.Tables[1].ToString();
             return (from DataRow row in dataSet.Tables[0].Rows
                     select new ContentStyleModel
@@ -256,24 +256,27 @@ namespace WRC_CMS.Controllers
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, string Description, int ViewID, string IsActive)
+        public async Task<ActionResult> CreateUpdContent(string Name, string Description, string IsActive, int ViewID, int Oid = 0)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    if (Oid == 0)
+                        Oid = -1;
                     int ContentID = 0;
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", "-1");
+                    List<ViewModel> ObjViewList = new List<ViewModel>();
+                    dicParams.Add("@Oid", Oid);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@Descr", Description);
                     dicParams.Add("@View", ViewID);
-                    dicParams.Add("@IsActive", IsActive);
+                    dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
 
                     //DataSet dataSet = null;
                     //await Task.Run(() =>
                     //{
-                    DataSet dataSet = await proxy.ExecuteDataset("SP_StaticContentsAddUp", dicParams);
+                    DataSet dataSet = await proxy.ExecuteDataset("SP_ContentsAddUp", dicParams);
                     //});
 
                     if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
@@ -293,10 +296,14 @@ namespace WRC_CMS.Controllers
                     {
                         contents.AddRange(GetAllContents(0).Result);
                     });
+                    await Task.Run(() =>
+                   {
+                       ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == PubSiteID));
+                   });
                     CombineContentModel combineContentModel = new CombineContentModel();
                     combineContentModel.ContentView = new ContentStyleModel();
                     combineContentModel.ContentList = contents;
-
+                    combineContentModel.ViewList = ObjViewList;
                     if (contents.Count > 0)
                     {
                         combineContentModel.SelectView = contents[0].SelectView; //View Name
@@ -314,10 +321,10 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> GetEdiContentPage(int Contentid = 0, int EViewId = 0, int tid = 0)
+        public async Task<ActionResult> GetEdiContentPage(int Contentid = 0, int EViewId = 0, int SiteId = 0)
         {
             ModelState.Clear();
-            if (tid != 0)
+            if (Contentid != 0)
             {
                 // int temp = ViewBag.Site;
                 List<ContentStyleModel> contents = new List<ContentStyleModel>();
@@ -358,7 +365,7 @@ namespace WRC_CMS.Controllers
             }
             else
             {
-                return RedirectToAction("CreateUpdContent");
+                return RedirectToAction("GetContentPage", new { id = SiteId });
             }
         }
 

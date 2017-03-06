@@ -21,15 +21,15 @@ namespace WRC_CMS
 
         protected void Application_EndRequest()
         {
-            if (Context.Response.StatusCode == 404 || Context.Response.StatusCode == 500)
-            {
-                Response.Clear();
-                var rd = new RouteData();
-                rd.Values["controller"] = "Dashboard";
-                rd.Values["action"] = "Home";
-                IController DC = new DashboardController();
-                DC.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
-            }
+            //if (Context.Response.StatusCode == 404 || Context.Response.StatusCode == 500)
+            //{
+            //    Response.Clear();
+            //    var rd = new RouteData();
+            //    rd.Values["controller"] = "Dashboard";
+            //    rd.Values["action"] = "Home";
+            //    IController DC = new DashboardController();
+            //    DC.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
+            //}
         }
     }
 }

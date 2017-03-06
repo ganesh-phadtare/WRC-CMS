@@ -415,12 +415,22 @@
                                                                                                     @* @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.ContentView.SelectView)*@
                                                                                                 </div>
-                                                                                                @* @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.ContentView.ViewID)
-                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.ViewID)
-                                                                                                    </div>*@
                                                                                             </div>
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.Oid, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Oid)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Oid)
+                                                                                                </div>
+                                                                                            </div>
+
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.Name, new { @class = "control-label col-md-2" })
@@ -594,7 +604,7 @@
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, tid = 1 }) |
+                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
                                                                                 @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
@@ -663,7 +673,7 @@
     <script type="text/javascript" src="./VW-Refresh_files/main.bundle.js.download"></script>
 
     <div class="hiddendiv common"></div>
-    @*@section Scripts {
+    @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
 
         <script type="text/javascript">
@@ -691,11 +701,12 @@
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({                            
+                        data: JSON.stringify({
                             Name: $("#ContentView_Name").val(),
                             Description: $("#ContentView_Description").val(),
-                            ViewID: $("#ContentView_ViewID").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
+                            ViewID: $("#ContentView_ViewID").val(),
+                            Oid: $("#ContentView_Oid").val()
                         }),
                         async: false,
                         success: function (data) {
@@ -725,44 +736,7 @@
             }
 
         </script>
-    }*@
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-        <script type="text/javascript">
-            $(document).ready(function () {
-
-                $('#Submit').unbind('click');                
-
-                $('#Submit').on('click', function () {
-                    $.ajax({
-                        url: "/AddView/Test",
-                        type: 'POST',
-                        contentType: "application/json; charset=utf-8",
-                        dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            URL: $("#NewView_URL").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDem: $('#NewView_IsDem').prop("checked"),
-                            IsAuth: $('#NewView_IsAuth').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#file").val(),
-                            Oid: $("#Oid").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
-                        async: false,
-                        success: function (data) {
-                            alert("Success");
-                        },
-                        failure: function (data) {
-                            alert("Fail");
-                        },
-                    });
-                });
-            });
-        </script>
     }
+
 </body>
 </html>
