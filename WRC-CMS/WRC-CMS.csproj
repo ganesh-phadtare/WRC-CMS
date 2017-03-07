@@ -235,6 +235,10 @@
     <Content Include="images\nav401010824i.gif" />
     <Content Include="images\navgray01.gif" />
     <Content Include="images\navgreen02.gif" />
+    <Content Include="images\NewContent1.png" />
+    <Content Include="images\NewContent2.png" />
+    <Content Include="images\NewDashboard.jpg" />
+    <Content Include="images\NewView.png" />
     <Content Include="images\rect39417018.gif" />
     <Content Include="images\rect40532402.gif" />
     <Content Include="images\rect49024914.gif" />

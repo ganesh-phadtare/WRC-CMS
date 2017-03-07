@@ -257,7 +257,7 @@ namespace WRC_CMS.Controllers
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, string Description, int ViewID, string IsActive, int SiteId, int CType, int SearchType, int Oid = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, string Description, int ViewID, string IsActive, int CType, int SearchType, int Oid = 0)
         {
             try
             {
@@ -269,10 +269,10 @@ namespace WRC_CMS.Controllers
 
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
                     dicParams.Add("@Oid", Oid);
-                    dicParams.Add("@Name", Name);
-                    dicParams.Add("@Descr", Description);
                     dicParams.Add("@View", ViewID);
-                    dicParams.Add("@IsActive", IsActive);
+                    dicParams.Add("@Name", Name);
+                    dicParams.Add("@Descr", Description);                    
+                    dicParams.Add("@IsActive",Convert.ToBoolean(IsActive));
                     dicParams.Add("@ContentType", CType);
                     dicParams.Add("@Search", SearchType);
                     dicParams.Add("@Orientation", 1);
@@ -315,7 +315,7 @@ namespace WRC_CMS.Controllers
                     ActionResult MainView = null;
                     await Task.Run(() =>
                     {
-                        MainView = GetContentPage(SiteId).Result;
+                        //MainView = GetContentPage(SiteId).Result;
                     });
                     return MainView;
                 }

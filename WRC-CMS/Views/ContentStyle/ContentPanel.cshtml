@@ -310,21 +310,21 @@
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="http://localhost:49791/Dashboard">
-                                <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg"></i> Dashboard
+                                <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/NewDashboard.jpg"></i> Dashboard
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: block;"></div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
                             <a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/@Model.ContentView.SiteID">
-                                <i class="fa fa-money" title="Views"></i> Views
+                                <i class="fa fa-money" title="Views"><img style="width:32px; height:32px" src="/images/NewView.png"></i> Views
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;"></div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.ContentView.SiteID">
-                                <i class="fa fa-money" title="Content Style"></i> Content Style
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.ContentView.SiteID" >
+                                <i class="fa fa-money" title="Content Style"><img style="width:32px; height:32px" src="/images/NewContent1.png"></i> Content Style
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;"></div>
@@ -726,7 +726,7 @@
                             //ViewID: $("#ContentView_ViewID").val(),
                             ViewID: $("#DDLList option:selected").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
-                            SiteId: $("#ContentView_SiteID").val(),
+                            //SiteId: $("#ContentView_SiteID").val(),
                             CType: $("select#Exemple option:selected").val(),
                             SearchType: $("select#SearchType option:selected").val(),
                             Oid: $("#ContentView_Oid").val()
