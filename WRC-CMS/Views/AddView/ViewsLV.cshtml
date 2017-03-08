@@ -503,18 +503,18 @@
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.URL, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.URL)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.URL)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.NewView.Title, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.Title)
                                                                                                     @Html.ValidationMessageFor(model => model.NewView.Title)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.NewView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.NewView.Orientation)
+                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Orientation)
                                                                                                 </div>
                                                                                             </div>
 
@@ -619,10 +619,9 @@
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => model.NewView.URL)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.Title)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.IsActive)</th>
-                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.CreateMenu)</th>*@
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.CreateMenu)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -635,27 +634,15 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectSite)</span></div>
                                                                             </td>
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.Name)
-                                                                                </td>*@
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.URL)</span></div>
-                                                                            </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.Title)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.IsDem)
-                                                                                </td>
-                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.IsAuth)
-                                                                                </td>*@
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.CreateMenu)
-                                                                                </td>*@
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.CreateMenu)
+                                                                            </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
                                                                                 @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
@@ -825,7 +812,6 @@
 
                 $('#cancel').on('click', function () {
                     document.getElementById("NewView_Name").value = "";
-                    document.getElementById("NewView_URL").value = "";
                     document.getElementById("NewView_Title").value = "";
                     document.getElementById("NewView_IsActive").value = false;
                     document.getElementById("NewView_IsDem").value = false;
@@ -842,7 +828,6 @@
                         dataType: 'json',
                         data: JSON.stringify({
                             Name: $("#NewView_Name").val(),
-                            URL: $("#NewView_URL").val(),
                             Title: $("#NewView_Title").val(),
                             IsActive: $('#NewView_IsActive').prop("checked"),
                             IsDem: $('#NewView_IsDem').prop("checked"),
@@ -850,6 +835,7 @@
                             CreateMenu: $('#NewView_CreateMenu').prop("checked"),
                             Logo: $("#file").val(),
                             Oid: $("#Oid").val(),
+                            Orientation: $("#NewView_Orientation").val(),
                             SiteID: $("#SiteID").val(),
                         }),
                         async: false,
