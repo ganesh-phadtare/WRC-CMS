@@ -335,6 +335,18 @@
 
                             </div>
                         </li>
+                        <li routerlinkactive="active" class="no-padding fifth">
+                            <div class="collapsible-header" routerlinkactive="active" title="Site Misc">
+                                <h5>@Html.ActionLink("Site Misc", "GetAllSiteMisc", "SiteMisc", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
+                            </div>
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
+                                    <i class="fa fa-money" title="Content Style"></i> Content Style
+                                </a>*@
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
                         @*<li routerlinkactive="active" class="no-padding third">
                                 <a class="collapsible-header" routerlinkactive="active" title="Views" href="http://localhost:49791/AddView/GetAllViewDetails">
                                 <i class="fa fa-file-text" title="Views"></i> Views
