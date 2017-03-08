@@ -1,4 +1,4 @@
-﻿@model WRC_CMS.Models.CombineModel
+﻿@model WRC_CMS.Models.SiteDbModelLD
 
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
@@ -323,7 +323,6 @@
 
                             </div>
                         </li>
-
                         <li routerlinkactive="active" class="no-padding fifth">
                             <div class="collapsible-header" routerlinkactive="active" title="Site DB">
                                 <h5>@Html.ActionLink("Site DB", "GetAllSiteDb", "SiteDb", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
@@ -344,8 +343,6 @@
 
                                 </div>
                             </li>*@
-
-
                         <li routerlinkactive="active" class="no-padding fifth">
                             <div class="collapsible-header" routerlinkactive="active" title="Content Style">
                                 <h5>@Html.ActionLink("Content Style", "GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
@@ -358,7 +355,6 @@
 
                             </div>
                         </li>
-
                         <!--<li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
                                 <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
@@ -395,7 +391,7 @@
                 <div class="row margin-zero">
                     <div class="col s12">
                         <h5>
-                            View Management
+                            Site DB Management
                             <!--<a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>-->
                             <span class="right mandatory-message">
                                 <!--<span>IND<a><img class="flag-img" src="./VW-Refresh_files/india-flag.png"></a></span>-->
@@ -417,7 +413,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create View", "GetAllViewDetails", new { id = @Model.SiteID })
+                                                        @Html.ActionLink("Create Site DB", "GetAllSiteDb", new { SiteId = @Model.SiteID })
                                                     </h4>
 
                                                 </div>
@@ -509,64 +505,52 @@
                                                                                                 </div>*@
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Name, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Name)
-                                                                                                    @Html.Hidden("Oid", Model.NewView.Oid)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Name)
+                                                                                                    @Html.Hidden("Oid", Model.DetailView.Id)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Name)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Name)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Title, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Server, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Title)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Title)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Server)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Server)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Database, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Orientation)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Orientation)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Database)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Database)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.UserID, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    <input type="file" name="file" class="text-box single-line" />
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Logo)
+                                                                                                    @Html.EditorFor(model => model.DetailView.UserID)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.UserID)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsActive, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Password, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsActive)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Password)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Password)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsDem, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Description, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsDem)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsAuth, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsAuth)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.CreateMenu)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Description)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Description)
                                                                                                 </div>
                                                                                             </div>
 
@@ -634,34 +618,33 @@
                                                             <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.Title)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.IsActive)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.CreateMenu)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Server)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Database)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.UserID)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Password)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
 
-                                                                    @foreach (var item in Model.views)
+                                                                    @foreach (var item in Model.ListView)
                                                                     {
-
                                                                         <tr _ngcontent-xlf-80="">
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectSite)</span></div>
+                                                                                @Html.DisplayFor(modelItem => item.Server)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Title)
+                                                                                @Html.DisplayFor(modelItem => item.Database)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.IsActive)
+                                                                                @Html.DisplayFor(modelItem => item.UserID)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.CreateMenu)
+                                                                                @Html.DisplayFor(modelItem => item.Password)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Edit", "EditSiteDB", new { SiteDBID = item.Id, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteSiteDB", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -827,31 +810,28 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    document.getElementById("NewView_Name").value = "";
-                    document.getElementById("NewView_Title").value = "";
-                    document.getElementById("NewView_IsActive").value = false;
-                    document.getElementById("NewView_IsDem").value = false;
-                    document.getElementById("NewView_IsAuth").value = false;
-                    document.getElementById("NewView_CreateMenu").value = false;
-                    document.getElementById("file").value = null;
+                    document.getElementById("DetailView_Name").value = "";
+                    document.getElementById("DetailView_Server").value = "";
+                    document.getElementById("DetailView_Database").value = "";
+                    document.getElementById("DetailView_UserID").value = "";
+                    document.getElementById("DetailView_Password").value = "";
+                    document.getElementById("DetailView_Description").value = "";
                 });
 
                 $('#Submit').on('click', function () {
                     $.ajax({
-                        url: "/AddView/Test",
+                        url: "/SiteDb/AddSiteDB",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDem: $('#NewView_IsDem').prop("checked"),
-                            IsAuth: $('#NewView_IsAuth').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#file").val(),
+                            Name: $("#DetailView_Name").val(),
+                            Server: $("#DetailView_Server").val(),
+                            Database: $('#DetailView_Database').val(),
+                            UserID: $('#DetailView_UserID').val(),
+                            Password: $('#DetailView_Password').val(),
+                            Description: $('#DetailView_Description').val(),
                             Oid: $("#Oid").val(),
-                            Orientation: $("#NewView_Orientation").val(),
                             SiteID: $("#SiteID").val(),
                         }),
                         async: false,
