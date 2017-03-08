@@ -17,6 +17,7 @@ namespace WRC_CMS
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Dashboard", action = "Index", id = UrlParameter.Optional }
+                //defaults: new { controller = "Site", action = "SiteDBDetail", id = UrlParameter.Optional }
             );
         }
     }

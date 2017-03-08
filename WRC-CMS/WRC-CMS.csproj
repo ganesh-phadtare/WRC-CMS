@@ -206,6 +206,11 @@
     <Content Include="images\block001.gif" />
     <Content Include="images\block002.gif" />
     <Content Include="images\block003.gif" />
+    <Content Include="images\Content.png" />
+    <Content Include="images\Content1.png" />
+    <Content Include="images\Content2.png" />
+    <Content Include="images\Dashboard.jpg" />
+    <Content Include="images\Dashboard1.png" />
     <Content Include="images\her_eyelashes-t2.jpg" />
     <Content Include="images\imageline2.gif" />
     <Content Include="images\image_line3.gif" />
@@ -235,6 +240,10 @@
     <Content Include="images\nav401010824i.gif" />
     <Content Include="images\navgray01.gif" />
     <Content Include="images\navgreen02.gif" />
+    <Content Include="images\NewContent1.png" />
+    <Content Include="images\NewContent2.png" />
+    <Content Include="images\NewDashboard.jpg" />
+    <Content Include="images\NewView.png" />
     <Content Include="images\rect39417018.gif" />
     <Content Include="images\rect40532402.gif" />
     <Content Include="images\rect49024914.gif" />
@@ -567,6 +576,7 @@
     <Content Include="Views\Shared\PageLayout.cshtml" />
     <Content Include="Views\Site\AddSite1.cshtml" />
     <Content Include="Views\ContentStyle\ContentPanel.cshtml" />
+    <Content Include="Views\Site\SiteDBDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
