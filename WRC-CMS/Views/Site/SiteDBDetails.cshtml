@@ -1,0 +1,570 @@
+﻿
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>VW-Refresh</title>
+    <script async="" src="~/VW-Refresh_files/analytics.js.download"></script>
+    <script src="~/VW-Refresh_files/jquery-3.1.1.min.js.download" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="~/VW-Refresh_files/hammer.min.js.download"></script>
+    <script src="~/VW-Refresh_files/Chart.min.js.download"></script>
+    <script src="~/VW-Refresh_files/materialize.min.js.download"></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-91282708-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!--<base href="/">-->
+    <base href=".">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/VW-Refresh_files/icon" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="~/VW-Refresh_files/font-awesome.min.css" media="screen,projection">
+    @*<link rel="stylesheet" href="~/VW-Refresh_files/materialize.css">*@
+    <link rel="stylesheet" href="~/VW-Refresh_files/styles.css">
+    <link rel="stylesheet" href="~/VW-Refresh_files/splash_screen.css">
+    <link rel="icon" type="image/x-icon" href="https://my.v2solutions.com/favicon.ico">
+    <style type="text/css">
+        /* You can add global styles to this file, and also import other style files */
+    </style>
+    <style></style>
+    <style>
+        .loading-wrapper[_ngcontent-xlf-11] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+        }
+
+        .clear-loading[_ngcontent-xlf-11] {
+            text-align: center;
+            margin: 0 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .loading-effect-1[_ngcontent-xlf-11] {
+            width: 60px;
+            height: 60px;
+        }
+
+            .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11] {
+                display: block;
+                -webit-border-radius: 50%;
+                -moz-border-radius: 50%;
+                -ms-border-radius: 50%;
+                -o-border-radius: 50%;
+                border-radius: 50%;
+                border: 4px solid #fff;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -moz-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                -o-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:first-child {
+                    width: 100%;
+                    height: 100%;
+                    border-color: #2d81af;
+                    border-left-color: transparent;
+                    top: 0;
+                    left: 0;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:nth-child(2) {
+                    width: 65%;
+                    height: 65%;
+                    border-color: #f15a24;
+                    border-right-color: transparent;
+                    top: 17.5%;
+                    left: 17.5%;
+                    -webkit-animation: effect-1-2 3s infinite linear;
+                    -moz-animation: effect-1-2 3s infinite linear;
+                    -ms-animation: effect-1-2 3s infinite linear;
+                    -o-animation: effect-1-2 3s infinite linear;
+                    animation: effect-1-2 3s infinite linear;
+                }
+
+                .loading-effect-1[_ngcontent-xlf-11] span[_ngcontent-xlf-11]:last-child {
+                    width: 30%;
+                    height: 30%;
+                    border-color: #888489;
+                    border-bottom-color: transparent;
+                    top: 35%;
+                    left: 35%;
+                    -webkit-animation: effect-1-1 4s infinite linear;
+                    -moz-animation: effect-1-1 4s infinite linear;
+                    -ms-animation: effect-1-1 4s infinite linear;
+                    -o-animation: effect-1-1 4s infinite linear;
+                    animation: effect-1-1 4s infinite linear;
+                }
+
+        @@-webkit-keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@keyframes effect-1-1 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @@-webkit-keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+
+        @@keyframes effect-1-2 {
+            from {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(-360deg);
+                -moz-transform: rotate(-360deg);
+                -ms-transform: rotate(-360deg);
+                -o-transform: rotate(-360deg);
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+    <style>
+        .modal-custom[_ngcontent-xlf-13] {
+            z-index: 1003;
+            display: block;
+            opacity: 1;
+            transform: scaleX(1);
+            top: 10%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            background-color: #fafafa;
+            max-height: 80%;
+            width: 40%;
+            margin: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
+            border-radius: 2px;
+            will-change: top, opacity;
+            box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+            padding: 10px;
+            background: #f9f9f9;
+        }
+
+            .modal-custom[_ngcontent-xlf-13] .modal-header[_ngcontent-xlf-13] {
+                padding: 10px 10px 15px 10px;
+                border-bottom: solid 1px #f15a24;
+                clear: both;
+            }
+
+                .modal-custom[_ngcontent-xlf-13] .modal-header[_ngcontent-xlf-13] h4[_ngcontent-xlf-13] {
+                    font-family: 'Lato-Bold';
+                    font-size: 16px;
+                    color: #000000;
+                    margin: 0;
+                    display: inline-block;
+                }
+
+            .modal-custom[_ngcontent-xlf-13] .modal-content[_ngcontent-xlf-13] .modal-footer[_ngcontent-xlf-13] {
+                border-radius: 0 0 2px 2px;
+                background-color: #fafafa;
+                padding: 0 10px 0 0;
+                height: 40px;
+                width: 100%;
+            }
+
+                .modal-custom[_ngcontent-xlf-13] .modal-content[_ngcontent-xlf-13] .modal-footer[_ngcontent-xlf-13] .btn[_ngcontent-xlf-13] {
+                    float: right;
+                    background: #f15a24;
+                    margin: 0 10px 0 0;
+                }
+
+            .modal-custom[_ngcontent-xlf-13] i[_ngcontent-xlf-13] {
+                color: #494342;
+                vertical-align: middle;
+                font-size: 20px;
+            }
+
+            .modal-custom[_ngcontent-xlf-13] h4[_ngcontent-xlf-13] {
+                font-family: 'Lato-Bold';
+                color: #000000;
+                display: inline-block;
+            }
+
+        .modal-overlay[_ngcontent-xlf-13] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            z-index: 1002;
+            display: block;
+            opacity: 0.5;
+            will-change: opacity;
+        }
+
+        /*.dark-gray {
+                height: 106px !important;
+            }*/
+
+        .leave-tbody {
+            max-height: 800px !important;
+        }
+    </style>
+    <style>
+        .chart[_ngcontent-xlf-9] {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
+        <!--style="height: 106px;"-->
+        <div _ngcontent-xlf-78="" class="navigation-div">
+            <div _ngcontent-xlf-78="" id="top-div-msg">
+            </div>
+            <nav _ngcontent-xlf-78="" class="dark-gray">
+                <sidenav-panel _ngcontent-xlf-78="">
+                    <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
+                        <li routerlinkactive="active" class="no-padding first">
+                            <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="http://localhost:49791/Dashboard">
+                                <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: block;"></div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding second">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/">
+                                <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;"></div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding fifth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/" style="display:block ">
+                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style
+                            </a>
+                            <div class="collapsible-body" id="childNav" style="display: none;"></div>
+                        </li>
+                    </ul>
+                </sidenav-panel>
+                <h5 class="header-title">
+                    <a href="http://localhost:49791/dashboard">
+                        <img class="header-logo responsive-img" src="/images/logo-img.png"><span> SiteName </span>
+                    </a>
+                </h5>
+            </nav>
+        </div>
+    </div>
+    <main _ngcontent-xlf-78="" class="attendance-main">
+        <div _ngcontent-eot-79="" class="breadcrumb-nav">
+            <div _ngcontent-eot-79="" class="row margin-zero">
+                <div _ngcontent-eot-79="" class="col s12">
+                    <h5 _ngcontent-eot-79="">
+                        Site Database Details
+                        <a _ngcontent-eot-79="" class="help-btn" href="/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i _ngcontent-eot-79="" aria-hidden="true" class="right fa fa-question-circle"></i></a>
+                        <span _ngcontent-eot-79="" class="right mandatory-message">
+                            @*<span _ngcontent-eot-79="">IND<img _ngcontent-eot-79="" class="flag-img" src="/images/india-flag.png"></span>*@
+                        </span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="tab-container">
+                <div class="row">
+                    <router-outlet></router-outlet><app-leave _nghost-xlf-80="">
+                        <div _ngcontent-xlf-80="" class="attendance-wrapper p-top20" style="width: 100%;float: left;">
+                            <div _ngcontent-xlf-80="" class="row attendance-data">
+
+                                <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 55% !important; ">
+                                    <div _ngcontent-xlf-80="" class="col s12 padding-zero">
+                                        <div _ngcontent-xlf-80="" class="apply-for-leave-container">
+                                            <div _ngcontent-xlf-80="" class="header">
+                                                <h4 _ngcontent-eot-80="">Create / Edit Database Details</h4>
+
+                                            </div>
+                                            <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
+                                                <div _ngcontent-xlf-80="">
+                                                    <ui-form _ngcontent-xlf-80="" columnorientation="3" controlcss="" formcss="">
+
+                                                        <div class="">
+                                                            <form class="form-element ng-untouched ng-pristine ng-invalid" name="datapluspics" method="Post" enctype="multipart/form-data">
+                                                                <div class="row">
+                                                                    <div>
+                                                                        <ui-input class="ng-untouched ng-pristine ng-invalid">
+
+                                                                            <div class="view-form-info ui-input">
+                                                                                <div class="col s12">
+                                                                                    @Html.AntiForgeryToken()
+                                                                                    <div class="form-horizontal">
+                                                                                        @*<h4>Add View</h4>
+                                                                                            <hr />*@
+                                                                                        @Html.ValidationSummary(true)
+                                                                                        <div class="row"></div>
+                                                                                        <div class="form-group" hidden="hidden">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.Oid, new { @class = "control-label col-md-2" })*@
+                                                                                            <div class="col-md-10">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.Oid)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Oid)*@
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("Site Name", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                @*@Html.ListBox("View List", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))*@
+                                                                                                @Html.DropDownList("View List", new SelectList("", "Oid", "Name", ""))
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("Server Name", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)*@
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("Description", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)*@
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("Database Name", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)*@
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("User ID", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)*@
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            @*@Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })*@
+                                                                                            @Html.Label("Password", new { @class = "control-label col-md-2" })
+                                                                                            <div class="col-md-10">
+                                                                                                <input style="position:relative" class="invalidControl ng-pristine ng-valid ng-touched" placeholder="" type="text">
+                                                                                                @*@Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)*@
+                                                                                            </div>
+                                                                                        </div>                                                                                       
+
+                                                                                        <div _ngcontent-xlf-80="" class="row m-bottom0">
+                                                                                            <div _ngcontent-xlf-80="" class="col s12 m6 leave-action table-note left-align">
+                                                                                                <!--<h6 _ngcontent-xlf-80="">To apply Long Leave/Paternity Leave contact HR.</h6>-->
+                                                                                            </div>
+                                                                                            <div _ngcontent-xlf-80="" class="col s12 m6 leave-action right-align">
+                                                                                                <div class="form-group">
+                                                                                                    <div class="col-md-offset-2 col-md-10">
+                                                                                                        <input type="submit" value="Submit" class="btn btn-default" id="Submit" />
+                                                                                                        <a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn reset" id="cancel" title="Cancel">Cancel</a>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-offset-2 col-md-10" style="color:green">
+                                                                                                @*@ViewBag.Message*@
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </ui-input>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </ui-form>
+                                                </div>
+                                                <div _ngcontent-xlf-80="" class="row m-bottom0">
+                                                    <div _ngcontent-xlf-80="" class="col s12 m6 leave-action table-note left-align">
+                                                        <!--<h6 _ngcontent-xlf-80="">To apply Long Leave/Paternity Leave contact HR.</h6>-->
+                                                    </div>
+                                                    <div _ngcontent-xlf-80="" class="col s12 m6 leave-action right-align">
+                                                        @*<a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn submit" id="" title="Submit">Submit</a>
+                                                            <a _ngcontent-xlf-80="" class="waves-effect waves-light btn custom-btn reset" title="Cancel">Cancel</a>*@
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 40% !important; ">
+                                    <div _ngcontent-xlf-80="" class="">
+                                        <div _ngcontent-xlf-80="" class="table-container padding-zero">
+                                            <div _ngcontent-xlf-80="" class="row m-bottom5">
+                                                <div _ngcontent-xlf-80="" class="col s12 padding-zero">
+                                                    <div _ngcontent-xlf-80="" class="table-responsive">
+                                                        <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
+                                                            <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
+                                                                <tr _ngcontent-xlf-80="">
+                                                                    @*@if (Model.SiteList != null)
+                                                                        {
+                                                                            foreach (var item in Model.SiteList)
+                                                                            {*@
+                                                                    @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => item.Name)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => item.URL)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.Title)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.IsActive)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>*@
+                                                                    <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">Col1</th>
+                                                                    <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">Col1</th>
+                                                                    @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Description)</th>*@
+                                                                    <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Col1</th>
+                                                                    <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
+                                                                    @*break;
+                                                                            }
+                                                                        }*@
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody _ngcontent-xlf-80="" class="leave-tbody">
+                                                                @*@foreach (var item in Model.ContentList)
+                                                                    {
+                                                                        <tr _ngcontent-xlf-80="">
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectView)</span></div>
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Name)</span></div>
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.IsActive)
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, SiteId = item.SiteID }) |
+                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                            </td>
+                                                                        </tr>
+                                                                    }*@
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div _ngcontent-xlf-80="" class="row">
+                                        <!--<div _ngcontent-xlf-80="" class="col s12 table-note">
+                                            <span _ngcontent-xlf-80=""><i _ngcontent-xlf-80="" class="pending-msg fa fa-pencil"></i>Only future date pending entries will be editable.</span>
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div _ngcontent-xlf-80="" class="holiday-modal">
+                            <ui-custom-model _ngcontent-xlf-80="" _nghost-xlf-13="">
+                            </ui-custom-model>
+                        </div>
+                        <div _ngcontent-xlf-80="" class="holiday-modal">
+                            <ui-custom-model _ngcontent-xlf-80="" _nghost-xlf-13="">
+                            </ui-custom-model>
+                        </div>
+                        <loader-component _ngcontent-xlf-80="" _nghost-xlf-11="">
+                        </loader-component>
+                    </app-leave>
+                </div>
+            </div>
+        </div>
+        </leave>
+    </main>
+</body>
+</html>
