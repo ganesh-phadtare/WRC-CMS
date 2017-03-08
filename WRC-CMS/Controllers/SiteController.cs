@@ -245,7 +245,7 @@ namespace WRC_CMS.Controllers
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
+                dicParams.Add("@Id", id);
                 proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
                 //return RedirectToAction("GetAllSitesDetails");
                 return RedirectToAction("GetAllSite");
@@ -294,7 +294,7 @@ namespace WRC_CMS.Controllers
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", Oid);
+                    dicParams.Add("@Id", Oid);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@url", URL);
                     dicParams.Add("@Logo", 0101);

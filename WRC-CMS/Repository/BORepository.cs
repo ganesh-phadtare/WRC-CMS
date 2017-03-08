@@ -16,13 +16,13 @@ namespace WRC_CMS.Repository
             return true;
         }
 
-        public static async Task<List<SiteModel>> GetAllSites(WebApiProxy proxy)
+        public static async Task<List<SiteModel>> GetAllSites(WebApiProxy proxy, int Id = -1, string SiteName = "")
         {
             List<SiteModel> SiteList = new List<SiteModel>();
             Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("@Id", -1);
+            dict.Add("@Id", Id);
             dict.Add("@LoadOnlyActive", 0);
-            dict.Add("@SiteName", "");
+            dict.Add("@SiteName", SiteName);
 
             var dataSet = await proxy.ExecuteDataset("SP_SiteSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
@@ -67,22 +67,42 @@ namespace WRC_CMS.Repository
                 dicParams.Add("@IsDefault", "0");
             dicParams.Add("@SiteId", ViewObject.SiteID);
 
-            //if (ViewObject.CreateMenu)
-            //    dicParams.Add("@IsMenu", "1");
-            //else
-            //    dicParams.Add("@IsMenu", "0");
-
-            //DataSet dataSet = null;
-            //await Task.Run(() =>
-            //     {
             DataSet dataSet = await proxy.ExecuteDataset("SP_ViewAddUp", dicParams);
-            //});
+
             if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
             {
                 if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
                 {
                     int ViewID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
                     return ViewID;
+                }
+            }
+            return -1;
+        }
+
+        public static async Task<int> AddSiteDB(WebApiProxy proxy, SiteDbModel SiteDBObject, bool IsNewObject = false)
+        {
+            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+            if (IsNewObject)
+                dicParams.Add("@Id", -1);
+            else
+                dicParams.Add("@Id", SiteDBObject.Id);
+            dicParams.Add("@Name", SiteDBObject.Name);
+            dicParams.Add("@Server", SiteDBObject.Server);
+            dicParams.Add("@Database", SiteDBObject.Database);
+            dicParams.Add("@UserID", SiteDBObject.UserID);
+            dicParams.Add("@Password", SiteDBObject.Password);
+            dicParams.Add("@Description", SiteDBObject.Description);
+            dicParams.Add("@SiteId", SiteDBObject.SiteId);
+
+            DataSet dataSet = await proxy.ExecuteDataset("SP_SiteDBAddUp", dicParams);
+
+            if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    int SiteDB = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+                    return SiteDB;
                 }
             }
             return -1;
@@ -144,6 +164,31 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return ViewList;
+        }
+
+        public static async Task<List<SiteDbModel>> GetAllSiteDb(WebApiProxy proxy)
+        {
+            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Id", -1);
+            var dataSet = await proxy.ExecuteDataset("SP_SiteDBSelect", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                return (from DataRow row in dataSet.Tables[0].Rows
+                        select new SiteDbModel
+                        {
+                            Id = Convert.ToInt32(row["Id"].ToString()),
+                            Name = row["Name"].ToString(),
+                            Server = row["Server"].ToString(),
+                            Database = row["Database"].ToString(),
+                            UserID = row["UserID"].ToString(),
+                            Password = row["Password"].ToString(),
+                            Description = row["Description"].ToString(),
+                            SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
+                            SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
+                        }).ToList();
+            }
+            return new List<SiteDbModel>();
         }
 
         public static async Task<List<ContentStyleModel>> GetAllContents(WebApiProxy proxy)

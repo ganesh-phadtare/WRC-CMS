@@ -175,6 +175,7 @@
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
     <Compile Include="Controllers\AddViewController.cs" />
+    <Compile Include="Controllers\SiteDbController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -183,6 +184,7 @@
     <Compile Include="Models\BulkDataModel.cs" />
     <Compile Include="Models\ContentStyleModel.cs" />
     <Compile Include="Models\MenuModel.cs" />
+    <Compile Include="Models\SiteDbModel.cs" />
     <Compile Include="Models\SiteModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -577,6 +579,7 @@
     <Content Include="Views\Site\AddSite1.cshtml" />
     <Content Include="Views\ContentStyle\ContentPanel.cshtml" />
     <Content Include="Views\Site\SiteDBDetails.cshtml" />
+    <Content Include="Views\SiteDb\GetAllSiteDb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
