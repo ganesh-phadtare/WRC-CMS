@@ -372,5 +372,10 @@ namespace WRC_CMS.Controllers
                 return View();
             }
         }
+
+        public ActionResult SiteDBDetail()
+        {
+            return View("SiteDBDetails");
+        }
     }
 }

@@ -567,6 +567,7 @@
     <Content Include="Views\Shared\PageLayout.cshtml" />
     <Content Include="Views\Site\AddSite1.cshtml" />
     <Content Include="Views\ContentStyle\ContentPanel.cshtml" />
+    <Content Include="Views\Site\SiteDBDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
