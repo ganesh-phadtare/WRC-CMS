@@ -108,6 +108,30 @@ namespace WRC_CMS.Repository
             return -1;
         }
 
+        public static async Task<int> AddSiteMisc(WebApiProxy proxy, SiteMiscModel SiteMiscObject, bool IsNewObject = false)
+        {
+            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+            if (IsNewObject)
+                dicParams.Add("@Id", -1);
+            else
+                dicParams.Add("@Id", SiteMiscObject.Id);
+            dicParams.Add("@Key", SiteMiscObject.Key);
+            dicParams.Add("@Value", SiteMiscObject.Value);
+            dicParams.Add("@SiteId", SiteMiscObject.SiteId);
+
+            DataSet dataSet = await proxy.ExecuteDataset("SP_SiteMiscAddUp", dicParams);
+
+            if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    int SiteMisc = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+                    return SiteMisc;
+                }
+            }
+            return -1;
+        }
+
         public static async Task<int> AddContentStyle(WebApiProxy proxy, ContentStyleModel ContentStyleModelObject)
         {
             Dictionary<string, object> dicParams = new Dictionary<string, object>();
@@ -190,6 +214,28 @@ namespace WRC_CMS.Repository
             }
             return new List<SiteDbModel>();
         }
+
+        public static async Task<List<SiteMiscModel>> GetAllSiteMISC(WebApiProxy proxy)
+        {
+            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Id", -1);
+            var dataSet = await proxy.ExecuteDataset("SP_SiteMiscSelect", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                return (from DataRow row in dataSet.Tables[0].Rows
+                        select new SiteMiscModel
+                        {
+                            Id = Convert.ToInt32(row["Id"].ToString()),
+                            Key = row["Key"].ToString(),
+                            Value = row["Value"].ToString(),
+                            SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
+                            SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
+                        }).ToList();
+            }
+            return new List<SiteMiscModel>();
+        }
+
 
         public static async Task<List<ContentStyleModel>> GetAllContents(WebApiProxy proxy)
         {
