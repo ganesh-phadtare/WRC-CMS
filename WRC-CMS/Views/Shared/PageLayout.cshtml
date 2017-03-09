@@ -478,7 +478,7 @@
                                                                                                 @*<div class="form-group">
                                                                                                         @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
                                                                                                         <div class="col-md-10">
-                                                                                                            @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
+                                                                                                            @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Id", "Name", null))
                                                                                                             @Html.ValidationMessageFor(model => model.SelectSite)
                                                                                                         </div>
                                                                                                     </div>*@

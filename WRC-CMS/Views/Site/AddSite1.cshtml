@@ -308,7 +308,7 @@
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title=" dashboard">
-                                    <img class="circle" style="width:32px; height:32px" src="./VW-Refresh_files/4378.jpg">
+                                    <img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png">
                                 </i> Dashboard
                             </a>
 
@@ -352,13 +352,13 @@
                     <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
 
                 </ul>
-                <sidenav-button _ngcontent-xlf-78="">
+                @*<sidenav-button _ngcontent-xlf-78="">
                     <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
                         <i aria-hidden="true" class="fa fa-bars"></i>
                     </a>
-                </sidenav-button>
+                </sidenav-button>*@
                 <h5 class="header-title">
-                    <a href="http://localhost:49791/dashboard"><img class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> WRC <span>CMS Application </span></a>
+                    <a href="http://localhost:49791/dashboard"><img class="header-logo responsive-img" src="/images/logo-img.png"> WRC <span>CMS Application </span></a>
                 </h5>
             </nav>
         </div>
@@ -372,7 +372,7 @@
                             Site Management
                             <a class="help-btn" href="" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>
                             <span class="right mandatory-message">
-                                <span>IND<img class="flag-img" src="./VW-Refresh_files/india-flag.png"></span>
+                                <span>IND<img class="flag-img" src="/images/india-flag.png"></span>
                             </span>
                         </h5>
                     </div>
@@ -475,7 +475,7 @@
                                                                                             @*<div class="form-group">
                                                                                                     @Html.LabelFor(model => model.SiteView.SelectSite, new { @class = "control-label col-md-2" })
                                                                                                     <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.SiteView.SelectSite, new SelectList(Model.SiteView., "Oid", "Name", null))
+                                                                                                        @Html.DropDownListFor(model => model.SiteView.SelectSite, new SelectList(Model.SiteView., "Id", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.SiteView.SelectSite)
                                                                                                     </div>
                                                                                                 </div>*@

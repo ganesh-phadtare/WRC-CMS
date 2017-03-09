@@ -342,13 +342,18 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Content Style"></i> Content Style
-                            </a>
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
+                                    <i class="fa fa-money" title="Content Style"><img style="width:32px; height:32px" src="/images/NewContent1.png"></i> Views
+                                </a>*@
 
-                            <div class="collapsible-body" id="childNav" style="display: none;">
+                            <div class="collapsible-header" routerlinkactive="active" title="Content Style">
+                                <h5>@Html.ActionLink("Content Style", "GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID }, new { @style = "background-image:url('/images/Content1.png')" }) </h5>
+                                @*<a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
+                                        <i class="fa fa-money" title="Content Style"></i> Content Style
+                                    </a>*@
 
-                            </div>
+                                <div class="collapsible-body" id="childNav" style="display: none;">
+                                </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = ViewBag.CurrSiteID })">
@@ -504,7 +509,7 @@
                                                                                             @*<div class="form-group">
                                                                                                     @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
                                                                                                     <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
+                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Id", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.SelectSite)
                                                                                                     </div>
                                                                                                 </div>*@
@@ -513,7 +518,7 @@
                                                                                                 @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.Name)
-                                                                                                    @Html.Hidden("Oid", Model.NewView.Oid)
+                                                                                                    @Html.Hidden("Id", Model.NewView.Oid)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
                                                                                                     @Html.ValidationMessageFor(model => model.NewView.Name)
                                                                                                 </div>

@@ -387,8 +387,8 @@
                                                                                             @*@Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })*@
                                                                                             @Html.Label("Site Name", new { @class = "control-label col-md-2" })
                                                                                             <div class="col-md-10">
-                                                                                                @*@Html.ListBox("View List", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))*@
-                                                                                                @Html.DropDownList("View List", new SelectList("", "Oid", "Name", ""))
+                                                                                                @*@Html.ListBox("View List", new SelectList(Model.ViewList, "Id", "Name", Model.SelectView))*@
+                                                                                                @Html.DropDownList("View List", new SelectList("", "Id", "Name", ""))
                                                                                             </div>
                                                                                         </div>
 

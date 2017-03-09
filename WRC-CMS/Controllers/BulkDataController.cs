@@ -57,7 +57,7 @@ namespace WRC_CMS.Controllers
             for (int i = 0; i < noOfRecords; i++)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
                 dicParams.Add("@Logo", new ComplexDataModel(typeof(Byte[]), GetImage()));
@@ -93,7 +93,7 @@ namespace WRC_CMS.Controllers
             for (int i = 0; i < noOfRecords; i++)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
                 dicParams.Add("@Logo", GetImage());
@@ -113,7 +113,7 @@ namespace WRC_CMS.Controllers
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
 
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Views", MockData.RandomNumber.Next(0, GetMaxNumber("Views")));
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@Descr", MockData.Address.SecondaryAddress());

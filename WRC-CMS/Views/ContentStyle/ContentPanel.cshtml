@@ -319,6 +319,8 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/@Model.ContentView.SiteID">
+                                <i class="fa fa-money" title="Views"><img style="width:32px; height:32px" src="/images/View.png"></i> Views*@
                             <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteID })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
@@ -346,6 +348,8 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
+                            @*<a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.ContentView.SiteID">
+                                <i class="fa fa-money" title="Content Style"><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style*@
                             <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
                                 <i class="fa fa-money" title="Content Style"></i> Content Style
                             </a>
@@ -442,35 +446,73 @@
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
 
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.ListBox("View List", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))
-                                                                                                    @* @Html.DropDownListFor(model => model.ContentView.SelectView, new SelectList(Model.ContentView.View, "Oid", "Name", null))
-                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.SelectView)*@
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            @*<div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.DropDownList("DDLList", new SelectList(Model.ViewList, "Id", "Name", Model.SelectView))
+                                                                                                    </div>
+                                                                                                </div>*@
+
                                                                                             <div class="form-group" hidden="hidden">
-                                                                                                @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.ContentView.Id, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.ViewID)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.ViewID)
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            <div class="form-group" hidden="hidden">
-                                                                                                @Html.LabelFor(model => model.ContentView.Oid, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Oid)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Oid)
+                                                                                                    @Html.EditorFor(model => model.ContentView.Id)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Id)
                                                                                                 </div>
                                                                                             </div>
 
+                                                                                            @*<div class="form-group" hidden="hidden">
+                                                                                                    @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.ContentView.ViewID)
+                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.ViewID)
+                                                                                                    </div>
+                                                                                                </div>*@
+
+                                                                                            <div class="form-group" hidden="hidden">                                                                                               
+                                                                                                <div class="col-md-10">
+                                                                                                    @*@Html.EditorFor(model => @Model.SiteID)*@
+                                                                                                    @Html.Hidden("SiteID", Model.SiteID)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.SiteID)
+                                                                                                </div>
+                                                                                            </div>
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.Name, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.ContentView.Name)
                                                                                                     @Html.ValidationMessageFor(model => model.ContentView.Name)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ContentView.Description, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Description)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Description)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            @*<div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.ListBox("View List", new SelectList(Model.ViewList, "Id", "Name", Model.SelectView))
+                                                                                                    </div>
+                                                                                                </div>*@
+
+                                                                                            <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Orientation)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Orientation)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ContentView.Sequence, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Sequence)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Sequence)
                                                                                                 </div>
                                                                                             </div>
 
@@ -482,18 +524,18 @@
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Static Content",
-                                                                                                                 Value = "1"
+                                                                                                                 Value = "0"
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Content Of Page",
-                                                                                                                 Value = "2",
+                                                                                                                 Value = "1",
                                                                                                                  Selected = true
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Search Content",
-                                                                                                                 Value = "3"
+                                                                                                                 Value = "2"
                                                                                                              });
                                                                                                     }
 
@@ -503,10 +545,10 @@
 
 
                                                                                             <div class="form-group" id="StaticContentPanel" hidden="hidden">
-                                                                                                @Html.LabelFor(model => model.ContentView.Description, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.ContentView.Data, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-1">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Description)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Description)
+                                                                                                    @Html.EditorFor(model => model.ContentView.Data)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Data)
                                                                                                 </div>
                                                                                             </div>
 
@@ -517,19 +559,25 @@
                                                                                                         List<SelectListItem> SearchItems = new List<SelectListItem>();
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
+                                                                                                                 Text = "--Select Search Type--",
+                                                                                                                 Value = "-1",
+                                                                                                                 Selected=true 
+                                                                                                             });
+                                                                                                        SearchItems.Add(new SelectListItem
+                                                                                                             {
                                                                                                                  Text = "Alphabetical Search",
-                                                                                                                 Value = "1"
+                                                                                                                 Value = "0"                                                                                                                 
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Quick Search",
-                                                                                                                 Value = "2",
+                                                                                                                 Value = "1",
                                                                                                                  Selected = true
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Advance Search",
-                                                                                                                 Value = "3"
+                                                                                                                 Value = "2"
                                                                                                              });
                                                                                                     }
 
@@ -609,9 +657,10 @@
                                                                             <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.Title)</th>
                                                                             <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.IsActive)</th>
                                                                             <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>*@
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.ContentView.SelectView)</th>
+                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.ContentView.SelectView)</th>*@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => model.ContentView.Name)</th>
-                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Description)</th>*@
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Description)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Type)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.IsActive)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                         @*break;
@@ -626,10 +675,26 @@
 
                                                                         <tr _ngcontent-xlf-80="">
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectView)</span></div>
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Name)</span></div>
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Name)</span></div>
+                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.Description)</span></div>
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <div _ngcontent-xlf-80="" class="break-word">
+                                                                                    @if (item.Type == 0)
+                                                                                    {
+                                                                                        <span _ngcontent-xlf-80="">Static Content</span>
+                                                                                    }
+                                                                                    else if (item.Type == 1)
+                                                                                    {
+                                                                                        <span _ngcontent-xlf-80="">Content Of Page</span>
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        <span _ngcontent-xlf-80="">Search Content</span>
+                                                                                    }
+                                                                                </div>
                                                                             </td>
                                                                             @*<td _ngcontent-xlf-80="" class="col-width-20">
                                                                                     @Html.DisplayFor(modelItem => item.Description)
@@ -638,9 +703,9 @@
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Oid, EViewId = item.ViewID, SiteId = item.SiteID }) |
+                                                                                @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Id, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
-                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Oid, IsDefault = item.IsDefault }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -721,26 +786,37 @@
                     document.getElementById("ContentView_Description").value = "";
                     document.getElementById("ContentView_ViewID").value = "";
                     document.getElementById("ContentView_IsActive").value = false;
+                    document.getElementById("ContentView_Id").value = "";
                 });
 
                 $('#Submit').on('click', function () {
+                    var content = tinyMCE.activeEditor.getContent({ format: 'html' });
                     var selected = $("#View_List option:selected");
+                    //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
                         message += $(this).text() + " " + $(this).val() + "\n";
                     });
-                    alert(message);
+                    alert(content);
+                   // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Name: $("#ContentView_Name").val(),
+                            Name: $("#ContentView_Name").val(),                            
+                            CType: $("select#Exemple option:selected").val(),
+                            Orientation: $("#ContentView_Orientation").val(),
+                            Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
                             Description: $("#ContentView_Description").val(),
+                            Sequence: $("#ContentView_Sequence").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
-                            ViewID: $("#ContentView_ViewID").val(),
-                            Oid: $("#ContentView_Oid").val()
+                            SearchType: $("select#SearchType option:selected").val(),
+                            Siteid: $("#SiteID").val(),
+                            Id: $("#ContentView_Id").val()
+                            //ViewID: $("#ContentView_ViewID").val(),
+                            //ViewID: $("#DDLList option:selected").val(),
                         }),
                         async: false,
                         success: function (data) {
@@ -755,11 +831,11 @@
 
             function toggleDIvDisplay(e) {
                 //alert("Dropdown");
-                if (e == 1) {
+                if (e == 0) {
                     $('#StaticContentPanel').show();
                     $('#SearchPanel').hide();
                 }
-                else if (e == 3) {
+                else if (e == 2) {
                     $('#SearchPanel').show();
                     $('#StaticContentPanel').hide();
                 }
@@ -772,5 +848,42 @@
         </script>
     }
 
+    @*@section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+            <script type="text/javascript">
+                $(document).ready(function () {
+
+                    $('#Submit').unbind('click');
+
+                    $('#Submit').on('click', function () {
+                        $.ajax({
+                            url: "/AddView/Test",
+                            type: 'POST',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                Name: $("#NewView_Name").val(),
+                                URL: $("#NewView_URL").val(),
+                                Title: $("#NewView_Title").val(),
+                                IsActive: $('#NewView_IsActive').prop("checked"),
+                                IsDem: $('#NewView_IsDem').prop("checked"),
+                                IsAuth: $('#NewView_IsAuth').prop("checked"),
+                                CreateMenu: $('#NewView_CreateMenu').prop("checked"),
+                                Logo: $("#file").val(),
+                                Id: $("#Id").val(),
+                                SiteID: $("#SiteID").val(),
+                            }),
+                            async: false,
+                            success: function (data) {
+                                alert("Success");
+                            },
+                            failure: function (data) {
+                                alert("Fail");
+                            },
+                        });
+                    });
+                });
+            </script>
+        }*@
 </body>
 </html>

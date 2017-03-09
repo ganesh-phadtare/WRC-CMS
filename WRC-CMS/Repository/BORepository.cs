@@ -78,7 +78,7 @@ namespace WRC_CMS.Repository
                 }
             }
             return -1;
-        }
+        }  
 
         public static async Task<int> AddSiteDB(WebApiProxy proxy, SiteDbModel SiteDBObject, bool IsNewObject = false)
         {
@@ -162,15 +162,20 @@ namespace WRC_CMS.Repository
         public static async Task<int> AddContentStyle(WebApiProxy proxy, ContentStyleModel ContentStyleModelObject)
         {
             Dictionary<string, object> dicParams = new Dictionary<string, object>();
-            dicParams.Add("@Oid", "-1");
+            dicParams.Add("@Id", "-1");
             dicParams.Add("@Name", ContentStyleModelObject.Name);
-            dicParams.Add("@Descr", ContentStyleModelObject.Description);
-            dicParams.Add("@View", ContentStyleModelObject.ViewID);
-
+            dicParams.Add("@Type", ContentStyleModelObject.Type);
+            dicParams.Add("@Orientation", ContentStyleModelObject.Orientation);
+            dicParams.Add("@Data", ContentStyleModelObject.Data);
+            dicParams.Add("@Description", ContentStyleModelObject.Description);
+            dicParams.Add("@Sequence", ContentStyleModelObject.Sequence);
             if (ContentStyleModelObject.IsActive)
                 dicParams.Add("@IsActive", "1");
             else
                 dicParams.Add("@IsActive", "0");
+            dicParams.Add("@SiteID", ContentStyleModelObject.SiteID);          
+
+           
             //DataSet dataSet = null;
             //await Task.Run(() =>
             //{
@@ -304,7 +309,7 @@ namespace WRC_CMS.Repository
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new ContentStyleModel
                         {
-                            Oid = Convert.ToInt32(row["Oid"].ToString()),
+                            Id = Convert.ToInt32(row["Oid"].ToString()),
                             Name = row["Name"].ToString(),
                             Description = row["Descr"].ToString(),
                             IsActive = bool.Parse(row["IsActive"].ToString()),
