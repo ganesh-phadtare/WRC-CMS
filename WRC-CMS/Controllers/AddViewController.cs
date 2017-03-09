@@ -39,7 +39,7 @@ namespace WRC_CMS.Controllers
             ViewObject.Title = Title.ToString();
             ViewObject.IsActive = Convert.ToBoolean(IsActive);
             ViewObject.IsDem = Convert.ToBoolean(IsDem);
-            ViewObject.IsAuth = Convert.ToBoolean(IsAuth);
+            ViewObject.IsAuth  = Convert.ToBoolean(IsAuth);
             ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
             ViewObject.SiteID = SiteID;
             ViewObject.Orientation = Orientation;
