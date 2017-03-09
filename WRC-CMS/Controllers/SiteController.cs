@@ -146,7 +146,7 @@ namespace WRC_CMS.Controllers
 
         //                            DefaultView.Title = "Home";
         //                            DefaultView.IsActive = true;
-        //                            DefaultView.IsDem = true;
+        //                            DefaultView.IsDefault = true;
         //                            DefaultView.Authorized = true;
         //                            DefaultView.SiteID = SiteID;
         //                            DefaultView.CreateMenu = true;
@@ -325,7 +325,7 @@ namespace WRC_CMS.Controllers
                                 DefaultView.Logo = Encoding.ASCII.GetBytes("Hello");
                                 DefaultView.Orientation = "0";
                                 DefaultView.IsActive = true;
-                                DefaultView.IsAuth = true;
+                                DefaultView.Authorized = true;
                                 DefaultView.IsDefault = true;
                                 DefaultView.SiteID = SiteID;
                                 int ViewID = 0;
