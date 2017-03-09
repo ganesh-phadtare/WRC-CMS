@@ -520,9 +520,18 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.Key)
+                                                                                                    @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })
+                                                                                                    @*@Html.Hidden("DetailView_Key", Model.DetailView.Key)*@
                                                                                                     @Html.Hidden("Oid", Model.DetailView.Id)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Keys)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.DetailView.Key)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.Key)
                                                                                                 </div>
                                                                                             </div>
@@ -785,9 +794,12 @@
                 $('#cancel').on('click', function () {
                     document.getElementById("DetailView_Key").value = "";
                     document.getElementById("DetailView_Value").value = "";
+                    document.getElementById("Keys").value = "";
                 });
 
                 $('#Submit').on('click', function () {
+                    if (document.getElementById("Keys").value == "")
+                        alert("Key is required.");
                     $.ajax({
                         url: "/SiteMisc/AddSiteMisc",
                         type: 'POST',
@@ -809,6 +821,10 @@
                     });
                 });
             });
+
+            function OnChange(e) {
+                $('#DetailView_Key').val(e)
+            }
         </script>
     }
 </body>
