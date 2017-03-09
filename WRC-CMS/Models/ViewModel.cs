@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace WRC_CMS.Models
     {
         public bool IsDem { get; set; }
         public bool IsAuth { get; set; }
+        [Display(Name = "Create Menu")]
         public bool CreateMenu { get; set; }
         public int SiteID { get; set; }
 
@@ -22,6 +24,10 @@ namespace WRC_CMS.Models
         [StringLength(100, ErrorMessage = "Site cannot be longer than 100 characters.")]
         [Display(Name = "Site")]
         public string SelectSite { get; set; }
+
+        [Required(ErrorMessage = "Orientation is required.")]
+        [StringLength(100, ErrorMessage = "Orientation cannot be longer than 100 characters.")]
+        public string Orientation { get; set; }
     }
 
     public class CombineModel

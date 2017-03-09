@@ -12,6 +12,9 @@ using WRC_CMS.Communication;
 using WRC_CMS.Models;
 using WRC_CMS.Repository;
 
+
+
+using Newtonsoft.Json;
 namespace WRC_CMS.Controllers
 {
     public class SiteController : Controller
@@ -103,87 +106,87 @@ namespace WRC_CMS.Controllers
         //}
 
 
-        [HttpPost]
-        public async Task<ActionResult> AddSite(SiteModel SiteObject, HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file != null && file.ContentLength > 0)
-                {
-                    SiteObject.Logo = new byte[file.ContentLength];
-                    file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
-                }
-                if (ModelState.IsValid)
-                {
-                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", -1);
-                    dicParams.Add("@Name", SiteObject.Name);
-                    dicParams.Add("@url", SiteObject.URL);
-                    dicParams.Add("@Logo", 0101);
-                    dicParams.Add("@Title", SiteObject.Title);
-                    if (SiteObject.IsActive)
-                        dicParams.Add("@IsActive", "1");
-                    else
-                        dicParams.Add("@IsActive", "0");
-                    DataSet dataSet = null;
-                    await Task.Run(() =>
-                    {
-                        dataSet = proxy.ExecuteDataset("SP_SiteAddUp", dicParams).Result;
-                    });
+        //        [HttpPost]
+        //        public async Task<ActionResult> AddSite(SiteModel SiteObject, HttpPostedFileBase file)
+        //        {
+        //            try
+        //            {
+        //                if (file != null && file.ContentLength > 0)
+        //                {
+        //                    SiteObject.Logo = new byte[file.ContentLength];
+        //                    file.InputStream.Read(SiteObject.Logo, 0, file.ContentLength);
+        //                }
+        //                if (ModelState.IsValid)
+        //                {
+        //                    Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //                    dicParams.Add("@Id", -1);
+        //                    dicParams.Add("@Name", SiteObject.Name);
+        //                    dicParams.Add("@url", SiteObject.URL);
+        //                    dicParams.Add("@Logo", 0101);
+        //                    dicParams.Add("@Title", SiteObject.Title);
+        //                    if (SiteObject.IsActive)
+        //                        dicParams.Add("@IsActive", "1");
+        //                    else
+        //                        dicParams.Add("@IsActive", "0");
+        //                    DataSet dataSet = null;
+        //                    await Task.Run(() =>
+        //                    {
+        //                        dataSet = proxy.ExecuteDataset("SP_SiteAddUp", dicParams).Result;
+        //                    });
 
-                    int SiteID = 0;
-                    if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
-                    {
-                        if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
-                        {
-                            SiteID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+        //                    int SiteID = 0;
+        //                    if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+        //                    {
+        //                        if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+        //                        {
+        //                            SiteID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
 
-                            ViewModel DefaultView = new ViewModel();
-                            DefaultView.Name = "Home";
-                            DefaultView.URL = "Home";
-                            DefaultView.Title = "Home";
-                            DefaultView.IsActive = true;
-                            DefaultView.IsDem = true;
-                            DefaultView.IsAuth = true;
-                            DefaultView.SiteID = SiteID;
-                            DefaultView.CreateMenu = true;
-                            DefaultView.IsDefault = true;
-                            int ViewID = 0;
-                            await Task.Run(() =>
-                            {
-                                ViewID = BORepository.AddView(proxy, DefaultView, true).Result;
-                            });
-                            if (ViewID > 0)
-                            {
-                                ContentStyleModel DefaultContent = new ContentStyleModel();
-                                DefaultContent.Name = "Welcome";
-                                string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
-<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
-                                DefaultContent.Description = welcomebody;
+        //                            ViewModel DefaultView = new ViewModel();
+        //                            DefaultView.Name = "Home";
 
-                                DefaultContent.IsActive = true;
-                                DefaultContent.ViewID = ViewID;
-                                DefaultContent.IsDefault = true;
-                                int ContentID = 0;
-                                await Task.Run(() =>
-                                {
-                                    ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
-                                });
-                            }
-                        }
-                    }
-                    if (SiteID != 0)
-                        ViewBag.Message = "Site added successfully.";
-                    else
-                        ViewBag.Message = "Problem occured while creating site, kindly contact our support team.";
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //                            DefaultView.Title = "Home";
+        //                            DefaultView.IsActive = true;
+        //                            DefaultView.IsDem = true;
+        //                            DefaultView.Authorized = true;
+        //                            DefaultView.SiteID = SiteID;
+        //                            DefaultView.CreateMenu = true;
+        //                            DefaultView.IsDefault = true;
+        //                            int ViewID = 0;
+        //                            await Task.Run(() =>
+        //                            {
+        //                                ViewID = BORepository.AddView(proxy, DefaultView, true).Result;
+        //                            });
+        //                            if (ViewID > 0)
+        //                            {
+        //                                ContentStyleModel DefaultContent = new ContentStyleModel();
+        //                                DefaultContent.Name = "Welcome";
+        //                                string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
+        //<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
+        //                                DefaultContent.Description = welcomebody;
+
+        //                                DefaultContent.IsActive = true;
+        //                                DefaultContent.ViewID = ViewID;
+        //                                DefaultContent.IsDefault = true;
+        //                                int ContentID = 0;
+        //                                await Task.Run(() =>
+        //                                {
+        //                                    ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
+        //                                });
+        //                            }
+        //                        }
+        //                    }
+        //                    if (SiteID != 0)
+        //                        ViewBag.Message = "Site added successfully.";
+        //                    else
+        //                        ViewBag.Message = "Problem occured while creating site, kindly contact our support team.";
+        //                }
+        //                return View();
+        //            }
+        //            catch
+        //            {
+        //                return View();
+        //            }
+        //        }
 
         [HttpPost]
         public ActionResult EditSiteDetails(SiteModel SiteObject, HttpPostedFileBase file)
@@ -198,7 +201,7 @@ namespace WRC_CMS.Controllers
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", SiteObject.Oid);
+                    dicParams.Add("@Id", SiteObject.Oid);
                     dicParams.Add("@Name", SiteObject.Name);
                     dicParams.Add("@url", SiteObject.URL);
                     dicParams.Add("@Logo", 0101);
@@ -245,7 +248,7 @@ namespace WRC_CMS.Controllers
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
+                dicParams.Add("@Id", id);
                 proxy.ExecuteNonQuery("SP_SiteDel", dicParams);
                 //return RedirectToAction("GetAllSitesDetails");
                 return RedirectToAction("GetAllSite");
@@ -294,7 +297,7 @@ namespace WRC_CMS.Controllers
                 if (ModelState.IsValid)
                 {
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    dicParams.Add("@Oid", Oid);
+                    dicParams.Add("@Id", Oid);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@url", URL);
                     dicParams.Add("@Logo", 0101);
@@ -308,43 +311,49 @@ namespace WRC_CMS.Controllers
                     });
 
                     int SiteID = 0;
-                    if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+                    if (Oid == -1)
                     {
-                        if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                        if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
                         {
-                            SiteID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
-
-                            ViewModel DefaultView = new ViewModel();
-                            DefaultView.Name = "Home";
-                            DefaultView.URL = "Home";
-                            DefaultView.Title = "Home";
-                            DefaultView.IsActive = true;
-                            DefaultView.IsDem = true;
-                            DefaultView.IsAuth = true;
-                            DefaultView.SiteID = SiteID;
-                            DefaultView.CreateMenu = true;
-                            DefaultView.IsDefault = true;
-                            int ViewID = 0;
-                            await Task.Run(() =>
+                            if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
                             {
-                                ViewID = BORepository.AddView(proxy, DefaultView, true).Result;
-                            });
-                            if (ViewID > 0)
-                            {
-                                ContentStyleModel DefaultContent = new ContentStyleModel();
-                                DefaultContent.Name = "Welcome";
-                                string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
-<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
-                                DefaultContent.Description = welcomebody;
+                                SiteID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
 
-                                DefaultContent.IsActive = true;
-                                DefaultContent.ViewID = ViewID;
-                                DefaultContent.IsDefault = true;
-                                int ContentID = 0;
+                                ViewModel DefaultView = new ViewModel();
+                                DefaultView.Name = "Home";
+                                DefaultView.Title = "Home";
+                                DefaultView.Logo = Encoding.ASCII.GetBytes("Hello");
+                                DefaultView.Orientation = "0";
+                                DefaultView.IsActive = true;
+                                DefaultView.IsAuth = true;
+                                DefaultView.IsDefault = true;
+                                DefaultView.SiteID = SiteID;
+                                int ViewID = 0;
                                 await Task.Run(() =>
                                 {
-                                    ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
+                                    ViewID = BORepository.AddView(proxy, DefaultView, true).Result;
                                 });
+
+                                if (ViewID > 0)
+                                {
+                                    ContentStyleModel DefaultContent = new ContentStyleModel();
+                                    DefaultContent.Name = "Home";
+                                    string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
+<p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
+                                    DefaultContent.Type = 0;
+                                    DefaultContent.Orientation = "0";
+                                    DefaultContent.Data = JsonConvert.SerializeObject(welcomebody);
+                                    DefaultContent.Description = "Welcome";
+                                    DefaultContent.Sequence = 1;
+                                    DefaultContent.IsActive = true;
+                                    DefaultContent.SiteID = SiteID;
+
+                                    int ContentID = 0;
+                                    await Task.Run(() =>
+                                    {
+                                        ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
+                                    });
+                                }
                             }
                         }
                     }

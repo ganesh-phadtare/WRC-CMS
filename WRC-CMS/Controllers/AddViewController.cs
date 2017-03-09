@@ -40,7 +40,7 @@ namespace WRC_CMS.Controllers
             ViewObject.Title = Title.ToString();
             ViewObject.IsActive = Convert.ToBoolean(IsActive);
             ViewObject.IsDem = Convert.ToBoolean(IsDem);
-            ViewObject.IsAuth = Convert.ToBoolean(IsAuth);
+            ViewObject.IsAuth  = Convert.ToBoolean(IsAuth);
             ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
             ViewObject.SiteID = SiteID;
             try
@@ -120,7 +120,7 @@ namespace WRC_CMS.Controllers
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
+                dicParams.Add("@Id", id);
                 proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
 
                 ModelState.Clear();

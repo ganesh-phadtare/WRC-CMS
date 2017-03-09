@@ -35,7 +35,7 @@ namespace WRC_CMS.Controllers
             if (ModelState.IsValid && MenuObject != null)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@SiteId", MenuObject.SelectSite);
                 dicParams.Add("@ViewId", MenuObject.SelectView);
                 proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
@@ -61,7 +61,7 @@ namespace WRC_CMS.Controllers
             if (ModelState.IsValid && MenuObject != null)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", MenuObject.Oid);
+                dicParams.Add("@Id", MenuObject.Oid);
                 dicParams.Add("@SiteId", MenuObject.SelectSite);
                 dicParams.Add("@ViewId", MenuObject.SelectView);
                 proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
@@ -97,7 +97,7 @@ namespace WRC_CMS.Controllers
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
+                dicParams.Add("@Id", id);
                 proxy.ExecuteNonQuery("SP_MenuDel", dicParams);
                 return RedirectToAction("GetAllMenuDetails");
             }
