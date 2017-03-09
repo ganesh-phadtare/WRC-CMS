@@ -56,12 +56,12 @@ namespace WRC_CMS.Repository
             else
                 dicParams.Add("@IsActive", "0");
 
-            if (ViewObject.IsAuth)
-                dicParams.Add("@IsAuth", "1");
+            if (ViewObject.Authorized)
+                dicParams.Add("@Authorized", "1");
             else
-                dicParams.Add("@IsAuth", "0");
+                dicParams.Add("@Authorized", "0");
 
-            if (ViewObject.IsDem)
+            if (ViewObject.IsDefault)
                 dicParams.Add("@IsDefault", "1");
             else
                 dicParams.Add("@IsDefault", "0");
@@ -211,8 +211,8 @@ namespace WRC_CMS.Repository
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             IsActive = bool.Parse(row["IsActive"].ToString()),
-                            IsDem = bool.Parse(row["IsDefault"].ToString()),
-                            IsAuth = bool.Parse(row["Authorized"].ToString()),
+                            IsDefault = bool.Parse(row["IsDefault"].ToString()),
+                            Authorized = bool.Parse(row["Authorized"].ToString()),
                             Orientation = row["Orientation"].ToString(),
                             //CreateMenu = bool.Parse(row["IsMenu"].ToString()),
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),

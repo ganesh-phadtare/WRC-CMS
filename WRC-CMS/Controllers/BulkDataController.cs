@@ -99,7 +99,7 @@ namespace WRC_CMS.Controllers
                 dicParams.Add("@Logo", GetImage());
                 dicParams.Add("@Title", MockData.Product.ProductName());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
-                dicParams.Add("@IsAuth", MockData.RandomNumber.Next(0, 1));
+                dicParams.Add("@Authorized", MockData.RandomNumber.Next(0, 1));
                 dicParams.Add("@IsDefault", MockData.RandomNumber.Next(0, 1));
                 dicParams.Add("@IsMenu", MockData.RandomNumber.Next(0, 1));
 
