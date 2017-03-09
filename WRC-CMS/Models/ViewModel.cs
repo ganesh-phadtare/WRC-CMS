@@ -11,7 +11,7 @@ namespace WRC_CMS.Models
     {
         public bool IsDefault { get; set; }
         public bool Authorized { get; set; }
-        [Display(Name = "Create Menu")]
+        [Display(Name = "Menu")]
         public bool CreateMenu { get; set; }
         public int SiteID { get; set; }
 

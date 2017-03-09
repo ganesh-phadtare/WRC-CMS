@@ -39,7 +39,7 @@ namespace WRC_CMS.Controllers
             ViewObject.Title = Title.ToString();
             ViewObject.IsActive = Convert.ToBoolean(IsActive);
             ViewObject.IsDefault = Convert.ToBoolean(IsDefault);
-            ViewObject.Authorized  = Convert.ToBoolean(Authorized);
+            ViewObject.Authorized = Convert.ToBoolean(Authorized);
             ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
             ViewObject.SiteID = SiteID;
             ViewObject.Orientation = Orientation;
@@ -101,12 +101,19 @@ namespace WRC_CMS.Controllers
                 });
                 CombineModel com = new CombineModel();
                 com.NewView = views.FirstOrDefault(view => view.Oid == ViewID);
+                await Task.Run(() =>
+               {
+                   var IsMenuExist = BORepository.GetAllMenu(proxy).Result.FirstOrDefault(item => item.SiteId == SiteID && item.ViewId == ViewID);
+                   if (!ReferenceEquals(IsMenuExist, null))
+                       com.NewView.CreateMenu = true;
+               });
                 com.views = views;
                 if (views.Count > 0)
                 {
                     com.SiteName = views[0].SelectSite;
                     com.SiteID = views[0].SiteID;
                 }
+                ViewBag.CurrSiteID = SiteID;
                 return View("ViewsLV", com);
             }
             else
@@ -159,12 +166,12 @@ namespace WRC_CMS.Controllers
                 com.SiteName = views[0].SelectSite;
                 com.SiteID = views[0].SiteID;
             }
+            ViewBag.CurrSiteID = id;
             return View("ViewsLV", com);
         }
 
         public async Task<ActionResult> GetAllViewDetails(int id)
         {
-            ViewBag.CurrSiteID = id;
             ActionResult View = null;
             await Task.Run(() =>
              {

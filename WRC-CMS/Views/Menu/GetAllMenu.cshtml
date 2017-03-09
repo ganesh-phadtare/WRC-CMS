@@ -501,7 +501,7 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.View, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.DropDownList("Views", new SelectList(@Model.DetailView.View, "Oid", "Name", Model.DetailView.ViewId), "--Select View--", new { @onchange = "OnChange(this.value)" })
+                                                                                                    @Html.DropDownList("Views", new SelectList(@Model.DetailView.View, "Oid", "Name", Model.DetailView.ViewId), "--Select View--", new { @onchange = "OnChange(this.value,this.text)" })
                                                                                                     @Html.Hidden("Oid", Model.DetailView.Oid)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.View)
@@ -835,8 +835,12 @@
                 });
             });
 
-            function OnChange(e) {
+            function OnChange(e, f) {
                 $('#DetailView_ViewId').val(e)
+                if (e != "")
+                    $("#DetailView_Name").val($("#Views option:selected").text())
+                else
+                    $("#DetailView_Name").val("");
             }
         </script>
     }
