@@ -27,22 +27,22 @@ namespace WRC_CMS.Controllers
             return View(ViewObject);
         }
 
-        public async Task<ActionResult> Test(string Name, string URL, string Title, string IsActive, string IsDem, string IsAuth, string CreateMenu, object Logo, int Oid, int SiteID)
+        public async Task<ActionResult> Test(string Name, string Title, string IsActive, string IsDem, string IsAuth, string CreateMenu, object Logo, int Oid, string Orientation, int SiteID)
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL) || string.IsNullOrEmpty(Title))
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Title))
                 return RedirectToAction("GetAllViewDetails");
 
             ViewModel ViewObject = new ViewModel();
             if (Oid > 0)
                 ViewObject.Oid = Oid;
             ViewObject.Name = Name.ToString();
-            ViewObject.URL = URL.ToString();
             ViewObject.Title = Title.ToString();
             ViewObject.IsActive = Convert.ToBoolean(IsActive);
             ViewObject.IsDem = Convert.ToBoolean(IsDem);
             ViewObject.IsAuth  = Convert.ToBoolean(IsAuth);
             ViewObject.CreateMenu = Convert.ToBoolean(CreateMenu);
             ViewObject.SiteID = SiteID;
+            ViewObject.Orientation = Orientation;
             try
             {
                 //if (file != null && file.ContentLength > 0)
