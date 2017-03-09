@@ -83,6 +83,7 @@ namespace WRC_CMS.Controllers
                     com.SiteName = SiteMICs[0].SiteName;
                     com.SiteID = SiteID;
                 }
+                ViewBag.CurrSiteID = SiteID;
                 return View("GetAllSiteMisc", com);
             }
             else
@@ -120,8 +121,7 @@ namespace WRC_CMS.Controllers
         }
 
         public async Task<ActionResult> GetAllSiteMisc(int SiteId)
-        {
-            ViewBag.CurrSiteID = SiteId;
+        {            
             ActionResult View = null;
             await Task.Run(() =>
             {
@@ -133,6 +133,7 @@ namespace WRC_CMS.Controllers
         public async Task<ActionResult> ReturnToMainView(int SiteId)
         {
             ModelState.Clear();
+            ViewBag.CurrSiteID = SiteId;
             List<SiteMiscModel> SiteMISC = new List<SiteMiscModel>();
             await Task.Run(() =>
             {

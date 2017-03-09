@@ -78,7 +78,7 @@ namespace WRC_CMS.Repository
                 }
             }
             return -1;
-        }  
+        }
 
         public static async Task<int> AddSiteDB(WebApiProxy proxy, SiteDbModel SiteDBObject, bool IsNewObject = false)
         {
@@ -173,9 +173,9 @@ namespace WRC_CMS.Repository
                 dicParams.Add("@IsActive", "1");
             else
                 dicParams.Add("@IsActive", "0");
-            dicParams.Add("@SiteID", ContentStyleModelObject.SiteID);          
+            dicParams.Add("@SiteID", ContentStyleModelObject.SiteID);
 
-           
+
             //DataSet dataSet = null;
             //await Task.Run(() =>
             //{
@@ -214,9 +214,9 @@ namespace WRC_CMS.Repository
                             IsDefault = bool.Parse(row["IsDefault"].ToString()),
                             Authorized = bool.Parse(row["Authorized"].ToString()),
                             Orientation = row["Orientation"].ToString(),
-                            //CreateMenu = bool.Parse(row["IsMenu"].ToString()),
+                            CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
-                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
+                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
                         }).ToList();
             }
             return ViewList;
@@ -268,12 +268,27 @@ namespace WRC_CMS.Repository
             return new List<SiteMiscModel>();
         }
 
+        public static async Task<bool> CheckMenuExistOrNot(WebApiProxy proxy, int ViewID)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Id", -1);
+            dict.Add("@ViewId", ViewID);
+            var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows.Count > 0)
+                    return true;
+            }
+            return false;
+        }
+
         public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ViewModel> Views = GetAllViews(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@ViewId", -1);
             var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
             {
