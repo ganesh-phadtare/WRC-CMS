@@ -240,18 +240,18 @@ namespace WRC_CMS.Controllers
             ViewBag.Site = SiteId;
             ModelState.Clear();
             List<ContentStyleModel> contents = new List<ContentStyleModel>();
-            //List<ViewModel> ObjViewList = new List<ViewModel>();
+            List<ViewModel> ObjViewList = new List<ViewModel>();
             CombineContentModel combineContentModel = new CombineContentModel();
 
             await Task.Run(() =>
             {
                 contents.AddRange(GetAllContents(SiteId, 0).Result);
-                //ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
+                ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
             });
 
             combineContentModel.ContentView = new ContentStyleModel();
             combineContentModel.ContentList = contents;
-            //combineContentModel.ViewList = ObjViewList;
+            combineContentModel.ViewList = ObjViewList;
 
 
             if (contents.Count > 0)

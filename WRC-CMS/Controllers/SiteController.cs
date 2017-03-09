@@ -76,7 +76,7 @@ namespace WRC_CMS.Controllers
                     {
                         await Task.Run(() =>
                         {
-                            contents.AddRange(BORepository.GetAllContents(proxy).Result);
+                            //contents.AddRange(BORepository.GetAllContents(proxy).Result);
                         });
                         SelectetdView.Contents = new List<ContentStyleModel>();
                         SelectetdView.Contents.AddRange(contents.Where(ite => ite.ViewID == ViewID));

@@ -469,7 +469,7 @@
                                                                                                     </div>
                                                                                                 </div>*@
 
-                                                                                            <div class="form-group" hidden="hidden">                                                                                               
+                                                                                            <div class="form-group" hidden="hidden">
                                                                                                 <div class="col-md-10">
                                                                                                     @*@Html.EditorFor(model => @Model.SiteID)*@
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
@@ -552,6 +552,13 @@
                                                                                                 </div>
                                                                                             </div>
 
+                                                                                            <div class="form-group" id="ContentOfPagePanel" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Id", "Name", Model.SelectView))
+                                                                                                </div>
+                                                                                            </div>
+
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
                                                                                                 <label id="lblContType" class="control-label col-md-2">Search Type</label>
                                                                                                 <div class="col-md-10">
@@ -561,12 +568,12 @@
                                                                                                              {
                                                                                                                  Text = "--Select Search Type--",
                                                                                                                  Value = "-1",
-                                                                                                                 Selected=true 
+                                                                                                                 Selected = true
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Alphabetical Search",
-                                                                                                                 Value = "0"                                                                                                                 
+                                                                                                                 Value = "0"
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
@@ -791,21 +798,23 @@
 
                 $('#Submit').on('click', function () {
                     var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#View_List option:selected");
+                    var selected = $("#ViewList option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
-                        message += $(this).text() + " " + $(this).val() + "\n";
+                        message += $(this).text()+ "\n";
+                        //message += $(this).text() + " " + $(this).val() + "\n";
                     });
+                    //var Data = content
                     alert(content);
-                   // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
+                    // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Name: $("#ContentView_Name").val(),                            
+                            Name: $("#ContentView_Name").val(),
                             CType: $("select#Exemple option:selected").val(),
                             Orientation: $("#ContentView_Orientation").val(),
                             Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
@@ -834,14 +843,22 @@
                 if (e == 0) {
                     $('#StaticContentPanel').show();
                     $('#SearchPanel').hide();
+                    $('#ContentOfPagePanel').hide();                    
                 }
                 else if (e == 2) {
                     $('#SearchPanel').show();
                     $('#StaticContentPanel').hide();
+                    $('#ContentOfPagePanel').hide();
+                }
+                else if (e == 1) {
+                    $('#SearchPanel').hide();
+                    $('#StaticContentPanel').hide();
+                    $('#ContentOfPagePanel').show();
                 }
                 else {
                     $('#StaticContentPanel').hide();
                     $('#SearchPanel').hide();
+                    $('#ContentOfPagePanel').hide();
                 }
             }
 
