@@ -1,4 +1,4 @@
-﻿@model WRC_CMS.Models.CombineModel
+﻿@model WRC_CMS.Models.MenuModelLD
 
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
@@ -303,7 +303,6 @@
             <nav _ngcontent-xlf-78="" class="dark-gray">
                 <sidenav-panel _ngcontent-xlf-78="">
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
-                        <!--style="margin-top: 106px;"-->
 
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
@@ -359,16 +358,6 @@
 
                             </div>
                         </li>
-
-                        <!--<li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
-                                <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
-                            </a>
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>-->
                     </ul>
 
                 </sidenav-panel>
@@ -396,7 +385,7 @@
                 <div class="row margin-zero">
                     <div class="col s12">
                         <h5>
-                            View Management
+                            Menu Management
                             <!--<a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>-->
                             <span class="right mandatory-message">
                                 <!--<span>IND<a><img class="flag-img" src="./VW-Refresh_files/india-flag.png"></a></span>-->
@@ -418,7 +407,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create View", "GetAllViewDetails", new { id = @Model.SiteID })
+                                                        @Html.ActionLink("Create Menu", "GetAllMenu", new { SiteId = @Model.SiteID })
                                                     </h4>
 
                                                 </div>
@@ -510,64 +499,52 @@
                                                                                                 </div>*@
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.View, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Name)
-                                                                                                    @Html.Hidden("Oid", Model.NewView.Oid)
+                                                                                                    @Html.DropDownList("Views", new SelectList(@Model.DetailView.View, "Oid", "Name", Model.DetailView.ViewId), "--Select View--", new { @onchange = "OnChange(this.value)" })
+                                                                                                    @Html.Hidden("Oid", Model.DetailView.Oid)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Name)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.View)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.DetailView.ViewId, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.DetailView.ViewId)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.ViewId)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Title, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Name, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Title)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Title)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Name)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Name)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.URL, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Orientation)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Orientation)
+                                                                                                    @Html.EditorFor(model => model.DetailView.URL)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.URL)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.IsExternal, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    <input type="file" name="file" class="text-box single-line" />
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Logo)
+                                                                                                    @Html.EditorFor(model => model.DetailView.IsExternal)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.IsExternal)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsActive, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Order, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsActive)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsDem, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsDem)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsAuth, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsAuth)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.CreateMenu)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Order)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Order)
                                                                                                 </div>
                                                                                             </div>
 
@@ -635,34 +612,29 @@
                                                             <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.Title)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.IsActive)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.CreateMenu)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.ViewName)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Name)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.URL)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
 
-                                                                    @foreach (var item in Model.views)
+                                                                    @foreach (var item in Model.ListView)
                                                                     {
-
                                                                         <tr _ngcontent-xlf-80="">
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectSite)</span></div>
+                                                                                @Html.DisplayFor(modelItem => item.ViewName)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Title)
+                                                                                @Html.DisplayFor(modelItem => item.Name)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.IsActive)
+                                                                                @Html.DisplayFor(modelItem => item.URL)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.CreateMenu)
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Edit", "EditMenu", new { MenuID = item.Oid, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteMenu", new { id = item.Oid, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -828,31 +800,28 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    document.getElementById("NewView_Name").value = "";
-                    document.getElementById("NewView_Title").value = "";
-                    document.getElementById("NewView_IsActive").value = false;
-                    document.getElementById("NewView_IsDem").value = false;
-                    document.getElementById("NewView_IsAuth").value = false;
-                    document.getElementById("NewView_CreateMenu").value = false;
-                    document.getElementById("file").value = null;
+                    document.getElementById("DetailView_Name").value = "";
+                    document.getElementById("DetailView_URL").value = "";
+                    document.getElementById("DetailView_IsExternal").value = false;
+                    document.getElementById("DetailView_Order").value = 0;
+                    document.getElementById("Views").value = "";
                 });
 
                 $('#Submit').on('click', function () {
+                    if (document.getElementById("Views").value == "")
+                        alert("View is required.");
                     $.ajax({
-                        url: "/AddView/Test",
+                        url: "/Menu/AddMenu",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDem: $('#NewView_IsDem').prop("checked"),
-                            IsAuth: $('#NewView_IsAuth').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#file").val(),
+                            Name: $("#DetailView_Name").val(),
+                            URL: $("#DetailView_URL").val(),
+                            IsExternal: $("#DetailView_IsExternal").prop("checked"),
+                            Order: $("#DetailView_Order").val(),
                             Oid: $("#Oid").val(),
-                            Orientation: $("#NewView_Orientation").val(),
+                            ViewId: $("#DetailView_ViewId").val(),
                             SiteID: $("#SiteID").val(),
                         }),
                         async: false,
@@ -865,6 +834,10 @@
                     });
                 });
             });
+
+            function OnChange(e) {
+                $('#DetailView_ViewId').val(e)
+            }
         </script>
     }
 </body>
