@@ -132,6 +132,33 @@ namespace WRC_CMS.Repository
             return -1;
         }
 
+        public static async Task<int> AddMenu(WebApiProxy proxy, MenuModel MenuObject, bool IsNewObject = false)
+        {
+            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+            if (IsNewObject)
+                dicParams.Add("@Id", -1);
+            else
+                dicParams.Add("@Id", MenuObject.Oid);
+            dicParams.Add("@Name", MenuObject.Name);
+            dicParams.Add("@URL", MenuObject.URL);
+            dicParams.Add("@IsExternal", MenuObject.IsExternal);
+            dicParams.Add("@Order", MenuObject.Order);
+            dicParams.Add("@ViewId", MenuObject.ViewId);
+            dicParams.Add("@SiteId", MenuObject.SiteId);
+
+            DataSet dataSet = await proxy.ExecuteDataset("SP_MenuAddUp", dicParams);
+
+            if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    int SiteMisc = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+                    return SiteMisc;
+                }
+            }
+            return -1;
+        }
+
         public static async Task<int> AddContentStyle(WebApiProxy proxy, ContentStyleModel ContentStyleModelObject)
         {
             Dictionary<string, object> dicParams = new Dictionary<string, object>();
@@ -236,6 +263,32 @@ namespace WRC_CMS.Repository
             return new List<SiteMiscModel>();
         }
 
+        public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy)
+        {
+            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            List<ViewModel> Views = GetAllViews(proxy).Result;
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Id", -1);
+            var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                return (from DataRow row in dataSet.Tables[0].Rows
+                        select new MenuModel
+                        {
+                            Oid = Convert.ToInt32(row["Id"].ToString()),
+                            Name = row["Name"].ToString(),
+                            URL = row["URL"].ToString(),
+                            IsExternal = Convert.ToBoolean(row["IsExternal"].ToString()),
+                            Order = Convert.ToInt32(row["Order"].ToString()),
+                            ViewId = Convert.ToInt32(row["ViewId"].ToString()),
+                            SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
+                            SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
+                            ViewName = Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["ViewId"].ToString())).Name
+                        }).ToList();
+            }
+            return new List<MenuModel>();
+        }
+
 
         public static async Task<List<ContentStyleModel>> GetAllContents(WebApiProxy proxy)
         {
@@ -259,29 +312,6 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return ContentList;
-        }
-
-        public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy)
-        {
-            List<ViewModel> Views = GetAllViews(proxy).Result;
-            List<SiteModel> Sites = GetAllSites(proxy).Result;
-            List<MenuModel> Menus = new List<MenuModel>();
-
-            Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("@Oid", -1);
-
-            var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
-            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
-            {
-                return (from DataRow row in dataSet.Tables[0].Rows
-                        select new MenuModel
-                        {
-                            Oid = Convert.ToInt32(row["Oid"].ToString()),
-                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Name,
-                            SelectView = Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["ViewId"].ToString())).Name,
-                        }).ToList();
-            }
-            return Menus;
         }
 
         public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy, string viewObject)

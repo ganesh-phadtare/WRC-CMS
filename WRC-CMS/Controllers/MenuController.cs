@@ -13,98 +13,249 @@ namespace WRC_CMS.Controllers
     public class MenuController : Controller
     {
         WebApiProxy proxy = new WebApiProxy();
-        //
-        // GET: /Menu/
-        public async Task<ActionResult> AddMenu()
-        {
-            MenuModel MenuObject = new MenuModel();
-            if (MenuObject != null)
-            {
-                await Task.Run(() =>
-                {                    
-                    MenuObject.Site = BORepository.GetAllSites(proxy).Result;
-                    MenuObject.View = BORepository.GetAllViews(proxy).Result;
-                });
-            }
-            return View(MenuObject);
-        }
+        ////
+        //// GET: /Menu/
+        //public async Task<ActionResult> AddMenu()
+        //{
+        //    MenuModel MenuObject = new MenuModel();
+        //    if (MenuObject != null)
+        //    {
+        //        await Task.Run(() =>
+        //        {                    
+        //            MenuObject.Site = BORepository.GetAllSites(proxy).Result;
+        //            MenuObject.View = BORepository.GetAllViews(proxy).Result;
+        //        });
+        //    }
+        //    return View(MenuObject);
+        //}
 
-        [HttpPost]
-        public ActionResult AddMenu(MenuModel MenuObject)
-        {
-            if (ModelState.IsValid && MenuObject != null)
-            {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
-                dicParams.Add("@SiteId", MenuObject.SelectSite);
-                dicParams.Add("@ViewId", MenuObject.SelectView);
-                proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
-                ViewBag.Message = "Menu added successfully";
-            }
-            return RedirectToAction("AddMenu");
-        }
+        //[HttpPost]
+        //public ActionResult AddMenu(MenuModel MenuObject)
+        //{
+        //    if (ModelState.IsValid && MenuObject != null)
+        //    {
+        //        Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //        dicParams.Add("@Oid", -1);
+        //        dicParams.Add("@SiteId", MenuObject.SelectSite);
+        //        dicParams.Add("@ViewId", MenuObject.SelectView);
+        //        proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
+        //        ViewBag.Message = "Menu added successfully";
+        //    }
+        //    return RedirectToAction("AddMenu");
+        //}
 
-        public async Task<ActionResult> GetAllMenuDetails()
-        {
-            ModelState.Clear();
-            List<MenuModel> menus = new List<MenuModel>();
-            await Task.Run(() =>
-            {
-                menus.AddRange(BORepository.GetAllMenu(proxy).Result);
-            });
-            return View("GetMenuDetails", menus);
-        }
+        //public async Task<ActionResult> GetAllMenuDetails()
+        //{
+        //    ModelState.Clear();
+        //    List<MenuModel> menus = new List<MenuModel>();
+        //    await Task.Run(() =>
+        //    {
+        //        menus.AddRange(BORepository.GetAllMenu(proxy).Result);
+        //    });
+        //    return View("GetMenuDetails", menus);
+        //}
 
-        [HttpPost]
-        public ActionResult EditMenuDetails(MenuModel MenuObject)
-        {
-            if (ModelState.IsValid && MenuObject != null)
-            {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", MenuObject.Oid);
-                dicParams.Add("@SiteId", MenuObject.SelectSite);
-                dicParams.Add("@ViewId", MenuObject.SelectView);
-                proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
-            }
-            return RedirectToAction("GetAllMenuDetails");
-        }
+        //[HttpPost]
+        //public ActionResult EditMenuDetails(MenuModel MenuObject)
+        //{
+        //    if (ModelState.IsValid && MenuObject != null)
+        //    {
+        //        Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //        dicParams.Add("@Oid", MenuObject.Oid);
+        //        dicParams.Add("@SiteId", MenuObject.SelectSite);
+        //        dicParams.Add("@ViewId", MenuObject.SelectView);
+        //        proxy.ExecuteNonQuery("SP_MenuAddUp", dicParams);
+        //    }
+        //    return RedirectToAction("GetAllMenuDetails");
+        //}
 
-        public async Task<ActionResult> EditMenuDetails(int id)
-        {
-            List<MenuModel> menus = new List<MenuModel>();
-            await Task.Run(() =>
-            {
-                menus.AddRange(BORepository.GetAllMenu(proxy).Result);
-            });
-            if (menus != null && menus.Count > 0)
-            {
-                MenuModel objetc = menus.FirstOrDefault(item => item.Oid == id);
-                if (objetc != null)
-                {
-                    await Task.Run(() =>
-                    {
-                        objetc.Site = BORepository.GetAllSites(proxy).Result;
-                        objetc.View = BORepository.GetAllViews(proxy).Result;
-                    });
-                }
-                return View(objetc);
-            }
-            return View();
-        }
+        //public async Task<ActionResult> EditMenuDetails(int id)
+        //{
+        //    List<MenuModel> menus = new List<MenuModel>();
+        //    await Task.Run(() =>
+        //    {
+        //        menus.AddRange(BORepository.GetAllMenu(proxy).Result);
+        //    });
+        //    if (menus != null && menus.Count > 0)
+        //    {
+        //        MenuModel objetc = menus.FirstOrDefault(item => item.Oid == id);
+        //        if (objetc != null)
+        //        {
+        //            await Task.Run(() =>
+        //            {
+        //                objetc.Site = BORepository.GetAllSites(proxy).Result;
+        //                objetc.View = BORepository.GetAllViews(proxy).Result;
+        //            });
+        //        }
+        //        return View(objetc);
+        //    }
+        //    return View();
+        //}
 
-        public ActionResult DeleteMenu(int id)
+        //public ActionResult DeleteMenu(int id)
+        //{
+        //    try
+        //    {
+        //        Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //        dicParams.Add("@Oid", id);
+        //        proxy.ExecuteNonQuery("SP_MenuDel", dicParams);
+        //        return RedirectToAction("GetAllMenuDetails");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
+
+        public async Task<ActionResult> AddMenu(string Name, string URL, bool IsExternal, int Order, int Oid, int ViewId, int SiteID)
         {
+            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL))
+                return RedirectToAction("GetAllMenu ");
+
+            MenuModel menuobj = new MenuModel();
+            if (Oid > 0)
+                menuobj.Oid = Oid;
+            menuobj.Name = Name;
+            menuobj.URL = URL;
+            menuobj.IsExternal = IsExternal;
+            menuobj.Order = Order;
+            menuobj.ViewId = ViewId;
+            menuobj.SiteId = SiteID;
             try
             {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", id);
-                proxy.ExecuteNonQuery("SP_MenuDel", dicParams);
-                return RedirectToAction("GetAllMenuDetails");
+                if (ModelState.IsValid)
+                {
+                    int MenuId = 0;
+
+                    await Task.Run(() =>
+                    {
+                        if (Oid == 0)
+                            MenuId = BORepository.AddMenu(proxy, menuobj, true).Result;
+                        else
+                            MenuId = BORepository.AddMenu(proxy, menuobj, false).Result;
+                    });
+                    if (MenuId > 0)
+                        ViewBag.Message = "Menu added successfully.";
+                    else
+                        ViewBag.Message = "Problem occured while adding Menu, kindly contact our support team.";
+
+                    List<MenuModel> Menus = new List<MenuModel>();
+                    await Task.Run(() =>
+                    {
+                        Menus.AddRange(BORepository.GetAllMenu(proxy).Result.Where(item => item.SiteId == SiteID));
+                    });
+
+                    ActionResult MainView = null;
+                    await Task.Run(() =>
+                    {
+                        MainView = ReturnToMainView(SiteID).Result;
+                    });
+                    return MainView;
+
+                }
+
+                return View();
             }
             catch
             {
                 return View();
             }
+        }
+        public async Task<ActionResult> EditMenu(int MenuID = 0, int SiteID = 0)
+        {
+            if (MenuID != 0)
+            {
+                List<MenuModel> Menus = new List<MenuModel>();
+                await Task.Run(() =>
+                {
+                    Menus.AddRange(BORepository.GetAllMenu(proxy).Result.Where(item => item.SiteId == SiteID));
+                });
+                MenuModelLD com = new MenuModelLD();
+                com.DetailView = Menus.FirstOrDefault(menu => menu.Oid == MenuID);
+                await Task.Run(() =>
+                {
+                    com.DetailView.View = BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID).ToList();
+                });
+                com.ListView = Menus;
+                if (Menus.Count > 0)
+                {
+                    com.SiteName = Menus[0].SiteName;
+                    com.SiteID = SiteID;
+                }
+                return View("GetAllMenu", com);
+            }
+            else
+            {
+                return RedirectToAction("GetAllMenu", new { SiteId = SiteID });
+            }
+        }
+
+
+        public async Task<ActionResult> DeleteMenu(int id, int SiteID)
+        {
+            try
+            {
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Id", id);
+                proxy.ExecuteNonQuery("SP_MenuDel", dicParams);
+
+                ModelState.Clear();
+                List<MenuModel> views = new List<MenuModel>();
+                await Task.Run(() =>
+                {
+                    views.AddRange(BORepository.GetAllMenu(proxy).Result.Where(item => item.SiteId == SiteID));
+                });
+                ActionResult View = null;
+                await Task.Run(() =>
+                {
+                    View = ReturnToMainView(SiteID).Result;
+                });
+                return View;
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+        public async Task<ActionResult> GetAllMenu(int SiteId)
+        {
+            ViewBag.CurrSiteID = SiteId;
+            ActionResult View = null;
+            await Task.Run(() =>
+            {
+                View = ReturnToMainView(SiteId).Result;
+            });
+            return View;
+        }
+
+        public async Task<ActionResult> ReturnToMainView(int SiteId)
+        {
+            ModelState.Clear();
+            List<MenuModel> Menu = new List<MenuModel>();
+            await Task.Run(() =>
+            {
+                Menu.AddRange(BORepository.GetAllMenu(proxy).Result.Where(item => item.SiteId == SiteId));
+            });
+            MenuModelLD com = new MenuModelLD();
+            com.DetailView = new MenuModel();
+            await Task.Run(() =>
+            {
+                com.DetailView.View = BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteId).ToList();
+            });
+            com.ListView = Menu;
+            await Task.Run(() =>
+            {
+                List<SiteModel> Sites = BORepository.GetAllSites(proxy, SiteId).Result;
+                if (Sites != null && Sites.Count > 0)
+                {
+                    com.SiteName = Sites.First().Title;
+                    com.SiteID = Sites.First().Oid;
+                }
+            });
+            return View("GetAllMenu", com);
         }
     }
 }

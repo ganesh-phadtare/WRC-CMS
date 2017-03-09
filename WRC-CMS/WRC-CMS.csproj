@@ -560,7 +560,7 @@
     <Content Include="Views\AddView\EditViewDetails.cshtml" />
     <Content Include="Views\ContentStyle\EditContentDetails.cshtml" />
     <Content Include="Views\Menu\AddMenu.cshtml" />
-    <Content Include="Views\Menu\GetMenuDetails.cshtml" />
+    <Content Include="Views\Menu\GetAllMenu.cshtml" />
     <Content Include="Views\Menu\EditMenuDetails.cshtml" />
     <Content Include="Views\Site\PreviewSite.cshtml" />
     <Content Include="Views\BulkData\BulkData.cshtml" />
