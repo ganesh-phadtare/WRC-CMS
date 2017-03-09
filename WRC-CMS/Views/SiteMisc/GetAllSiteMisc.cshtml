@@ -305,6 +305,7 @@
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
                         <!--style="margin-top: 106px;"-->
 
+
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
@@ -315,7 +316,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="http://localhost:49791/AddView/GetAllViewDetails/@Model.SiteID">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteID })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
 
@@ -323,60 +324,42 @@
 
                             </div>
                         </li>
-
-                        <li routerlinkactive="active" class="no-padding fifth">
-                            <div class="collapsible-header" routerlinkactive="active" title="Site DB">
-                                <h5>@Html.ActionLink("Site DB", "GetAllSiteDb", "SiteDb", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
-                            </div>
-                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
-                                    <i class="fa fa-money" title="Content Style"></i> Content Style
-                                </a>*@
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>
-                        <li routerlinkactive="active" class="no-padding fifth">
-                            <div class="collapsible-header" routerlinkactive="active" title="Site Misc">
-                                <h5>@Html.ActionLink("Site Misc", "GetAllSiteMisc", "SiteMisc", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
-                            </div>
-                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
-                                    <i class="fa fa-money" title="Content Style"></i> Content Style
-                                </a>*@
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>
-                        @*<li routerlinkactive="active" class="no-padding third">
-                                <a class="collapsible-header" routerlinkactive="active" title="Views" href="http://localhost:49791/AddView/GetAllViewDetails">
-                                <i class="fa fa-file-text" title="Views"></i> Views
-
-                                <div class="collapsible-body" id="childNav" style="display: none;">
-
-                                </div>
-                            </li>*@
-                        <li routerlinkactive="active" class="no-padding fifth">
-                            <div class="collapsible-header" routerlinkactive="active" title="Content Style">
-                                <h5>@Html.ActionLink("Content Style", "GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID }, "") </h5>
-                            </div>
-                            @*<a class="collapsible-header" routerlinkactive="active" title="Expense" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.SiteID">
-                                    <i class="fa fa-money" title="Content Style"></i> Content Style
-                                </a>*@
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>
-                        <!--<li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
-                                <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
+                        <li routerlinkactive="active" class="no-padding third">
+                            <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = ViewBag.CurrSiteID })">
+                                <i class="fa fa-money" title="Site DB"></i> Site DB
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
 
                             </div>
-                        </li>-->
+                        </li>
+                        <li routerlinkactive="active" class="no-padding fourth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = ViewBag.CurrSiteID })">
+                                <i class="fa fa-money" title="Site Misc"></i> Site Misc
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding fifth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
+                                <i class="fa fa-money" title="Content Style"></i> Content Style
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding sixth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = ViewBag.CurrSiteID })">
+                                <i class="fa fa-money" title="Menu"></i> Menu
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
                     </ul>
 
                 </sidenav-panel>
