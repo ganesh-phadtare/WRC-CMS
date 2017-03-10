@@ -57,7 +57,7 @@ namespace WRC_CMS.Controllers
             for (int i = 0; i < noOfRecords; i++)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
                 dicParams.Add("@Logo", new ComplexDataModel(typeof(Byte[]), GetImage()));
@@ -93,13 +93,13 @@ namespace WRC_CMS.Controllers
             for (int i = 0; i < noOfRecords; i++)
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
                 dicParams.Add("@Logo", GetImage());
                 dicParams.Add("@Title", MockData.Product.ProductName());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
-                dicParams.Add("@IsAuth", MockData.RandomNumber.Next(0, 1));
+                dicParams.Add("@Authorized", MockData.RandomNumber.Next(0, 1));
                 dicParams.Add("@IsDefault", MockData.RandomNumber.Next(0, 1));
                 dicParams.Add("@IsMenu", MockData.RandomNumber.Next(0, 1));
 
@@ -113,12 +113,12 @@ namespace WRC_CMS.Controllers
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
 
-                dicParams.Add("@Oid", -1);
+                dicParams.Add("@Id", -1);
                 dicParams.Add("@Views", MockData.RandomNumber.Next(0, GetMaxNumber("Views")));
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@Descr", MockData.Address.SecondaryAddress());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
-                proxy.ExecuteNonQuery("SP_StaticContentsAddUp", dicParams);
+                proxy.ExecuteNonQuery("SP_ContentsAddUp", dicParams);
             }
         }
 

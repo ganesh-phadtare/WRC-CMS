@@ -1,4 +1,4 @@
-﻿@model WRC_CMS.Models.CombineModel
+﻿@model WRC_CMS.Models.SiteMiscModelLD
 
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
@@ -305,6 +305,8 @@
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
                         <!--style="margin-top: 106px;"-->
 
+
+
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
@@ -357,26 +359,6 @@
 
                             </div>
                         </li>
-
-                        <li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Of View" href="@Url.Action("GetAllContentOfView", "ContentOfView", new { @Model.SiteID })">
-                                <i class="fa fa-money" title="Content Of View"></i> Content Of View
-                            </a>
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>
-
-                        <!--<li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
-                                <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
-                            </a>
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>-->
                     </ul>
 
                 </sidenav-panel>
@@ -404,7 +386,7 @@
                 <div class="row margin-zero">
                     <div class="col s12">
                         <h5>
-                            View Management
+                            Site Misc Management
                             <!--<a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>-->
                             <span class="right mandatory-message">
                                 <!--<span>IND<a><img class="flag-img" src="./VW-Refresh_files/india-flag.png"></a></span>-->
@@ -426,7 +408,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create View", "GetAllViewDetails", new { id = @Model.SiteID })
+                                                        @Html.ActionLink("Create Site Misc", "GetAllSiteMisc", new { SiteId = @Model.SiteID })
                                                     </h4>
 
                                                 </div>
@@ -512,70 +494,35 @@
                                                                                             @*<div class="form-group">
                                                                                                     @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
                                                                                                     <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Id", "Name", null))
+                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
                                                                                                         @Html.ValidationMessageFor(model => model.SelectSite)
                                                                                                     </div>
                                                                                                 </div>*@
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Name)
-                                                                                                    @Html.Hidden("Id", Model.NewView.Oid)
+                                                                                                    @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })
+                                                                                                    @*@Html.Hidden("DetailView_Key", Model.DetailView.Key)*@
+                                                                                                    @Html.Hidden("Oid", Model.DetailView.Id)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Name)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Keys)
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.DetailView.Key)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Key)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Title, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.DetailView.Value, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Title)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Title)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Orientation, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Orientation)
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Orientation)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    <input type="file" name="file" class="text-box single-line" />
-                                                                                                    @Html.ValidationMessageFor(model => model.NewView.Logo)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsActive, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsActive)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsDefault, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsDefault)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.Authorized, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.Authorized)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.CreateMenu)
+                                                                                                    @Html.EditorFor(model => model.DetailView.Value)
+                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Value)
                                                                                                 </div>
                                                                                             </div>
 
@@ -643,33 +590,25 @@
                                                             <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.NewView.SelectSite)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.Title)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.IsActive)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.NewView.CreateMenu)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Key)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Value)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
 
-                                                                    @foreach (var item in Model.views)
+                                                                    @foreach (var item in Model.ListView)
                                                                     {
                                                                         <tr _ngcontent-xlf-80="">
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectSite)</span></div>
+                                                                                @Html.DisplayFor(modelItem => item.Key)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Title)
+                                                                                @Html.DisplayFor(modelItem => item.Value)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.IsActive)
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.CreateMenu)
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Edit", "EditSiteMisc", new { SiteMISCID = item.Id, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -835,31 +774,23 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    document.getElementById("NewView_Name").value = "";
-                    document.getElementById("NewView_Title").value = "";
-                    document.getElementById("NewView_IsActive").value = false;
-                    document.getElementById("NewView_IsDefault").value = false;
-                    document.getElementById("NewView_Authorized").value = false;
-                    document.getElementById("NewView_CreateMenu").value = false;
-                    document.getElementById("file").value = null;
+                    document.getElementById("DetailView_Key").value = "";
+                    document.getElementById("DetailView_Value").value = "";
+                    document.getElementById("Keys").value = "";
                 });
 
                 $('#Submit').on('click', function () {
+                    if (document.getElementById("Keys").value == "")
+                        alert("Key is required.");
                     $.ajax({
-                        url: "/AddView/Test",
+                        url: "/SiteMisc/AddSiteMisc",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDefault: $('#NewView_IsDefault').prop("checked"),
-                            Authorized: $('#NewView_Authorized').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#file").val(),
-                            Oid: $("#Id").val(),
-                            Orientation: $("#NewView_Orientation").val(),
+                            Key: $("#DetailView_Key").val(),
+                            Value: $("#DetailView_Value").val(),
+                            Oid: $("#Oid").val(),
                             SiteID: $("#SiteID").val(),
                         }),
                         async: false,
@@ -872,6 +803,10 @@
                     });
                 });
             });
+
+            function OnChange(e) {
+                $('#DetailView_Key').val(e)
+            }
         </script>
     }
 </body>
