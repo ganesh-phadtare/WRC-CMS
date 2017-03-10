@@ -1,4 +1,5 @@
-﻿@model WRC_CMS.Models.SiteMiscModelLD
+﻿
+@model WRC_CMS.Models.CombineContentViewModel
 
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
@@ -316,7 +317,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = Model.SiteId })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
 
@@ -325,15 +326,6 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding third">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
-                                <i title="Content Style"><img style="width:32px; height:32px" src="/images/Content1.png"></i>Content Style
-                            </a>
-
-                            <div class="collapsible-body" id="childNav" style="display: none;">
-
-                            </div>
-                        </li>
-                        <li routerlinkactive="active" class="no-padding fourth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = ViewBag.CurrSiteID })">
                                 <i class="fa fa-money" title="Site DB"></i> Site DB
                             </a>
@@ -342,7 +334,7 @@
 
                             </div>
                         </li>
-                        <li routerlinkactive="active" class="no-padding fifth">
+                        <li routerlinkactive="active" class="no-padding fourth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = ViewBag.CurrSiteID })">
                                 <i class="fa fa-money" title="Site Misc"></i> Site Misc
                             </a>
@@ -351,7 +343,15 @@
 
                             </div>
                         </li>
-                     
+                        <li routerlinkactive="active" class="no-padding fifth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
+                                <i class="fa fa-money" title="Content Style"></i> Content Style
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = ViewBag.CurrSiteID })">
                                 <i class="fa fa-money" title="Menu"></i> Menu
@@ -388,7 +388,7 @@
                 <div class="row margin-zero">
                     <div class="col s12">
                         <h5>
-                            Site Misc Management
+                            Content Of View Management
                             <!--<a class="help-btn" href="https://my.v2solutions.com/vibranthelp/help-landing-page.html" target="_blank" title="Help"><i aria-hidden="true" class="right fa fa-question-circle"></i></a>-->
                             <span class="right mandatory-message">
                                 <!--<span>IND<a><img class="flag-img" src="./VW-Refresh_files/india-flag.png"></a></span>-->
@@ -410,7 +410,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create Site Misc", "GetAllSiteMisc", new { SiteId = @Model.SiteID })
+                                                        @Html.ActionLink("Create Site Misc", "GetAllContentOfView", new { SiteId =Model.SiteId })
                                                     </h4>
 
                                                 </div>
@@ -493,38 +493,36 @@
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
 
-                                                                                            @*<div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.SelectSite, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.DropDownListFor(model => model.SelectSite, new SelectList(Model.Site, "Oid", "Name", null))
-                                                                                                        @Html.ValidationMessageFor(model => model.SelectSite)
-                                                                                                    </div>
-                                                                                                </div>*@
+                                                                                            <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ContentList, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name", null))
+                                                                                                </div>
+                                                                                            </div>
 
                                                                                             <div class="form-group">
+                                                                                                @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", null))
+                                                                                                </div>
+                                                                                            </div>
+
+
+                                                                                            @*<div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })
-                                                                                                    @*@Html.Hidden("DetailView_Key", Model.DetailView.Key)*@
+                                                                                                    @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })                                                                                                  
                                                                                                     @Html.Hidden("Oid", Model.DetailView.Id)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.Keys)
                                                                                                 </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group" hidden="hidden">
-                                                                                                @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.Key)
-                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Key)
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            </div>*@                                                                                           
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.DetailView.Value, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.ContentViewDetails.Order, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.Value)
-                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Value)
+                                                                                                    @Html.EditorFor(model => model.ContentViewDetails.Order)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentViewDetails.Order)
                                                                                                 </div>
                                                                                             </div>
 
@@ -592,27 +590,31 @@
                                                             <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Key)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Value)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.ContentName)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.ViewName)</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.Order)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
 
-                                                                    @foreach (var item in Model.ListView)
+                                                                    @foreach (var item in Model.ContentViewList)
                                                                     {
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Key)
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Value)
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditSiteMisc", new { SiteMISCID = item.Id, SiteID = item.SiteId }) |
-                                                                                @Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
-                                                                            </td>
-                                                                        </tr>
+                                                                    <tr _ngcontent-xlf-80="">
+                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @Html.DisplayFor(modelItem => item.ContentName)
+                                                                        </td>
+                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @Html.DisplayFor(modelItem => item.ViewName)
+                                                                        </td>
+                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @Html.DisplayFor(modelItem => item.Order)
+                                                                        </td>
+                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @Html.ActionLink("Edit", "EditSiteMisc", new { SiteMISCID = item.Id, SiteID = item.SiteId }) |
+                                                                            @Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                        </td>
+                                                                    </tr>
                                                                     }
 
 
