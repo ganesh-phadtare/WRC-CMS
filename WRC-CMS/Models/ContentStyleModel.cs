@@ -36,7 +36,7 @@ namespace WRC_CMS.Models
         [UIHint("tinymce_full")]
         public string Data { get; set; }
 
-        public int Sequence { get; set; }
+        public int Order { get; set; }
         public string Orientation { get; set; }
     }
 
@@ -51,7 +51,7 @@ namespace WRC_CMS.Models
 
         public int Type { get; set; }
         public string Data { get; set; }
-        public int Sequence { get; set; }
+        public int Order { get; set; }
         public string Orientation { get; set; }
     }
 }

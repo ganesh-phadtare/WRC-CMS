@@ -76,7 +76,7 @@ namespace WRC_CMS.Controllers
                     {
                         await Task.Run(() =>
                         {
-                            contents.AddRange(BORepository.GetAllContents(proxy).Result);
+                            //contents.AddRange(BORepository.GetAllContents(proxy).Result);
                         });
                         SelectetdView.Contents = new List<ContentStyleModel>();
                         SelectetdView.Contents.AddRange(contents.Where(ite => ite.ViewID == ViewID));
@@ -337,18 +337,25 @@ namespace WRC_CMS.Controllers
                                 if (ViewID > 0)
                                 {
                                     ContentStyleModel DefaultContent = new ContentStyleModel();
+                                    Dictionary<string, object> ContentData = new Dictionary<string, object>();  
+
                                     DefaultContent.Name = "Home";
                                     string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
 <p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
+                                    
+                                    ContentData.Add("sd", welcomebody);
+                                    ContentData.Add("st", -1);
+                                    ContentData.Add("v", ViewID);
+
                                     DefaultContent.Type = 0;
                                     DefaultContent.Orientation = "0";
-                                    DefaultContent.Data = JsonConvert.SerializeObject(welcomebody);
+                                    DefaultContent.Data = JsonConvert.SerializeObject(ContentData);
                                     DefaultContent.Description = "Welcome";
-                                    DefaultContent.Sequence = 1;
+                                    DefaultContent.Order = 1;
                                     DefaultContent.IsActive = true;
                                     DefaultContent.SiteID = SiteID;
-
                                     int ContentID = 0;
+
                                     await Task.Run(() =>
                                     {
                                         ContentID = BORepository.AddContentStyle(proxy, DefaultContent).Result;
