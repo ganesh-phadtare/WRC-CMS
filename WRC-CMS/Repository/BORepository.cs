@@ -57,12 +57,12 @@ namespace WRC_CMS.Repository
             else
                 dicParams.Add("@IsActive", "0");
 
-            if (ViewObject.IsAuth)
-                dicParams.Add("@IsAuth", "1");
+            if (ViewObject.Authorized)
+                dicParams.Add("@Authorized", "1");
             else
-                dicParams.Add("@IsAuth", "0");
+                dicParams.Add("@Authorized", "0");
 
-            if (ViewObject.IsDem)
+            if (ViewObject.IsDefault)
                 dicParams.Add("@IsDefault", "1");
             else
                 dicParams.Add("@IsDefault", "0");
@@ -169,7 +169,7 @@ namespace WRC_CMS.Repository
             dicParams.Add("@Orientation", ContentStyleModelObject.Orientation);
             dicParams.Add("@Data", ContentStyleModelObject.Data);
             dicParams.Add("@Description", ContentStyleModelObject.Description);
-            dicParams.Add("@Sequence", ContentStyleModelObject.Sequence);
+            dicParams.Add("@Order", ContentStyleModelObject.Order);
             if (ContentStyleModelObject.IsActive)
                 dicParams.Add("@IsActive", "1");
             else
@@ -212,10 +212,10 @@ namespace WRC_CMS.Repository
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             IsActive = bool.Parse(row["IsActive"].ToString()),
-                            IsDem = bool.Parse(row["IsDefault"].ToString()),
-                            IsAuth = bool.Parse(row["Authorized"].ToString()),
+                            IsDefault = bool.Parse(row["IsDefault"].ToString()),
+                            Authorized = bool.Parse(row["Authorized"].ToString()),
                             Orientation = row["Orientation"].ToString(),
-                            //CreateMenu = bool.Parse(row["IsMenu"].ToString()),
+                            CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
                         }).ToList();
@@ -269,6 +269,20 @@ namespace WRC_CMS.Repository
             return new List<SiteMiscModel>();
         }
 
+        public static async Task<bool> CheckMenuExistOrNot(WebApiProxy proxy, int ViewID)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@Id", -1);
+            dict.Add("@ViewId", ViewID);
+            var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows.Count > 0)
+                    return true;
+            }
+            return false;
+        }
+
         public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
@@ -318,7 +332,7 @@ namespace WRC_CMS.Repository
                             Type = Convert.ToInt32(row["Type"].ToString()),
                             Orientation = row["Orientation"].ToString(),
                             Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                            Sequence = Convert.ToInt32(row["Sequence"].ToString()),
+                            Order = Convert.ToInt32(row["Order"].ToString()),
                            // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                         }).ToList();
             }

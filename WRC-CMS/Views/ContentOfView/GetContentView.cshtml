@@ -317,7 +317,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = Model.SiteId })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
 
@@ -410,7 +410,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create Site Misc", "GetAllContentOfView", new { SiteId = @Model.SiteID })
+                                                        @Html.ActionLink("Create Site Misc", "GetAllContentOfView", new { SiteId =Model.SiteId })
                                                     </h4>
 
                                                 </div>
@@ -503,7 +503,7 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Id", "Name", null))
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", null))
                                                                                                 </div>
                                                                                             </div>
 

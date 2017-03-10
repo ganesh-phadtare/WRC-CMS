@@ -229,7 +229,7 @@ namespace WRC_CMS.Controllers
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
                         Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                        Sequence = Convert.ToInt32(row["Sequence"].ToString()),
+                        Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
         }
@@ -264,7 +264,7 @@ namespace WRC_CMS.Controllers
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Sequence, string IsActive, int Siteid, int SearchType = 0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Order, string IsActive, int Siteid,string ViewList, int SearchType = 0, int Id = 0)
         {
             try
             {
@@ -273,16 +273,20 @@ namespace WRC_CMS.Controllers
                     int ContentID = 0;
                     if (Id == 0)
                         Id = -1;
-
+                    Dictionary<string, object> ContentData = new Dictionary<string, object>();
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                    ContentData.Add("sd", Data);
+                    ContentData.Add("st", SearchType);
+                    ContentData.Add("v", ViewList);
+
                     dicParams.Add("@Id", Id);
                     //dicParams.Add("@View", ViewID);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@Type", CType);
                     dicParams.Add("@Orientation", Orientation);
-                    dicParams.Add("@Data",JsonConvert.SerializeObject(Data));
+                    dicParams.Add("@Data", JsonConvert.SerializeObject(ContentData));
                     dicParams.Add("@Description", Description);
-                    dicParams.Add("@Sequence", Sequence);
+                    dicParams.Add("@Order", Order);
                     dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));                   
                     //dicParams.Add("@Search", SearchType);
                     dicParams.Add("@Siteid", Siteid);                    
@@ -349,6 +353,7 @@ namespace WRC_CMS.Controllers
                 await Task.Run(() =>
                 {
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
+                    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
                     //contents.AddRange(GetSelectedContent(Contentid).Result.Where(item => item.Oid == Contentid));                    
                 });               
 
@@ -367,13 +372,13 @@ namespace WRC_CMS.Controllers
                 //});
                 combineContentModel.ContentView = contents.FirstOrDefault(item => item.Id == Contentid);
                 combineContentModel.ContentList = contents;
-                //combineContentModel.ViewList = ObjViewList;
+                combineContentModel.ViewList = ObjViewList;
                 //ViewBag.Site = PubSiteID;
                 foreach (var item in contents)
                 {
                     if (item.Id == Contentid)
                     {
-                        combineContentModel.Sequence = item.Sequence;
+                        combineContentModel.Order = item.Order;
                         combineContentModel.Orientation = item.Orientation;
                         combineContentModel.Type = item.Type;
                     }

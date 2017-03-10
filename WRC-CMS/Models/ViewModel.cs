@@ -9,15 +9,14 @@ namespace WRC_CMS.Models
 {
     public class ViewModel : BaseModel
     {
-        public bool IsDem { get; set; }
-        public bool IsAuth { get; set; }
-        [Display(Name = "Create Menu")]
+        public bool IsDefault { get; set; }
+        public bool Authorized { get; set; }
+        [Display(Name = "Menu")]
         public bool CreateMenu { get; set; }
         public int SiteID { get; set; }
 
-        public bool IsDefault { get; set; }
-
         public List<ContentStyleModel> Contents { get; set; }
+
 
         public List<SiteModel> Site { get; set; }
         [Required(ErrorMessage = "Site is required.")]
