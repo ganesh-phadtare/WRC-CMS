@@ -234,7 +234,7 @@ namespace WRC_CMS.Controllers
                     }).ToList();
         }
 
-        public async Task<ActionResult> GetContentPage(int SiteId=0)
+        public async Task<ActionResult> GetContentPage(int SiteId = 0)
         {
             //SiteID = SiteId;
             ViewBag.Site = SiteId;
@@ -258,13 +258,13 @@ namespace WRC_CMS.Controllers
             {
                 // combineContentModel.SelectView = contents[0].SelectView; //View Name
                 combineContentModel.SiteName = contents[0].SiteName;
-                combineContentModel.SiteID = contents[0].SiteID;
-                PubSiteID = contents[0].SiteID;
             }
+            combineContentModel.SiteID = SiteId;
+            PubSiteID = SiteId;
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Order, string IsActive, int Siteid,string ViewList, int SearchType = 0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Order, string IsActive, int Siteid, string ViewList, int SearchType = 0, int Id = 0)
         {
             try
             {
@@ -287,9 +287,9 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Data", JsonConvert.SerializeObject(ContentData));
                     dicParams.Add("@Description", Description);
                     dicParams.Add("@Order", Order);
-                    dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));                   
+                    dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
                     //dicParams.Add("@Search", SearchType);
-                    dicParams.Add("@Siteid", Siteid);                    
+                    dicParams.Add("@Siteid", Siteid);
                     //DataSet dataSet = null;
                     //await Task.Run(() =>
                     //{
@@ -355,7 +355,7 @@ namespace WRC_CMS.Controllers
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
                     ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
                     //contents.AddRange(GetSelectedContent(Contentid).Result.Where(item => item.Oid == Contentid));                    
-                });               
+                });
 
                 if (contents.Count > 0)
                 {

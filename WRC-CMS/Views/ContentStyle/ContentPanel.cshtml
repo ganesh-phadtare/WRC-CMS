@@ -309,6 +309,7 @@
                 <sidenav-panel _ngcontent-xlf-78="">
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
 
+
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
@@ -319,9 +320,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            @*<a class="collapsible-header" routerlinkactive="active" title="Views" href="hhttp://localhost:49791/AddView/GetAllViewDetails/@Model.ContentView.SiteID">
-                                <i class="fa fa-money" title="Views"><img style="width:32px; height:32px" src="/images/View.png"></i> Views*@
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteID })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
 
@@ -330,19 +329,14 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding third">
-                            @*<a class="collapsible-header" routerlinkactive="active" title="Content Style" href="http://localhost:49791/ContentStyle/GetContentPage/@Model.ContentView.SiteID">
-                                <i class="fa fa-money" title="Content Style"><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style*@
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId =Model.SiteID })">
-                                <i title="Content Style"><img style="width:32px; height:32px" src="/images/Content1.png"></i>Content Style
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = @Model.SiteID })">
+                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Views
                             </a>
-
                             <div class="collapsible-body" id="childNav" style="display: none;">
-
                             </div>
                         </li>
-
                         <li routerlinkactive="active" class="no-padding fourth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = @Model.SiteID })">
                                 <i class="fa fa-money" title="Site DB"></i> Site DB
                             </a>
 
@@ -351,7 +345,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = @Model.SiteID })">
                                 <i class="fa fa-money" title="Site Misc"></i> Site Misc
                             </a>
 
@@ -359,9 +353,8 @@
 
                             </div>
                         </li>
-
                         <li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = Model.SiteID })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteID })">
                                 <i class="fa fa-money" title="Menu"></i> Menu
                             </a>
 
