@@ -163,7 +163,7 @@ namespace WRC_CMS.Controllers
         //}
         #endregion
 
-        public ActionResult DeleteContent(int id, bool IsDefault)
+        public ActionResult DeleteContent(int id, bool IsDefault, int Siteid)
         {
             try
             {
@@ -177,7 +177,7 @@ namespace WRC_CMS.Controllers
                 {
                     ViewBag.Message = "Site must have atleast one content.";
                 }
-                return RedirectToAction("GetContentPage");
+                return RedirectToAction("GetContentPage", new { SiteId = Siteid });
             }
             catch
             {
@@ -228,7 +228,7 @@ namespace WRC_CMS.Controllers
                         SiteID = Convert.ToInt32(row["SiteId"].ToString()),
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
-                        Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
+                        Data = (row["Data"].ToString()== "") ?"" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
                         Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
@@ -366,6 +366,8 @@ namespace WRC_CMS.Controllers
                     //             where cont.Id == Contentid
                     //             select cont.SiteID).First();
                 }
+                combineContentModel.SiteID = SiteId;
+                PubSiteID = SiteId;
                 //await Task.Run(() =>
                 //{
                 //    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == PubSiteID));
