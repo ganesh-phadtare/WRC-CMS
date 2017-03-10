@@ -554,14 +554,11 @@
                                                                                                 </div>
                                                                                             </div>
 
-                                                                                            <div class="form-group" hidden="hidden">
+                                                                                            @*<div class="form-group" hidden="hidden">
                                                                                                 @if (Model.ContentView.Type == 0)
                                                                                                 {
                                                                                                     @Html.Hidden("ContentOfPagePanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                    @*@('#StaticContentPanel').hide()
-                                                                                                        @('#SearchPanel').hide()
-                                                                                                        @('#ContentOfPagePanel').hide()*@
+                                                                                                    @Html.Hidden("SearchPanel")                                                                                                   
                                                                                                 }
                                                                                                 else if (Model.ContentView.Type == 1)
                                                                                                 {
@@ -579,7 +576,7 @@
                                                                                                     @Html.Hidden("ContentOfPagePanel")
                                                                                                     @Html.Hidden("SearchPanel")
                                                                                                 }
-                                                                                            </div>
+                                                                                            </div>*@
 
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
                                                                                                 <label id="lblContType" class="control-label col-md-2">Search Type</label>
@@ -822,7 +819,7 @@
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#ViewList option:selected");
+                    var selected = $("#ViewList option:selected"); //$("#SearchType option:selected").val();//$("#SiteID").val();//$("#ViewList option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
@@ -833,7 +830,7 @@
                     //var e = document.getElementById("#ViewList");
                     //var strUser = e.options[e.selectedIndex].value;
 
-                    alert(message);
+                    alert(selected);
                     // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
