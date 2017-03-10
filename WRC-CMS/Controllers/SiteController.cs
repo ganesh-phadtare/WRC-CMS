@@ -146,7 +146,7 @@ namespace WRC_CMS.Controllers
 
         //                            DefaultView.Title = "Home";
         //                            DefaultView.IsActive = true;
-        //                            DefaultView.IsDem = true;
+        //                            DefaultView.IsDefault = true;
         //                            DefaultView.Authorized = true;
         //                            DefaultView.SiteID = SiteID;
         //                            DefaultView.CreateMenu = true;

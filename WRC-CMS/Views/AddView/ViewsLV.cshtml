@@ -566,16 +566,16 @@
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsDem, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.NewView.IsDefault, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsDem)
+                                                                                                    @Html.EditorFor(model => model.NewView.IsDefault)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.IsAuth, new { @class = "control-label col-md-2" })
+                                                                                                @Html.LabelFor(model => model.NewView.Authorized, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.IsAuth)
+                                                                                                    @Html.EditorFor(model => model.NewView.Authorized)
                                                                                                 </div>
                                                                                             </div>
 
@@ -660,8 +660,7 @@
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
 
                                                                     @foreach (var item in Model.views)
-                                                                    {
-
+                                                                    {                                                                        
                                                                         <tr _ngcontent-xlf-80="">
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">@Html.DisplayFor(modelItem => item.SelectSite)</span></div>
@@ -846,8 +845,8 @@
                     document.getElementById("NewView_Name").value = "";
                     document.getElementById("NewView_Title").value = "";
                     document.getElementById("NewView_IsActive").value = false;
-                    document.getElementById("NewView_IsDem").value = false;
-                    document.getElementById("NewView_IsAuth").value = false;
+                    document.getElementById("NewView_IsDefault").value = false;
+                    document.getElementById("NewView_Authorized").value = false;
                     document.getElementById("NewView_CreateMenu").value = false;
                     document.getElementById("file").value = null;
                 });
@@ -862,11 +861,11 @@
                             Name: $("#NewView_Name").val(),
                             Title: $("#NewView_Title").val(),
                             IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDem: $('#NewView_IsDem').prop("checked"),
-                            IsAuth: $('#NewView_IsAuth').prop("checked"),
+                            IsDefault: $('#NewView_IsDefault').prop("checked"),
+                            Authorized: $('#NewView_Authorized').prop("checked"),
                             CreateMenu: $('#NewView_CreateMenu').prop("checked"),
                             Logo: $("#file").val(),
-                            Oid: $("#Oid").val(),
+                            Oid: $("#Id").val(),
                             Orientation: $("#NewView_Orientation").val(),
                             SiteID: $("#SiteID").val(),
                         }),

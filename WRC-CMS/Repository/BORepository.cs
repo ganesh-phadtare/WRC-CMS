@@ -217,7 +217,7 @@ namespace WRC_CMS.Repository
                             Orientation = row["Orientation"].ToString(),
                             CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
-                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
+                            SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
                         }).ToList();
             }
             return ViewList;
@@ -289,6 +289,7 @@ namespace WRC_CMS.Repository
             List<ViewModel> Views = GetAllViews(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@ViewId", -1);
             var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
             {
