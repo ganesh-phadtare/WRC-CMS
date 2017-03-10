@@ -541,7 +541,7 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text"), "--Select Type--", new { @onchange = "toggleDIvDisplay(this.value)" })
+                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text", Model.ContentView.Type), "--Select Type--", new { @onchange = "toggleDIvDisplay(this.value)" })
                                                                                                 </div>
                                                                                             </div>
 
@@ -557,8 +557,35 @@
                                                                                             <div class="form-group" id="ContentOfPagePanel" hidden="hidden">
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.SelectView))
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))
                                                                                                 </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @if (Model.ContentView.Type == 0)
+                                                                                                {
+                                                                                                    @Html.Hidden("ContentOfPagePanel")
+                                                                                                    @Html.Hidden("SearchPanel")
+                                                                                                    @*@('#StaticContentPanel').hide()
+                                                                                                        @('#SearchPanel').hide()
+                                                                                                        @('#ContentOfPagePanel').hide()*@
+                                                                                                }
+                                                                                                else if (Model.ContentView.Type == 1)
+                                                                                                {
+                                                                                                    @Html.Hidden("StaticContentPanel")
+                                                                                                    @Html.Hidden("SearchPanel")
+                                                                                                }
+                                                                                                else if (Model.ContentView.Type == 2)
+                                                                                                {
+                                                                                                    @Html.Hidden("StaticContentPanel")
+                                                                                                    @Html.Hidden("ContentOfPagePanel")
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    @Html.Hidden("StaticContentPanel")
+                                                                                                    @Html.Hidden("ContentOfPagePanel")
+                                                                                                    @Html.Hidden("SearchPanel")
+                                                                                                }
                                                                                             </div>
 
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
@@ -714,7 +741,7 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Id, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
-                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Id, IsDefault = item.IsDefault, Siteid = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -793,6 +820,7 @@
                     //alert(document.getElementById("ContentView_IsActive").value);
                     document.getElementById("ContentView_Name").value = "";
                     document.getElementById("ContentView_Description").value = "";
+                    document.getElementById("ContentView_Orientation").value = "";
                     document.getElementById("ContentView_Order").value = "";
                     document.getElementById("ContentView_IsActive").prop("checked") = false;
                     document.getElementById("ContentView_Id").value = "";
@@ -805,11 +833,14 @@
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
-                        message += $(this).text() + "\n";
-                        //message += $(this).text() + " " + $(this).val() + "\n";
+                        //message += $(this).text() + "\n";
+                        message += $(this).text() + " " + $(this).val() + "\n";
                     });
-                    //var Data = content
-                    alert(content);
+                    var Data = "";
+                    //var e = document.getElementById("#ViewList");
+                    //var strUser = e.options[e.selectedIndex].value;
+
+                    alert(message);
                     // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
@@ -826,7 +857,8 @@
                             IsActive: $("#ContentView_IsActive").prop("checked"),
                             SearchType: $("select#SearchType option:selected").val(),
                             Siteid: $("#SiteID").val(),
-                            ViewList: $("#message").val(),
+                            //ViewList:  $("#ViewList option:selected").val(),
+                            ViewList: $("#ViewList option:selected").val(),
                             Id: $("#ContentView_Id").val()
                             //ViewID: $("#ContentView_ViewID").val(),
                             //ViewID: $("#DDLList option:selected").val(),
