@@ -337,7 +337,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding fourth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site DB"></i> Site DB
+                                <i><img style="width:32px; height:32px" src="/images/SiteDB.png"></i> Site DB
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -346,7 +346,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site Misc"></i> Site Misc
+                                <i><img style="width:32px; height:32px" src="/images/Misc1.png"></i> Site Misc
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -355,7 +355,16 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Menu"></i> Menu
+                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i></i> Menu
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding seventh">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Of View" href="@Url.Action("GetAllContentOfView", "ContentOfView", new { @Model.SiteID })">
+                                <i><img style="width:32px; height:32px" src="/images/Content.png"></i> Content Of View
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -371,11 +380,11 @@
                     <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
 
                 </ul>
-                <sidenav-button _ngcontent-xlf-78="">
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>
+                @*<sidenav-button _ngcontent-xlf-78="">
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 class="header-title">
                     <a href="http://localhost:49791/dashboard">
                         <img class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName </span>
@@ -511,11 +520,32 @@
                                                                                                 </div>
                                                                                             </div>
 
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.Type, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.Type)
+                                                                                                    @* @Html.ValidationMessageFor(model => model.ContentView.Type)*@
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.SearchType, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentView.SearchType)
+                                                                                                    @* @Html.ValidationMessageFor(model => model.ContentView.Type)*@
+                                                                                                </div>
+                                                                                            </div>
+
                                                                                             <div class="form-group">
                                                                                                 <label id="lblContType" class="control-label col-md-2">Content Type</label>
                                                                                                 <div class="col-md-10">
                                                                                                     @{
                                                                                                         List<SelectListItem> listItems = new List<SelectListItem>();
+                                                                                                        listItems.Add(new SelectListItem
+                                                                                                        {
+                                                                                                            Text = "--Select Type--",
+                                                                                                            Value = "-1"
+                                                                                                        });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Static Content",
@@ -525,7 +555,7 @@
                                                                                                              {
                                                                                                                  Text = "Content Of Page",
                                                                                                                  Value = "1",
-                                                                                                                 Selected = true
+                                                                                                                 //Selected = true
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
@@ -534,7 +564,7 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text", Model.ContentView.Type), "--Select Type--", new { @onchange = "toggleDIvDisplay(this.value)" })
+                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text", Model.ContentView.Type), null, new { @onchange = "toggleDIvDisplay(this.value)" })
                                                                                                 </div>
                                                                                             </div>
 
@@ -554,44 +584,16 @@
                                                                                                 </div>
                                                                                             </div>
 
-                                                                                            <div class="form-group" hidden="hidden">
-                                                                                                @if (Model.ContentView.Type == 0)
-                                                                                                {
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                    @*@('#StaticContentPanel').hide()
-                                                                                                        @('#SearchPanel').hide()
-                                                                                                        @('#ContentOfPagePanel').hide()*@
-                                                                                                }
-                                                                                                else if (Model.ContentView.Type == 1)
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                }
-                                                                                                else if (Model.ContentView.Type == 2)
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                }
-                                                                                            </div>
-
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
                                                                                                 <label id="lblContType" class="control-label col-md-2">Search Type</label>
                                                                                                 <div class="col-md-10">
                                                                                                     @{
                                                                                                         List<SelectListItem> SearchItems = new List<SelectListItem>();
                                                                                                         SearchItems.Add(new SelectListItem
-                                                                                                             {
-                                                                                                                 Text = "--Select Search Type--",
-                                                                                                                 Value = "-1",
-                                                                                                                 Selected = true
-                                                                                                             });
+                                                                                                        {
+                                                                                                            Text = "--Select Search Type--",
+                                                                                                            Value = "-1"
+                                                                                                        });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Alphabetical Search",
@@ -600,8 +602,7 @@
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Quick Search",
-                                                                                                                 Value = "1",
-                                                                                                                 Selected = true
+                                                                                                                 Value = "1"
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
@@ -610,9 +611,33 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text"), "--Select Search Type--")
+                                                                                                    @Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))
                                                                                                 </div>
                                                                                             </div>
+
+                                                                                            @* <div class="form-group" hidden="hidden">
+                                                                                                    @if (Model.Type == 0)
+                                                                                                    {
+                                                                                                        @Html.Hidden("ContentOfPagePanel")
+                                                                                                        @Html.Hidden("SearchPanel")
+                                                                                                    }
+                                                                                                    else if (Model.ContentView.Type == 1)
+                                                                                                    {
+                                                                                                        @Html.Hidden("StaticContentPanel")
+                                                                                                        @Html.Hidden("SearchPanel")
+                                                                                                    }
+                                                                                                    else if (Model.ContentView.Type == 2)
+                                                                                                    {
+                                                                                                        @Html.Hidden("StaticContentPanel")
+                                                                                                        @Html.Hidden("ContentOfPagePanel")
+                                                                                                    }
+                                                                                                    else
+                                                                                                    {
+                                                                                                        @Html.Hidden("StaticContentPanel")
+                                                                                                        @Html.Hidden("ContentOfPagePanel")
+                                                                                                        @Html.Hidden("SearchPanel")
+                                                                                                    }
+                                                                                                </div>*@
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.IsActive, new { @class = "control-label col-md-2" })
@@ -810,19 +835,26 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
+                    //var selected = $("#ContentView_Type").val();
+                    //alert(selected);
                     //alert(document.getElementById("ContentView_IsActive").value);
                     document.getElementById("ContentView_Name").value = "";
                     document.getElementById("ContentView_Description").value = "";
                     document.getElementById("ContentView_Orientation").value = "";
                     document.getElementById("ContentView_Order").value = "";
-                    document.getElementById("ContentView_IsActive").prop("checked") = false;
+                    document.getElementById("ContentView_IsActive").value = false;
                     document.getElementById("ContentView_Id").value = "";
+                    //document.getElementById("ContentView_Data").value = "";
+                    document.getElementById("ContentView_SearchType").value = -1;
+                    document.getElementById("ContentView_Type").value = -1;
+                    document.getElementById("Exemple").value = "";
+
                     //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
                 });
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#ViewList option:selected");
+                    var selected = $("#ViewList option:selected"); //$("#SearchType option:selected").val();//$("#SiteID").val();//$("#ViewList option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
@@ -833,8 +865,12 @@
                     //var e = document.getElementById("#ViewList");
                     //var strUser = e.options[e.selectedIndex].value;
 
-                    alert(message);
+                    //alert(selected);
                     // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
+                    if (document.getElementById("ContentView_Name").value == "")
+                        alert("Content Name is required.");
+                    if (document.getElementById("Exemple").value == "")
+                        alert("Content Type is required.");
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
