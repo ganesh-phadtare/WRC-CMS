@@ -169,7 +169,7 @@ namespace WRC_CMS.Repository
             dicParams.Add("@Orientation", ContentStyleModelObject.Orientation);
             dicParams.Add("@Data", ContentStyleModelObject.Data);
             dicParams.Add("@Description", ContentStyleModelObject.Description);
-            dicParams.Add("@Order", ContentStyleModelObject.Order);
+            //dicParams.Add("@Order", ContentStyleModelObject.Order);
             if (ContentStyleModelObject.IsActive)
                 dicParams.Add("@IsActive", "1");
             else
@@ -334,7 +334,7 @@ namespace WRC_CMS.Repository
                             Type = Convert.ToInt32(row["Type"].ToString()),
                             Orientation = row["Orientation"].ToString(),
                             Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                            Order = Convert.ToInt32(row["Order"].ToString()),
+                            //Order = Convert.ToInt32(row["Order"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
                            // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                         }).ToList();
@@ -390,7 +390,7 @@ namespace WRC_CMS.Repository
                             ContentName = Contents.FirstOrDefault(c => c.Id == Convert.ToInt32(row["ContentId"].ToString())).Name,
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                            Order = Convert.ToInt32(row["Order"].ToString()),                            
+                           // Order = Convert.ToInt32(row["Order"].ToString()),                            
                         }).ToList();
             }
             return new List<ContentOfViewModel>();

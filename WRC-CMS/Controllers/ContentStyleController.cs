@@ -229,7 +229,7 @@ namespace WRC_CMS.Controllers
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
                         Data = (row["Data"].ToString() == "") ? "" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                        Order = Convert.ToInt32(row["Order"].ToString()),
+                        //Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
         }
@@ -254,6 +254,7 @@ namespace WRC_CMS.Controllers
             combineContentModel.ContentView.SearchType = -1;
             combineContentModel.ContentList = contents;
             combineContentModel.ViewList = ObjViewList;
+            combineContentModel.ContentView.Orientation = "1";
 
             if (contents.Count > 0)
             {
@@ -265,10 +266,13 @@ namespace WRC_CMS.Controllers
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Order, string IsActive, int Siteid, string ViewList, int SearchType = 0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, string IsActive, int Siteid, string ViewList, int SearchType = 0, int Id = 0)
         {
             try
             {
+                if (string.IsNullOrEmpty(Name) || CType == -1 || (CType == 1 && (Convert.ToInt32((Orientation == "" ? "0" : Orientation)) <= 0 || Convert.ToInt32((Orientation == "" ? "0" : Orientation)) >= 5)))               
+                    return RedirectToAction("GetContentPage", new { SiteId = Siteid });
+
                 if (ModelState.IsValid)
                 {
                     int ContentID = 0;
@@ -276,9 +280,13 @@ namespace WRC_CMS.Controllers
                         Id = -1;
                     Dictionary<string, object> ContentData = new Dictionary<string, object>();
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    ContentData.Add("sd", Data);
-                    ContentData.Add("st", SearchType);
-                    ContentData.Add("v", ViewList);
+
+                    if (CType == 0)
+                        ContentData.Add("sd", Data);
+                    else if (CType == 1)
+                        ContentData.Add("st", SearchType);
+                    else if (CType == 2)
+                        ContentData.Add("v", ViewList);
 
                     dicParams.Add("@Id", Id);
                     //dicParams.Add("@View", ViewID);
@@ -287,7 +295,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Orientation", Orientation);
                     dicParams.Add("@Data", JsonConvert.SerializeObject(ContentData));
                     dicParams.Add("@Description", Description);
-                    dicParams.Add("@Order", Order);
+                    //dicParams.Add("@Order", Order);
                     dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
                     //dicParams.Add("@Search", SearchType);
                     dicParams.Add("@Siteid", Siteid);
@@ -383,7 +391,7 @@ namespace WRC_CMS.Controllers
                 {
                     if (item.Id == Contentid)
                     {
-                        combineContentModel.Order = item.Order;
+                        //combineContentModel.Order = item.Order;
                         combineContentModel.Orientation = item.Orientation;
                         combineContentModel.Type = item.Type;
                         dictData = JsonConvert.DeserializeObject<Dictionary<string, object>>(item.Data.ToString());
