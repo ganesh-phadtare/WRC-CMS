@@ -1,5 +1,4 @@
-﻿
-@model WRC_CMS.Models.CombineContentViewModel
+﻿@model WRC_CMS.Models.CombineContentViewModel
 
 <!DOCTYPE html>
 <!-- saved from url=(0042)https://my.v2solutions.com/#/my/leaves/new -->
@@ -306,7 +305,6 @@
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
                         <!--style="margin-top: 106px;"-->
 
-
                         <li routerlinkactive="active" class="no-padding first">
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
@@ -317,7 +315,7 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
-                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = Model.SiteId })">
+                            <a class="collapsible-header" routerlinkactive="active" title="Views" href="@Url.Action("GetAllViewDetails", "AddView", new { id = @Model.SiteId })">
                                 <i><img style="width:32px; height:32px" src="/images/View.png"></i> Views
                             </a>
 
@@ -326,17 +324,15 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding third">
-                            <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Site DB"></i> Site DB
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = @Model.SiteId })">
+                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style
                             </a>
-
                             <div class="collapsible-body" id="childNav" style="display: none;">
-
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fourth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Site Misc"></i> Site Misc
+                            <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = @Model.SiteId })">
+                                <i><img style="width:32px; height:32px" src="/images/SiteDB.png"></i> Site DB
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -344,8 +340,8 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Content Style"></i> Content Style
+                            <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = @Model.SiteId })">
+                                <i><img style="width:32px; height:32px" src="/images/Misc1.png"></i> Site Misc
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -353,14 +349,33 @@
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Menu"></i> Menu
+                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteId })">
+                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i> Menu
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
 
                             </div>
                         </li>
+                        <li routerlinkactive="active" class="no-padding seventh">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Of View" href="@Url.Action("GetAllContentOfView", "ContentOfView", new { @Model.SiteId })">
+                                <i><img style="width:32px; height:32px" src="/images/Content.png"></i> Content Of View
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
+
+                        <!--<li routerlinkactive="active" class="no-padding sixth">
+                            <a class="collapsible-header" routerlinkactive="active" title="Helpdesk" href="https://my.v2solutions.com/#/my/helpdesk/newticket">
+                                <i class="fa fa-support" title="Helpdesk"></i> Helpdesk
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>-->
                     </ul>
 
                 </sidenav-panel>
@@ -371,13 +386,13 @@
                     <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
 
                 </ul>
-                <sidenav-button _ngcontent-xlf-78="">
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="@Url.Action("Index", "Dashboard")">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>
+                @*<sidenav-button _ngcontent-xlf-78="">
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="@Url.Action("Index", "Dashboard")">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 _ngcontent-xlf-78="" class="header-title" style=" height: 100%; ">
-                    <a _ngcontent-xlf-78="" href="@Url.Action("Index", "Dashboard")"><img _ngcontent-xlf-78="" class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> @Model.SiteName</span></a>
+                    <a _ngcontent-xlf-78="" href="@Url.Action("Index", "Dashboard")"><img _ngcontent-xlf-78="" class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName</span></a>
                 </h5>
             </nav>
         </div>
@@ -410,7 +425,7 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Create Site Misc", "GetAllContentOfView", new { SiteId =Model.SiteId })
+                                                        @Html.ActionLink("Manage Content Of View", "GetAllContentOfView", new { SiteId = Model.SiteId })
                                                     </h4>
 
                                                 </div>
@@ -420,57 +435,7 @@
 
                                                             <div class="">
                                                                 <form class="form-element ng-untouched ng-pristine ng-invalid" name="datapluspics" method="Post" enctype="multipart/form-data">
-                                                                    @*<div class="row">
-                                                                            <div>
-                                                                                <ui-input class="ng-untouched ng-pristine ng-valid">
 
-                                                                                    <div class="view-form-info ui-input">
-                                                                                        <div class="col s6 m-top15">
-                                                                                            <select class=" browser-default validControl ng-untouched ng-pristine ng-valid" style="position:relative">
-                                                                                                <option value="2">Leave Without Pay (LWP)</option>
-                                                                                                <option value="1">Leave</option>
-                                                                                            </select>
-                                                                                            <div>
-                                                                                                <span>
-                                                                                                    <h6 class="active">Leave Type</h6>
-                                                                                                </span>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </ui-input>
-                                                                            </div><div>
-                                                                                <ui-input class="ng-untouched ng-pristine ng-valid">
-                                                                                    <div class="view-form-info ui-input">
-                                                                                        <div class="col s3 m-top15">
-                                                                                            <input materialize="pickadate" style="position:relative" type="text" updatematerializeparams="" class="validControl ng-untouched ng-pristine ng-valid picker__input" placeholder="" readonly="" id="P1438141263" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1438141263_root"><div class="picker" id="P1438141263_root" tabindex="0" aria-hidden="true"><div class="picker__holder"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__date-display"><div class="picker__weekday-display">Monday</div><div class="picker__month-display"><div>Feb</div></div><div class="picker__day-display"><div>27</div></div><div class="picker__year-display"><div>2017</div></div></div><div class="picker__calendar-container"><div class="picker__header"><div class="picker__month">February</div><select class="picker__select--year browser-default" disabled="" aria-controls="P1438141263_table" title="Select a year"><option value="2016">2016</option><option value="2017" selected="">2017</option><option value="2018">2018</option></select><div class="picker__nav--prev" data-nav="-1" role="button" aria-controls="P1438141263_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="P1438141263_table" title="Next month"> </div></div><table class="picker__table" id="P1438141263_table" role="grid" aria-controls="P1438141263" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">S</th><th class="picker__weekday" scope="col" title="Monday">M</th><th class="picker__weekday" scope="col" title="Tuesday">T</th><th class="picker__weekday" scope="col" title="Wednesday">W</th><th class="picker__weekday" scope="col" title="Thursday">T</th><th class="picker__weekday" scope="col" title="Friday">F</th><th class="picker__weekday" scope="col" title="Saturday">S</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485628200000" role="gridcell" aria-label="01/29/2017" aria-disabled="true">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1485714600000" role="gridcell" aria-label="01/30/2017">30</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1485801000000" role="gridcell" aria-label="01/31/2017">31</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1485887400000" role="gridcell" aria-label="02/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1485973800000" role="gridcell" aria-label="02/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486060200000" role="gridcell" aria-label="02/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486146600000" role="gridcell" aria-label="02/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486233000000" role="gridcell" aria-label="02/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486319400000" role="gridcell" aria-label="02/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486405800000" role="gridcell" aria-label="02/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486492200000" role="gridcell" aria-label="02/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486578600000" role="gridcell" aria-label="02/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486665000000" role="gridcell" aria-label="02/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486751400000" role="gridcell" aria-label="02/11/2017" aria-disabled="true">11</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486837800000" role="gridcell" aria-label="02/12/2017" aria-disabled="true">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1486924200000" role="gridcell" aria-label="02/13/2017">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487010600000" role="gridcell" aria-label="02/14/2017">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487097000000" role="gridcell" aria-label="02/15/2017">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487183400000" role="gridcell" aria-label="02/16/2017">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487269800000" role="gridcell" aria-label="02/17/2017">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487356200000" role="gridcell" aria-label="02/18/2017" aria-disabled="true">18</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487442600000" role="gridcell" aria-label="02/19/2017" aria-disabled="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487529000000" role="gridcell" aria-label="02/20/2017">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487615400000" role="gridcell" aria-label="02/21/2017">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487701800000" role="gridcell" aria-label="02/22/2017">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487788200000" role="gridcell" aria-label="02/23/2017">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1487874600000" role="gridcell" aria-label="02/24/2017">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487961000000" role="gridcell" aria-label="02/25/2017" aria-disabled="true">25</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1488047400000" role="gridcell" aria-label="02/26/2017" aria-disabled="true">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1488133800000" role="gridcell" aria-label="02/27/2017" aria-activedescendant="true">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1488220200000" role="gridcell" aria-label="02/28/2017">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488306600000" role="gridcell" aria-label="03/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488393000000" role="gridcell" aria-label="03/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488479400000" role="gridcell" aria-label="03/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488565800000" role="gridcell" aria-label="03/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488652200000" role="gridcell" aria-label="03/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488738600000" role="gridcell" aria-label="03/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488825000000" role="gridcell" aria-label="03/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488911400000" role="gridcell" aria-label="03/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488997800000" role="gridcell" aria-label="03/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1489084200000" role="gridcell" aria-label="03/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1489170600000" role="gridcell" aria-label="03/11/2017" aria-disabled="true">11</div></td></tr></tbody></table></div><div class="picker__footer"><button class="btn-flat picker__clear" type="button" data-clear="1" disabled="" aria-controls="P1438141263">Clear</button><button class="btn-flat picker__close" type="button" data-close="true" disabled="" aria-controls="P1438141263">Close</button></div></div></div></div></div></div>
-                                                                                            <div>
-                                                                                                <span>
-                                                                                                    <h6 class="active">From Date</h6>
-                                                                                                </span>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </ui-input>
-                                                                            </div>
-                                                                            <div>
-                                                                                <ui-input class="ng-untouched ng-pristine ng-invalid">
-                                                                                    <div class="view-form-info ui-input">
-                                                                                        <div class="col s3 m-top15">
-                                                                                            <input materialize="pickadate" style="position:relative" type="text" updatematerializeparams="" class="invalidControl ng-untouched ng-pristine ng-valid picker__input" placeholder="" readonly="" id="P1006151855" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="P1006151855_root"><div class="picker" id="P1006151855_root" tabindex="0" aria-hidden="true"><div class="picker__holder"><div class="picker__frame"><div class="picker__wrap"><div class="picker__box"><div class="picker__date-display"><div class="picker__weekday-display">Monday</div><div class="picker__month-display"><div>Feb</div></div><div class="picker__day-display"><div>27</div></div><div class="picker__year-display"><div>2017</div></div></div><div class="picker__calendar-container"><div class="picker__header"><div class="picker__month">February</div><select class="picker__select--year browser-default" disabled="" aria-controls="P1006151855_table" title="Select a year"><option value="2017" selected="">2017</option><option value="2018">2018</option></select><div class="picker__nav--prev picker__nav--disabled" data-nav="-1" role="button" aria-controls="P1006151855_table" title="Previous month"> </div><div class="picker__nav--next" data-nav="1" role="button" aria-controls="P1006151855_table" title="Next month"> </div></div><table class="picker__table" id="P1006151855_table" role="grid" aria-controls="P1006151855" aria-readonly="true"><thead><tr><th class="picker__weekday" scope="col" title="Sunday">S</th><th class="picker__weekday" scope="col" title="Monday">M</th><th class="picker__weekday" scope="col" title="Tuesday">T</th><th class="picker__weekday" scope="col" title="Wednesday">W</th><th class="picker__weekday" scope="col" title="Thursday">T</th><th class="picker__weekday" scope="col" title="Friday">F</th><th class="picker__weekday" scope="col" title="Saturday">S</th></tr></thead><tbody><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485628200000" role="gridcell" aria-label="01/29/2017" aria-disabled="true">29</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485714600000" role="gridcell" aria-label="01/30/2017" aria-disabled="true">30</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1485801000000" role="gridcell" aria-label="01/31/2017" aria-disabled="true">31</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1485887400000" role="gridcell" aria-label="02/01/2017" aria-disabled="true">1</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1485973800000" role="gridcell" aria-label="02/02/2017" aria-disabled="true">2</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486060200000" role="gridcell" aria-label="02/03/2017" aria-disabled="true">3</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486146600000" role="gridcell" aria-label="02/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486233000000" role="gridcell" aria-label="02/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486319400000" role="gridcell" aria-label="02/06/2017" aria-disabled="true">6</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486405800000" role="gridcell" aria-label="02/07/2017" aria-disabled="true">7</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486492200000" role="gridcell" aria-label="02/08/2017" aria-disabled="true">8</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486578600000" role="gridcell" aria-label="02/09/2017" aria-disabled="true">9</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486665000000" role="gridcell" aria-label="02/10/2017" aria-disabled="true">10</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486751400000" role="gridcell" aria-label="02/11/2017" aria-disabled="true">11</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486837800000" role="gridcell" aria-label="02/12/2017" aria-disabled="true">12</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1486924200000" role="gridcell" aria-label="02/13/2017" aria-disabled="true">13</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487010600000" role="gridcell" aria-label="02/14/2017" aria-disabled="true">14</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487097000000" role="gridcell" aria-label="02/15/2017" aria-disabled="true">15</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487183400000" role="gridcell" aria-label="02/16/2017" aria-disabled="true">16</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487269800000" role="gridcell" aria-label="02/17/2017" aria-disabled="true">17</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487356200000" role="gridcell" aria-label="02/18/2017" aria-disabled="true">18</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487442600000" role="gridcell" aria-label="02/19/2017" aria-disabled="true">19</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487529000000" role="gridcell" aria-label="02/20/2017" aria-disabled="true">20</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487615400000" role="gridcell" aria-label="02/21/2017" aria-disabled="true">21</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487701800000" role="gridcell" aria-label="02/22/2017" aria-disabled="true">22</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487788200000" role="gridcell" aria-label="02/23/2017" aria-disabled="true">23</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487874600000" role="gridcell" aria-label="02/24/2017" aria-disabled="true">24</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1487961000000" role="gridcell" aria-label="02/25/2017" aria-disabled="true">25</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--infocus picker__day--disabled" data-pick="1488047400000" role="gridcell" aria-label="02/26/2017" aria-disabled="true">26</div></td><td role="presentation"><div class="picker__day picker__day--infocus picker__day--today picker__day--highlighted" data-pick="1488133800000" role="gridcell" aria-label="02/27/2017" aria-activedescendant="true">27</div></td><td role="presentation"><div class="picker__day picker__day--infocus" data-pick="1488220200000" role="gridcell" aria-label="02/28/2017">28</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488306600000" role="gridcell" aria-label="03/01/2017">1</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488393000000" role="gridcell" aria-label="03/02/2017">2</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488479400000" role="gridcell" aria-label="03/03/2017">3</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488565800000" role="gridcell" aria-label="03/04/2017" aria-disabled="true">4</div></td></tr><tr><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1488652200000" role="gridcell" aria-label="03/05/2017" aria-disabled="true">5</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488738600000" role="gridcell" aria-label="03/06/2017">6</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488825000000" role="gridcell" aria-label="03/07/2017">7</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488911400000" role="gridcell" aria-label="03/08/2017">8</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1488997800000" role="gridcell" aria-label="03/09/2017">9</div></td><td role="presentation"><div class="picker__day picker__day--outfocus" data-pick="1489084200000" role="gridcell" aria-label="03/10/2017">10</div></td><td role="presentation"><div class="picker__day picker__day--outfocus picker__day--disabled" data-pick="1489170600000" role="gridcell" aria-label="03/11/2017" aria-disabled="true">11</div></td></tr></tbody></table></div><div class="picker__footer"><button class="btn-flat picker__clear" type="button" data-clear="1" disabled="" aria-controls="P1006151855">Clear</button><button class="btn-flat picker__close" type="button" data-close="true" disabled="" aria-controls="P1006151855">Close</button></div></div></div></div></div></div>
-                                                                                            <div class="errorMessage"></div>
-                                                                                            <div>
-                                                                                                <span>
-                                                                                                    <h6 class="active">To Date</h6>
-                                                                                                </span>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </ui-input>
-                                                                            </div>
-                                                                        </div>*@
                                                                     <div class="row">
                                                                         <div>
                                                                             <ui-input class="ng-untouched ng-pristine ng-invalid">
@@ -493,30 +458,48 @@
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
 
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.Hidden("Id", Model.ContentViewDetails.Id)
+                                                                                            </div>
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                <div class="col-md-10">
+                                                                                                    @*@Html.EditorFor(model => @Model.SiteID)*@
+                                                                                                    @Html.Hidden("SiteID", Model.SiteId)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentViewDetails.SiteId)
+                                                                                                </div>
+                                                                                            </div>
+
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name", null))
+                                                                                                    @*@Html.DropDownList("ContentList", new SelectList(Model.ContentList, Model.ContentViewDetails.ContentId),"--Select Key--", new { @onchange = "OnChange(this.value)" })*@
+                                                                                                    @* @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name",  Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })*@
+                                                                                                    @*@Html.DropDownList("Keys", new SelectList(@Model.ContentList, Model.ContentViewDetails.ContentId), "--Select Key--", null)*@
+                                                                                                    @Html.DropDownList("ContentList", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })
+
+                                                                                                    @Html.Hidden("CId", Model.ContentId)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", null))
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))
+                                                                                                    @Html.Hidden("VId", Model.ContentViewDetails.ViewId)
                                                                                                 </div>
                                                                                             </div>
 
 
                                                                                             @*<div class="form-group">
-                                                                                                @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })                                                                                                  
-                                                                                                    @Html.Hidden("Oid", Model.DetailView.Id)
-                                                                                                    @Html.Hidden("SiteID", Model.SiteID)
-                                                                                                    @Html.ValidationMessageFor(model => model.DetailView.Keys)
-                                                                                                </div>
-                                                                                            </div>*@                                                                                           
+                                                                                                    @Html.LabelFor(model => model.DetailView.Key, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.DropDownList("Keys", new SelectList(@Model.DetailView.Keys, Model.DetailView.Key), "--Select Key--", new { @onchange = "OnChange(this.value)" })
+                                                                                                        @Html.Hidden("Oid", Model.DetailView.Id)
+                                                                                                        @Html.Hidden("SiteID", Model.SiteID)
+                                                                                                        @Html.ValidationMessageFor(model => model.DetailView.Keys)
+                                                                                                    </div>
+                                                                                                </div>*@
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentViewDetails.Order, new { @class = "control-label col-md-2" })
@@ -600,112 +583,22 @@
 
                                                                     @foreach (var item in Model.ContentViewList)
                                                                     {
-                                                                    <tr _ngcontent-xlf-80="">
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.DisplayFor(modelItem => item.ContentName)
-                                                                        </td>
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.DisplayFor(modelItem => item.ViewName)
-                                                                        </td>
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.DisplayFor(modelItem => item.Order)
-                                                                        </td>
-                                                                        <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                            @Html.ActionLink("Edit", "EditSiteMisc", new { SiteMISCID = item.Id, SiteID = item.SiteId }) |
-                                                                            @Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
-                                                                        </td>
-                                                                    </tr>
+                                                                        <tr _ngcontent-xlf-80="">
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.ContentName)
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.ViewName)
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.DisplayFor(modelItem => item.Order)
+                                                                            </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                @Html.ActionLink("Edit", "EditContentOfView", new { id = item.Id, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteContentOfView", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                            </td>
+                                                                        </tr>
                                                                     }
-
-
-                                                                    @*<tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">02/17/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>02/17/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Cousin was not well due to Jaundice, Police also called for verification of passport process.<br> Auto - Approve by Admin</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">02/08/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>02/08/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Scheduled Appointment for Passport.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/27/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/27/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Have some work related to marriage certificate and other documents.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/18/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/18/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Not came due to some medical emergency at home.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/06/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/06/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Not well due to Fever and Loose Motions. (UnPlanned Leave.)</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>*@
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -778,24 +671,38 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    document.getElementById("DetailView_Key").value = "";
-                    document.getElementById("DetailView_Value").value = "";
-                    document.getElementById("Keys").value = "";
+                    document.getElementById("ContentViewDetails_Order").value = "";
+                    document.getElementById("ContentViewDetails_ContentId").value = "";
+                    document.getElementById("ContentViewDetails_ViewId").value = "";
+                    document.getElementById("ContentList").value = "";
+                    document.getElementById("ViewList").value = "";
+                    document.getElementById("CId").value = "";
+                    document.getElementById("VId").value = "";
                 });
 
                 $('#Submit').on('click', function () {
-                    if (document.getElementById("Keys").value == "")
-                        alert("Key is required.");
+                    //if (document.getElementById("Keys").value == "")
+                    //var data1 = $("#ContentViewDetails_SiteId").val();//$("#ContentViewDetails_SiteId").val(); //$("#ContentViewDetails_Order").val();
+                    var selected = $("#ContentList option:selected");
+                    var message = "";
+                    selected.each(function () {
+                        //message += $(this).text() + "\n";
+                        message += $(this).text() + " " + $(this).val() + "\n";
+                    });
+                    var s = "";
+                    s = s + $("#SiteId");
+                    //alert(message +""+ s);
                     $.ajax({
-                        url: "/SiteMisc/AddSiteMisc",
+                        url: "/ContentOfView/CreateUpdContentOfView",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            Key: $("#DetailView_Key").val(),
-                            Value: $("#DetailView_Value").val(),
-                            Oid: $("#Oid").val(),
-                            SiteID: $("#SiteID").val(),
+                            ContentId: $("#CId").val(),//$("#ContentList option:selected").val(),
+                            ViewId: $("#VId").val(), //$("#ViewList option:selected").val(),
+                            SiteId: $("#SiteID").val(),
+                            Order: $("#ContentViewDetails_Order").val(),
+                            Id: $("#Id").val()
                         }),
                         async: false,
                         success: function (data) {
@@ -808,8 +715,12 @@
                 });
             });
 
-            function OnChange(e) {
-                $('#DetailView_Key').val(e)
+            function OnChange(e, f) {
+                $('#ContentViewDetails_ContentId').val(e)
+                if (e != "")
+                    $("#ContentViewDetails_Name").val($("#ContentList option:selected").text())
+                else
+                    $("#ContentViewDetails_Name").val("");
             }
         </script>
     }

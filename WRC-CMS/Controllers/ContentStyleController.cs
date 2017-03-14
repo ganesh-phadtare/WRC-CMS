@@ -228,7 +228,7 @@ namespace WRC_CMS.Controllers
                         SiteID = Convert.ToInt32(row["SiteId"].ToString()),
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
-                        Data = (row["Data"].ToString()== "") ?"" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
+                        Data = (row["Data"].ToString() == "") ? "" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
                         Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
@@ -250,9 +250,10 @@ namespace WRC_CMS.Controllers
             });
 
             combineContentModel.ContentView = new ContentStyleModel();
+            combineContentModel.ContentView.Type = -1;
+            combineContentModel.ContentView.SearchType = -1;
             combineContentModel.ContentList = contents;
             combineContentModel.ViewList = ObjViewList;
-
 
             if (contents.Count > 0)
             {
@@ -349,7 +350,8 @@ namespace WRC_CMS.Controllers
                 List<ContentStyleModel> contents = new List<ContentStyleModel>();
                 List<ViewModel> ObjViewList = new List<ViewModel>();
                 CombineContentModel combineContentModel = new CombineContentModel();
-
+                ContentStyleModel objContentstyle = new ContentStyleModel();
+                Dictionary<string, object> dictData = new Dictionary<string, object>();
                 await Task.Run(() =>
                 {
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
@@ -366,6 +368,7 @@ namespace WRC_CMS.Controllers
                     //             where cont.Id == Contentid
                     //             select cont.SiteID).First();
                 }
+
                 combineContentModel.SiteID = SiteId;
                 PubSiteID = SiteId;
                 //await Task.Run(() =>
@@ -383,6 +386,18 @@ namespace WRC_CMS.Controllers
                         combineContentModel.Order = item.Order;
                         combineContentModel.Orientation = item.Orientation;
                         combineContentModel.Type = item.Type;
+                        dictData = JsonConvert.DeserializeObject<Dictionary<string, object>>(item.Data.ToString());
+                        foreach (var _item in dictData)
+                        {
+                            if (_item.Key == "sd")
+                                combineContentModel.ContentView.Data = _item.Value.ToString();
+                            else if (_item.Key == "st")
+                                combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());
+                            else if (_item.Key == "v")
+                                combineContentModel.ContentView.ViewID = (_item.Value == null ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
+                            else
+                            { }
+                        }
                     }
                 }
 

@@ -14,7 +14,7 @@ namespace WRC_CMS.Models
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; }
-        private string _Description { get; set; }       
+        private string _Description { get; set; }
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
@@ -38,6 +38,7 @@ namespace WRC_CMS.Models
 
         public int Order { get; set; }
         public string Orientation { get; set; }
+        public int SearchType { get; set; }
     }
 
     public class CombineContentModel
@@ -53,5 +54,6 @@ namespace WRC_CMS.Models
         public string Data { get; set; }
         public int Order { get; set; }
         public string Orientation { get; set; }
+
     }
 }
