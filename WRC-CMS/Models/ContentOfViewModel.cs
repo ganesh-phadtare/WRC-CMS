@@ -14,7 +14,7 @@ namespace WRC_CMS.Models
         public string SiteName { get; set; }
         public int Order { get; set; }
         public string ContentName { get; set; }
-        public string ViewName { get; set; }      
+        public string ViewName { get; set; }
     }
     public class CombineContentViewModel
     {
@@ -23,6 +23,8 @@ namespace WRC_CMS.Models
         public List<ViewModel> ViewList { get; set; }
         public List<ContentStyleModel> ContentList { get; set; }
         public int SiteId { get; set; }
-        public string SiteName { get; set; }          
+        public string SiteName { get; set; }
+        public int ContentId { get; set; }
+        public int ViewId { get; set; }
     }
 }

@@ -215,6 +215,7 @@
     <Content Include="images\Content.png" />
     <Content Include="images\Content1.png" />
     <Content Include="images\Content2.png" />
+    <Content Include="images\CoV.png" />
     <Content Include="images\Dashboard.jpg" />
     <Content Include="images\Dashboard1.png" />
     <Content Include="images\her_eyelashes-t2.jpg" />
@@ -224,6 +225,8 @@
     <Content Include="images\image_line63.gif" />
     <Content Include="images\india-flag.png" />
     <Content Include="images\logo-img.png" />
+    <Content Include="images\Menu.png" />
+    <Content Include="images\Misc1.png" />
     <Content Include="images\nav205217440a.gif" />
     <Content Include="images\nav205217440i.gif" />
     <Content Include="images\nav205217441a.gif" />
@@ -255,6 +258,10 @@
     <Content Include="images\rect49024914.gif" />
     <Content Include="images\rect49347187.gif" />
     <Content Include="images\shape20449734.gif" />
+    <Content Include="images\SiteDB.png" />
+    <Content Include="images\SiteDB1.jpg" />
+    <Content Include="images\SiteDB3.png" />
+    <Content Include="images\View.png" />
     <Content Include="images\wpmhome.gif" />
     <Content Include="Images\bb.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

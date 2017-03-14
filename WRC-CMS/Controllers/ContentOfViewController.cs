@@ -66,7 +66,7 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> CreateUpdContentOfView(int ContentId=0, int ViewId=0, int SiteId=0, int Order=0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContentOfView(int ContentId, int ViewId, int SiteId, int Order, int Id = 0)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace WRC_CMS.Controllers
                 {
                     ContentView.AddRange(BORepository.GetContentViews(proxy, SiteID).Result.Where(item => item.SiteId == SiteID));
                     ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteID));
-                    ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteID).Result);                  
+                    ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteID).Result);
                 });
                 CombineContentViewModel combineContentModel = new CombineContentViewModel();
                 combineContentModel.ContentViewList = ContentView;
@@ -134,14 +134,14 @@ namespace WRC_CMS.Controllers
                 combineContentModel.ContentList = ObjContentList;
                 combineContentModel.ContentViewDetails = ContentView.FirstOrDefault(item => item.Id == id);
 
-                //foreach (var item in ContentView)
-                //{
-                //    if (item.Id == id)
-                //    {
-                //        combineContentModel.ContentViewDetails.ContentId = item.ContentId;
-                //        combineContentModel.ContentViewDetails.ViewId = item.ViewId;
-                //    }
-                //}
+                foreach (var item in ContentView)
+                {
+                    if (item.Id == id)
+                    {
+                        combineContentModel.ContentId = item.ContentId;
+                        combineContentModel.ViewId = item.ViewId;
+                    }
+                }
 
                 if (ContentView.Count > 0)
                 {
@@ -151,6 +151,8 @@ namespace WRC_CMS.Controllers
 
                 ViewBag.CurrSiteID = SiteID;
                 combineContentModel.SiteId = SiteID;
+                ViewBag.DepartmentId = new SelectList(combineContentModel.ContentList, "ContentId", "ContentName", combineContentModel.ContentId);
+
                 return View("GetContentView", combineContentModel);
             }
             else
