@@ -471,19 +471,20 @@
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentList, new { @class = "control-label col-md-2" })
+                                                                                                @Html.Label("Content List", new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @*@Html.DropDownList("ContentList", new SelectList(Model.ContentList, Model.ContentViewDetails.ContentId),"--Select Key--", new { @onchange = "OnChange(this.value)" })*@
                                                                                                     @* @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name",  Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })*@
                                                                                                     @*@Html.DropDownList("Keys", new SelectList(@Model.ContentList, Model.ContentViewDetails.ContentId), "--Select Key--", null)*@
-                                                                                                    @Html.DropDownList("ContentList", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })
+                                                                                                    @Html.DropDownList("ContentList", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--")
 
                                                                                                     @Html.Hidden("CId", Model.ContentId)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
+                                                                                                @Html.Label("View List", new { @class = "control-label col-md-2" })
+                                                                                                @*@Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })*@
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))
                                                                                                     @Html.Hidden("VId", Model.ContentViewDetails.ViewId)
@@ -504,7 +505,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentViewDetails.Order, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentViewDetails.Order)
+                                                                                                    @Html.TextBoxFor(model => model.ContentViewDetails.Order, new { @type = "number", @class = "span4", @min = "1" })                                                                                                    
+                                                                                                    @*@Html.EditorFor(model => model.ContentViewDetails.Order)*@
                                                                                                     @Html.ValidationMessageFor(model => model.ContentViewDetails.Order)
                                                                                                 </div>
                                                                                             </div>
@@ -577,6 +579,7 @@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.ViewName)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.Order)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Order</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">

@@ -291,7 +291,7 @@
     </style>
 </head>
 
-<body>
+<body onload="javascript: toggleDIvDisplay(@Model.ContentView.Type); ">
     @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
 
     <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
@@ -415,7 +415,7 @@
                             <div _ngcontent-xlf-80="" class="attendance-wrapper p-top20" style="width: 100%;float: left;">
                                 <div _ngcontent-xlf-80="" class="row attendance-data">
 
-                                    <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 55% !important; ">
+                                    <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 50% !important; ">
                                         <div _ngcontent-xlf-80="" class="col s12 padding-zero">
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
@@ -504,21 +504,13 @@
                                                                                                     </div>
                                                                                                 </div>*@
 
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Orientation)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Orientation)
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentView.Order, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Order)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Order)
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            @*<div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.ContentView.Order, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.ContentView.Order)
+                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.Order)
+                                                                                                    </div>
+                                                                                                </div>*@
 
                                                                                             <div class="form-group" hidden="hidden">
                                                                                                 @Html.LabelFor(model => model.ContentView.Type, new { @class = "control-label col-md-2" })
@@ -582,6 +574,13 @@
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))
                                                                                                 </div>
+
+                                                                                                @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.TextBoxFor(model => model.ContentView.Orientation, new { @type = "number", @class = "span4", @min = "1", @max = "5" })
+                                                                                                    @*@Html.EditorFor(model => model.ContentView.Orientation, new { htmlAttributes = new { min = 0, max = 5 }, @type = "number" })*@
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Orientation)
+                                                                                                </div>
                                                                                             </div>
 
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
@@ -611,33 +610,10 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))
+                                                                                                    @*@Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))*@
+                                                                                                    @Html.ListBox("SearchType", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID), new { @class = "listbox" })
                                                                                                 </div>
                                                                                             </div>
-
-                                                                                            @* <div class="form-group" hidden="hidden">
-                                                                                                    @if (Model.Type == 0)
-                                                                                                    {
-                                                                                                        @Html.Hidden("ContentOfPagePanel")
-                                                                                                        @Html.Hidden("SearchPanel")
-                                                                                                    }
-                                                                                                    else if (Model.ContentView.Type == 1)
-                                                                                                    {
-                                                                                                        @Html.Hidden("StaticContentPanel")
-                                                                                                        @Html.Hidden("SearchPanel")
-                                                                                                    }
-                                                                                                    else if (Model.ContentView.Type == 2)
-                                                                                                    {
-                                                                                                        @Html.Hidden("StaticContentPanel")
-                                                                                                        @Html.Hidden("ContentOfPagePanel")
-                                                                                                    }
-                                                                                                    else
-                                                                                                    {
-                                                                                                        @Html.Hidden("StaticContentPanel")
-                                                                                                        @Html.Hidden("ContentOfPagePanel")
-                                                                                                        @Html.Hidden("SearchPanel")
-                                                                                                    }
-                                                                                                </div>*@
 
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.IsActive, new { @class = "control-label col-md-2" })
@@ -693,7 +669,7 @@
                                         </div>
                                     </div>
 
-                                    <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 40% !important; ">
+                                    <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 48% !important; ">
                                         <div _ngcontent-xlf-80="" class="">
                                             <div _ngcontent-xlf-80="" class="table-container padding-zero">
                                                 <div _ngcontent-xlf-80="" class="row m-bottom5">
@@ -847,30 +823,21 @@
                     //document.getElementById("ContentView_Data").value = "";
                     document.getElementById("ContentView_SearchType").value = -1;
                     document.getElementById("ContentView_Type").value = -1;
-                    document.getElementById("Exemple").value = "";
+                    document.getElementById("Exemple").value = -1;
 
                     //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
                 });
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#ViewList option:selected"); //$("#SearchType option:selected").val();//$("#SiteID").val();//$("#ViewList option:selected");
+                    var selected = $("#ViewList option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
                     selected.each(function () {
                         //message += $(this).text() + "\n";
-                        message += $(this).text() + " " + $(this).val() + "\n";
+                        message += $(this).val() + ",";
                     });
-                    var Data = "";
-                    //var e = document.getElementById("#ViewList");
-                    //var strUser = e.options[e.selectedIndex].value;
-
-                    //alert(selected);
-                    // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
-                    if (document.getElementById("ContentView_Name").value == "")
-                        alert("Content Name is required.");
-                    if (document.getElementById("Exemple").value == "")
-                        alert("Content Type is required.");
+                    // alert(message);
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
@@ -882,12 +849,12 @@
                             Orientation: $("#ContentView_Orientation").val(),
                             Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
                             Description: $("#ContentView_Description").val(),
-                            Order: $("#ContentView_Order").val(),
+                            //Order: $("#ContentView_Order").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
                             SearchType: $("select#SearchType option:selected").val(),
                             Siteid: $("#SiteID").val(),
                             //ViewList:  $("#ViewList option:selected").val(),
-                            ViewList: $("#ViewList option:selected").val(),
+                            ViewList: message,
                             Id: $("#ContentView_Id").val()
                             //ViewID: $("#ContentView_ViewID").val(),
                             //ViewID: $("#DDLList option:selected").val(),
@@ -927,45 +894,11 @@
                 }
             }
 
-        </script>
-    }
-
-    @*@section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-            <script type="text/javascript">
-                $(document).ready(function () {
-
-                    $('#Submit').unbind('click');
-
-                    $('#Submit').on('click', function () {
-                        $.ajax({
-                            url: "/AddView/Test",
-                            type: 'POST',
-                            contentType: "application/json; charset=utf-8",
-                            dataType: 'json',
-                            data: JSON.stringify({
-                                Name: $("#NewView_Name").val(),
-                                URL: $("#NewView_URL").val(),
-                                Title: $("#NewView_Title").val(),
-                                IsActive: $('#NewView_IsActive').prop("checked"),
-                                IsDefault: $('#NewView_IsDem').prop("checked"),
-                                Authorized: $('#NewView_IsAuth').prop("checked"),
-                                CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                                Logo: $("#file").val(),
-                                Id: $("#Id").val(),
-                                SiteID: $("#SiteID").val(),
-                            }),
-                            async: false,
-                            success: function (data) {
-                                alert("Success");
-                            },
-                            failure: function (data) {
-                                alert("Fail");
-                            },
-                        });
-                    });
+            $(function () {
+                $('.listbox').multiselect({
+                    includeSelectAllOption: true
                 });
-            </script>
-        }*@
-</body>
+            });
+        </script>
+    </body>
 </html>

@@ -25,6 +25,7 @@ namespace WRC_CMS.Controllers
         {
             ModelState.Clear();
             ViewBag.CurrSiteID = SiteId;
+            List<SiteModel> Sites = new List<SiteModel>();
             List<ContentOfViewModel> ContentView = new List<ContentOfViewModel>();
             List<ViewModel> ObjViewList = new List<ViewModel>();
             List<ContentStyleModel> ObjContentList = new List<ContentStyleModel>();
@@ -34,6 +35,7 @@ namespace WRC_CMS.Controllers
                 ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result.Where(item => item.SiteId == SiteId));
                 ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
                 ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteId).Result);
+                Sites = BORepository.GetAllSites(proxy).Result;
             });
             CombineContentViewModel combineContentModel = new CombineContentViewModel();
             combineContentModel.ContentViewDetails = new ContentOfViewModel();
@@ -43,10 +45,10 @@ namespace WRC_CMS.Controllers
             if (ObjContentList.Count > 0)
             {
                 combineContentModel.SiteId = ObjContentList[0].SiteID;
-                combineContentModel.SiteName = ObjContentList[0].SiteName;
+                combineContentModel.SiteName = ObjContentList[0].SiteName;                
             }
             obj.SiteId = SiteId;
-            obj.SiteName = ObjContentList[0].SiteName;
+            obj.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title ;
             return View("GetContentView", combineContentModel);
         }
 
@@ -70,6 +72,9 @@ namespace WRC_CMS.Controllers
         {
             try
             {
+                if (ContentId == -1 || ViewId == -1)
+                    return RedirectToAction("GetAllContentOfView", new { SiteId = SiteId });
+
                 if (ModelState.IsValid)
                 {
                     int ContentID = 0;
