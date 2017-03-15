@@ -49,8 +49,8 @@ namespace WRC_CMS.Controllers
                 combineContentModel.SiteId = ObjContentList[0].SiteID;
                 combineContentModel.SiteName = ObjContentList[0].SiteName;                
             }
-            obj.SiteId = SiteId;
-            obj.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title ;
+            combineContentModel.SiteId = SiteId;
+            combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
             return View("GetContentView", combineContentModel);
         }
 
