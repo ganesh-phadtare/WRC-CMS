@@ -126,16 +126,30 @@ namespace WRC_CMS.Controllers
         {
             try
             {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Id", id);
-                proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
-
-                ModelState.Clear();
                 List<ViewModel> views = new List<ViewModel>();
                 await Task.Run(() =>
                 {
                     views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
                 });
+                if (views != null && views.Count > 0)
+                {
+                    if (!ReferenceEquals(views.FirstOrDefault(it => it.Oid == id), null))
+                    {
+                        ViewModel viewtodelete = views.FirstOrDefault(it => it.Oid == id);
+                        if (viewtodelete != null && !viewtodelete.IsDefault)
+                        {
+                            Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                            dicParams.Add("@Id", id);
+                            proxy.ExecuteNonQuery("SP_ViewDel", dicParams);
+                        }
+                        else
+                        {
+                            ViewData["DeletionError"] = "Problem occured while deleting view.Cannot delete Default View.";
+                        }
+                    }
+                }
+
+                ModelState.Clear();
                 ActionResult View = null;
                 await Task.Run(() =>
                 {

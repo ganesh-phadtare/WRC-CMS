@@ -769,11 +769,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div _ngcontent-xlf-80="" class="row">
-                                            <!--<div _ngcontent-xlf-80="" class="col s12 table-note">
-                                                <span _ngcontent-xlf-80=""><i _ngcontent-xlf-80="" class="pending-msg fa fa-pencil"></i>Only future date pending entries will be editable.</span>
-                                            </div>-->
-                                        </div>
+                                        @*<div _ngcontent-xlf-80="" class="row">
+                                                <div _ngcontent-xlf-80="" class="col s12 table-note">
+                                                    <span _ngcontent-xlf-80=""><i _ngcontent-xlf-80="" class="pending-msg fa fa-pencil"></i>@ViewBag.Message.</span>
+                                                </div>
+                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -830,6 +830,8 @@
         <script type="text/javascript">
             $(document).ready(function () {
 
+                if ('@ViewData["DeletionError"]' != null && '@ViewData["DeletionError"]' != "")
+                    alert('@ViewData["DeletionError"]');
                 $('#Submit').unbind('click');
                 $('#cancel').unbind('click');
 
@@ -841,7 +843,7 @@
                     document.getElementById("NewView_IsActive").value = false;
                     document.getElementById("NewView_IsDefault").value = false;
                     document.getElementById("NewView_Authorized").value = false;
-                    document.getElementById("NewView_CreateMenu").value = false;                                        
+                    document.getElementById("NewView_CreateMenu").value = false;
                 });
 
                 $('#Submit').on('click', function () {
