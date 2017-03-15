@@ -571,12 +571,12 @@
                                                                                                 </div>
                                                                                             </div>
 
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.NewView.CreateMenu)
-                                                                                                </div>
-                                                                                            </div>
+                                                                                            @*<div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.NewView.CreateMenu, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.NewView.CreateMenu)
+                                                                                                    </div>
+                                                                                                </div>*@
 
                                                                                             <div _ngcontent-xlf-80="" class="row m-bottom0">
                                                                                                 <div _ngcontent-xlf-80="" class="col s12 m6 leave-action table-note left-align">
@@ -836,11 +836,12 @@
                 $('#cancel').on('click', function () {
                     document.getElementById("NewView_Name").value = "";
                     document.getElementById("NewView_Title").value = "";
+                    document.getElementById("NewView_Orientation").value = "";
+                    document.getElementById("file").value = null;
                     document.getElementById("NewView_IsActive").value = false;
                     document.getElementById("NewView_IsDefault").value = false;
                     document.getElementById("NewView_Authorized").value = false;
-                    document.getElementById("NewView_CreateMenu").value = false;
-                    document.getElementById("file").value = null;
+                    document.getElementById("NewView_CreateMenu").value = false;                                        
                 });
 
                 $('#Submit').on('click', function () {
