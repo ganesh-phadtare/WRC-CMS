@@ -29,7 +29,6 @@ namespace WRC_CMS.Controllers
             List<ContentOfViewModel> ContentView = new List<ContentOfViewModel>();
             List<ViewModel> ObjViewList = new List<ViewModel>();
             List<ContentStyleModel> ObjContentList = new List<ContentStyleModel>();
-            ContentOfViewModel obj = new ContentOfViewModel();
             await Task.Run(() =>
             {
                 ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result.Where(item => item.SiteId == SiteId));
@@ -42,24 +41,26 @@ namespace WRC_CMS.Controllers
             combineContentModel.ContentViewList = ContentView;
             combineContentModel.ViewList = ObjViewList;
             combineContentModel.ContentList = ObjContentList;
-            combineContentModel.ContentId = -1;
-            combineContentModel.ViewId = -1;
+
             if (ObjContentList.Count > 0)
             {
                 combineContentModel.SiteId = ObjContentList[0].SiteID;
-                combineContentModel.SiteName = ObjContentList[0].SiteName;                
+                combineContentModel.SiteName = ObjContentList[0].SiteName;
             }
-            combineContentModel.SiteId = SiteId;
-            combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
+            else
+            {
+                combineContentModel.SiteId = SiteId;
+                combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
+            }
             return View("GetContentView", combineContentModel);
         }
 
-        public ActionResult DeleteContentOfView(int id, int SiteID)
+        public ActionResult DeleteContentOfView(int Did, int SiteID)
         {
             try
             {
                 Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Id", id);
+                dicParams.Add("@Id", Did);
                 proxy.ExecuteNonQuery("SP_ContentOfViewDel", dicParams);
 
                 return RedirectToAction("GetAllContentOfView", new { SiteId = SiteID });
@@ -106,7 +107,7 @@ namespace WRC_CMS.Controllers
                         ViewBag.Message = "Content of View added successfully.";
                     else
                         ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
-
+                    
                     ActionResult MainView = null;
                     await Task.Run(() =>
                     {
@@ -122,9 +123,10 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditContentOfView(int id, int SiteID)
+        public async Task<ActionResult> EditContentOfView(int Eid = 0, int SiteID = 0)
         {
-            if (id != 0)
+            ModelState.Clear();
+            if (Eid != 0)
             {
                 List<ContentOfViewModel> ContentView = new List<ContentOfViewModel>();
                 List<ContentStyleModel> ObjContentList = new List<ContentStyleModel>();
@@ -139,16 +141,7 @@ namespace WRC_CMS.Controllers
                 combineContentModel.ContentViewList = ContentView;
                 combineContentModel.ViewList = ObjViewList;
                 combineContentModel.ContentList = ObjContentList;
-                combineContentModel.ContentViewDetails = ContentView.FirstOrDefault(item => item.Id == id);
-
-                foreach (var item in ContentView)
-                {
-                    if (item.Id == id)
-                    {
-                        combineContentModel.ContentId = item.ContentId;
-                        combineContentModel.ViewId = item.ViewId;
-                    }
-                }
+                combineContentModel.ContentViewDetails = ContentView.FirstOrDefault(item => item.Id == Eid);
 
                 if (ContentView.Count > 0)
                 {
@@ -158,7 +151,6 @@ namespace WRC_CMS.Controllers
 
                 ViewBag.CurrSiteID = SiteID;
                 combineContentModel.SiteId = SiteID;
-                ViewBag.DepartmentId = new SelectList(combineContentModel.ContentList, "ContentId", "ContentName", combineContentModel.ContentId);
 
                 return View("GetContentView", combineContentModel);
             }

@@ -457,8 +457,16 @@
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
 
-                                                                                            <div class="form-group" hidden="hidden">
+                                                                                            @*<div class="form-group" hidden="hidden">
                                                                                                 @Html.Hidden("Id", Model.ContentViewDetails.Id)
+                                                                                            </div>*@
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentViewDetails.Id, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.EditorFor(model => model.ContentViewDetails.Id)
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentViewDetails.Id)
+                                                                                                </div>
                                                                                             </div>
 
                                                                                             <div class="form-group" hidden="hidden">
@@ -475,9 +483,9 @@
                                                                                                     @*@Html.DropDownList("ContentList", new SelectList(Model.ContentList, Model.ContentViewDetails.ContentId),"--Select Key--", new { @onchange = "OnChange(this.value)" })*@
                                                                                                     @* @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name",  Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })*@
                                                                                                     @*@Html.DropDownList("Keys", new SelectList(@Model.ContentList, Model.ContentViewDetails.ContentId), "--Select Key--", null)*@
-                                                                                                    @Html.DropDownList("ContentList1", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--")
+                                                                                                    @Html.DropDownList("ContentList1", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentViewDetails.ContentId), "--Select Content--")
 
-                                                                                                    @Html.Hidden("CId", Model.ContentId)
+                                                                                                    @*@Html.Hidden("CId", Model.ContentViewDetails.ContentId)*@
                                                                                                 </div>
                                                                                             </div>
 
@@ -486,8 +494,8 @@
                                                                                                 @*@Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })*@
                                                                                                 <div class="col-md-10">
                                                                                                     @*@Html.ListBox("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))*@
-                                                                                                    @Html.DropDownList("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId), "--Select View--")
-                                                                                                    @Html.Hidden("VId", Model.ContentViewDetails.ViewId)
+                                                                                                    @Html.DropDownList("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentViewDetails.ViewId), "--Select View--")
+                                                                                                    @*@Html.Hidden("VId", Model.ContentViewDetails.ViewId)*@
                                                                                                 </div>
                                                                                             </div>
 
@@ -597,8 +605,8 @@
                                                                                 @Html.DisplayFor(modelItem => item.Order)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditContentOfView", new { id = item.Id, SiteID = item.SiteId }) |
-                                                                                @Html.ActionLink("Delete", "DeleteContentOfView", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Edit", "EditContentOfView", new { Eid = item.Id, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteContentOfView", new { Did = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -674,29 +682,21 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    document.getElementById("ContentViewDetails_Order").value = "";
-                    document.getElementById("ContentId").value = "";
-                    document.getElementById("ViewId").value = "";
+                   
+                    document.getElementById("ContentViewDetails_Order").value = "";                    
                     document.getElementById("ContentList1").value = "";
-                    document.getElementById("ViewList1").value = "";
-                    document.getElementById("CId").value = "";
-                    document.getElementById("VId").value = "";
-                    Model.ContentId
+                    document.getElementById("ViewList1").value = "";                               
                 });
 
-                $('#Submit').on('click', function () {
-                    //if (document.getElementById("Keys").value == "")
-                    //var data1 = $("#ContentViewDetails_SiteId").val();//$("#ContentViewDetails_SiteId").val(); //$("#ContentViewDetails_Order").val();
-                    //var selected = $("#ContentList option:selected");
+                $('#Submit').on('click', function () {                  
                     var selected = $("#ViewList1 option:selected");
                     var message = "";
                     selected.each(function () {
                         //message += $(this).text() + "\n";
                         message += $(this).val() + ",";
                     });
-                    //var s = "";
-                    //s = s + $("#SiteId");
-                    alert(message);
+                   
+                    alert($("#ContentViewDetails_Id").val());
                     $.ajax({
                         url: "/ContentOfView/CreateUpdContentOfView",
                         type: 'POST',
@@ -707,7 +707,7 @@
                             ViewId: $("#ViewList1 option:selected").val(),//$("#VId").val(), 
                             SiteId: $("#SiteID").val(),
                             Order: $("#ContentViewDetails_Order").val(),
-                            Id: $("#Id").val()
+                            Id: $("#ContentViewDetails_Id").val()//$("#Id").val()
                         }),
                         async: false,
                         success: function (data) {
@@ -718,15 +718,7 @@
                         },
                     });
                 });
-            });
-
-            function OnChange(e, f) {
-                $('#ContentViewDetails_ContentId').val(e)
-                if (e != "")
-                    $("#ContentViewDetails_Name").val($("#ContentList option:selected").text())
-                else
-                    $("#ContentViewDetails_Name").val("");
-            }
+            });           
         </script>
     }
 </body>
