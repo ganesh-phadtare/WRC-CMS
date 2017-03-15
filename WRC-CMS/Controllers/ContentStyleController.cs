@@ -286,7 +286,7 @@ namespace WRC_CMS.Controllers
                     else if (CType == 1)
                         ContentData.Add("v", ViewList.ToString().Substring(0, ViewList.Length - 1));
                     else if (CType == 2)
-                        ContentData.Add("st", SearchType.ToString().Substring(0,SearchType.Length-1));
+                        ContentData.Add("st", SearchType.ToString().Substring(0, SearchType.Length - 1));
 
                     dicParams.Add("@Id", Id);
                     //dicParams.Add("@View", ViewID);
@@ -387,8 +387,7 @@ namespace WRC_CMS.Controllers
                 //});
                 combineContentModel.ContentView = contents.FirstOrDefault(item => item.Id == Contentid);
                 combineContentModel.ContentList = contents;
-                combineContentModel.ViewList = ObjViewList;
-
+                combineContentModel.ViewList = ObjViewList;                
                 //ViewBag.Site = PubSiteID;
                 foreach (var item in contents)
                 {
@@ -404,9 +403,12 @@ namespace WRC_CMS.Controllers
                                 combineContentModel.ContentView.Data = _item.Value.ToString();
                             else if (_item.Key == "st")
                                 //combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());                                
-                                combineContentModel.ContentView.STyList= new List<int>( Array.ConvertAll(_item.Value.ToString().Split(','), int.Parse) );
+                                combineContentModel.ContentView.STyList = new List<int>(Array.ConvertAll(_item.Value.ToString().Split(','), int.Parse));
                             else if (_item.Key == "v")
-                                combineContentModel.ContentView.ViewID = (_item.Value == null ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
+                                combineContentModel.ContentView.VTyList = new List<int>(Array.ConvertAll((string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : _item.Value).ToString().Split(','), int.Parse));
+                            //(string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
+
+                               
                             else
                             { }
                         }
