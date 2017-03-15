@@ -485,7 +485,8 @@
                                                                                                 @Html.Label("View List", new { @class = "control-label col-md-2" })
                                                                                                 @*@Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })*@
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))
+                                                                                                    @*@Html.ListBox("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))*@
+                                                                                                    @Html.DropDownList("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId), "--Select View--")
                                                                                                     @Html.Hidden("VId", Model.ContentViewDetails.ViewId)
                                                                                                 </div>
                                                                                             </div>
