@@ -572,7 +572,7 @@
                                                                                             <div class="form-group" id="ContentOfPagePanel" hidden="hidden">
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))
+                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewList[0]))
                                                                                                 </div>
 
                                                                                                 @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
@@ -609,9 +609,9 @@
                                                                                                                  Value = "2"
                                                                                                              });
                                                                                                     }
-
+                                                                                                    @Html.ListBox("SearchType", new MultiSelectList(SearchItems, "Value", "Text", @Model.ContentView.STyList))
                                                                                                     @*@Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))*@
-                                                                                                    @Html.ListBox("SearchType", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID), new { @class = "listbox" })
+                                                                                                    @*@Html.ListBox("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))*@
                                                                                                 </div>
                                                                                             </div>
 
@@ -824,20 +824,28 @@
                     document.getElementById("ContentView_SearchType").value = -1;
                     document.getElementById("ContentView_Type").value = -1;
                     document.getElementById("Exemple").value = -1;
-
+                    document.getElementById("SearchType").value = -1;
                     //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
                 });
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
                     var selected = $("#ViewList option:selected");
+                    var ST = $("#SearchType option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
+                    var message1 = "";
                     selected.each(function () {
                         //message += $(this).text() + "\n";
                         message += $(this).val() + ",";
+                        alert(message);
                     });
-                    // alert(message);
+
+                    ST.each(function () {
+                     //message += $(this).text() + "\n";
+                        message1 += $(this).val() + ",";
+                    });
+
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
@@ -851,7 +859,7 @@
                             Description: $("#ContentView_Description").val(),
                             //Order: $("#ContentView_Order").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
-                            SearchType: $("select#SearchType option:selected").val(),
+                            SearchType:message1,//$("select#SearchType option:selected").val(),
                             Siteid: $("#SiteID").val(),
                             //ViewList:  $("#ViewList option:selected").val(),
                             ViewList: message,
@@ -893,12 +901,6 @@
                     $('#ContentOfPagePanel').hide();
                 }
             }
-
-            $(function () {
-                $('.listbox').multiselect({
-                    includeSelectAllOption: true
-                });
-            });
         </script>
     }
 </body>

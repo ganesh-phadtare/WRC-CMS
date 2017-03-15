@@ -266,11 +266,11 @@ namespace WRC_CMS.Controllers
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, string IsActive, int Siteid, string ViewList, int SearchType = 0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, string IsActive, int Siteid, string ViewList, string SearchType = "", int Id = 0)
         {
             try
             {
-                if (string.IsNullOrEmpty(Name) || CType == -1 || (CType == 1 && (Convert.ToInt32((Orientation == "" ? "0" : Orientation)) <= 0 || Convert.ToInt32((Orientation == "" ? "0" : Orientation)) >= 5)))               
+                if (string.IsNullOrEmpty(Name) || CType == -1 || (CType == 1 && (Convert.ToInt32((Orientation == "" ? "0" : Orientation)) <= 0 || Convert.ToInt32((Orientation == "" ? "0" : Orientation)) >= 5)))
                     return RedirectToAction("GetContentPage", new { SiteId = Siteid });
 
                 if (ModelState.IsValid)
@@ -284,9 +284,9 @@ namespace WRC_CMS.Controllers
                     if (CType == 0)
                         ContentData.Add("sd", Data);
                     else if (CType == 1)
-                        ContentData.Add("st", SearchType);
+                        ContentData.Add("v", ViewList.ToString().Substring(0, ViewList.Length - 1));
                     else if (CType == 2)
-                        ContentData.Add("v", ViewList);
+                        ContentData.Add("st", SearchType.ToString().Substring(0,SearchType.Length-1));
 
                     dicParams.Add("@Id", Id);
                     //dicParams.Add("@View", ViewID);
@@ -360,6 +360,8 @@ namespace WRC_CMS.Controllers
                 CombineContentModel combineContentModel = new CombineContentModel();
                 ContentStyleModel objContentstyle = new ContentStyleModel();
                 Dictionary<string, object> dictData = new Dictionary<string, object>();
+                //List<int> STyList =new List<int> ();
+
                 await Task.Run(() =>
                 {
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
@@ -386,21 +388,23 @@ namespace WRC_CMS.Controllers
                 combineContentModel.ContentView = contents.FirstOrDefault(item => item.Id == Contentid);
                 combineContentModel.ContentList = contents;
                 combineContentModel.ViewList = ObjViewList;
+
                 //ViewBag.Site = PubSiteID;
                 foreach (var item in contents)
                 {
                     if (item.Id == Contentid)
                     {
                         //combineContentModel.Order = item.Order;
-                        combineContentModel.Orientation = item.Orientation;
-                        combineContentModel.Type = item.Type;
+                        combineContentModel.ContentView.Orientation = item.Orientation;
+                        combineContentModel.ContentView.Type = item.Type;
                         dictData = JsonConvert.DeserializeObject<Dictionary<string, object>>(item.Data.ToString());
                         foreach (var _item in dictData)
                         {
                             if (_item.Key == "sd")
                                 combineContentModel.ContentView.Data = _item.Value.ToString();
                             else if (_item.Key == "st")
-                                combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());
+                                //combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());                                
+                                combineContentModel.ContentView.STyList= new List<int>( Array.ConvertAll(_item.Value.ToString().Split(','), int.Parse) );
                             else if (_item.Key == "v")
                                 combineContentModel.ContentView.ViewID = (_item.Value == null ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
                             else
