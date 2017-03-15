@@ -421,7 +421,7 @@
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
                                                         @Html.ActionLink("Create Content Style", "GetContentPage", new { SiteId = Model.SiteID })
-                                                    </h4>   
+                                                    </h4>
 
                                                 </div>
                                                 <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
@@ -575,7 +575,7 @@
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @*@Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))*@
-                                                                                                    @Html.ListBox("ViewList1", new MultiSelectList(Model.ViewList, "Oid", "Name",@Model.ContentView.VTyList))                                                                                                    
+                                                                                                    @Html.ListBox("ViewList1", new MultiSelectList(Model.ViewList, "Oid", "Name", @Model.ContentView.VTyList))
                                                                                                 </div>
 
                                                                                                 @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
@@ -814,21 +814,20 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
-                    //var selected = $("#ContentView_Type").val();
-                    //alert(selected);
-                    //alert(document.getElementById("ContentView_IsActive").value);
+                    $('#StaticContentPanel').hide();
+                    $('#SearchPanel').hide();
+                    $('#ContentOfPagePanel').hide();
+                    document.getElementById("ViewList1").value = -1;
+                    document.getElementById("Exemple").value = -1;
                     document.getElementById("ContentView_Name").value = "";
                     document.getElementById("ContentView_Description").value = "";
                     document.getElementById("ContentView_Orientation").value = "";
                     document.getElementById("ContentView_Order").value = "";
-                    document.getElementById("ContentView_IsActive").value = false;
                     document.getElementById("ContentView_Id").value = "";
-                    //document.getElementById("ContentView_Data").value = "";
                     document.getElementById("ContentView_SearchType").value = -1;
                     document.getElementById("ContentView_Type").value = -1;
-                    document.getElementById("Exemple").value = -1;
-                    document.getElementById("ViewList1").value = -1;
-                    //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
+                    document.getElementById("ContentView_IsActive").value = false;
+
                 });
 
                 $('#Submit').on('click', function () {
@@ -845,7 +844,7 @@
                     });
 
                     ST.each(function () {
-                     //message += $(this).text() + "\n";
+                        //message += $(this).text() + "\n";
                         message1 += $(this).val() + ",";
                     });
 
@@ -882,7 +881,6 @@
             });
 
             function toggleDIvDisplay(e) {
-                //alert("Dropdown");
                 if (e == 0) {
                     $('#StaticContentPanel').show();
                     $('#SearchPanel').hide();
