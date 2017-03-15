@@ -356,7 +356,7 @@ namespace WRC_CMS.Repository
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new SiteModel
                         {
-                            Oid = Convert.ToInt32(row["Oid"].ToString()),
+                            Oid = Convert.ToInt32(row["Id"].ToString()),
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             URL = row["url"].ToString(),
