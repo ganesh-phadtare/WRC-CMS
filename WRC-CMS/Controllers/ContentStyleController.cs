@@ -206,6 +206,7 @@ namespace WRC_CMS.Controllers
             //List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
             List<SiteModel> Sites = BORepository.GetAllSites(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
+           
 
             dict.Add("@Id", ContentId);
             dict.Add("@LoadOnlyActive", 0);
@@ -242,11 +243,13 @@ namespace WRC_CMS.Controllers
             List<ContentStyleModel> contents = new List<ContentStyleModel>();
             List<ViewModel> ObjViewList = new List<ViewModel>();
             CombineContentModel combineContentModel = new CombineContentModel();
+            List<SiteModel> Sites = new List<SiteModel>();
 
             await Task.Run(() =>
             {
                 contents.AddRange(GetAllContents(SiteId, 0).Result);
                 ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
+                Sites = BORepository.GetAllSites(proxy).Result;
             });
 
             combineContentModel.ContentView = new ContentStyleModel();
@@ -262,6 +265,7 @@ namespace WRC_CMS.Controllers
                 combineContentModel.SiteName = contents[0].SiteName;
             }
             combineContentModel.SiteID = SiteId;
+            combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
             PubSiteID = SiteId;
             return View("ContentPanel", combineContentModel);
         }

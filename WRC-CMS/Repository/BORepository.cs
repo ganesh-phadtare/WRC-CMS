@@ -218,7 +218,6 @@ namespace WRC_CMS.Repository
                             CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                            selected = true,
                         }).ToList();
             }
             return ViewList;
