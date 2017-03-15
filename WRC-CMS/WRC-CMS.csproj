@@ -172,6 +172,7 @@
     <Compile Include="Controllers\ContentOfViewController.cs" />
     <Compile Include="Controllers\ContentStyleController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorInfoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\SiteController.cs" />
