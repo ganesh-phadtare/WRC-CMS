@@ -15,6 +15,7 @@ using WRC_CMS.Repository;
 
 
 using Newtonsoft.Json;
+using System.IO;
 namespace WRC_CMS.Controllers
 {
     public class SiteController : Controller
@@ -204,7 +205,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Id", SiteObject.Oid);
                     dicParams.Add("@Name", SiteObject.Name);
                     dicParams.Add("@url", SiteObject.URL);
-                    dicParams.Add("@Logo", 0101);
+                    dicParams.Add("@Logo", CommonClass.GetImage(file.InputStream));
                     dicParams.Add("@Title", SiteObject.Title);
                     if (SiteObject.IsActive)
                         dicParams.Add("@IsActive", "1");
@@ -300,7 +301,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Id", Oid);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@url", URL);
-                    dicParams.Add("@Logo", 0101);
+                    dicParams.Add("@Logo", new ComplexDataModel(typeof(Byte[]), CommonClass.GetImage(Convert.ToString(Logo))));
                     dicParams.Add("@Title", Title);
                     dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
 
@@ -337,12 +338,12 @@ namespace WRC_CMS.Controllers
                                 if (ViewID > 0)
                                 {
                                     ContentStyleModel DefaultContent = new ContentStyleModel();
-                                    Dictionary<string, object> ContentData = new Dictionary<string, object>();  
+                                    Dictionary<string, object> ContentData = new Dictionary<string, object>();
 
                                     DefaultContent.Name = "Home";
                                     string welcomebody = @"<p><span style='font-size: medium;'><b><span style='text-decoration: underline;'>This is our default template.</span></b></span></p>
 <p><strong><span style='text-decoration: underline;'>Welcome to our site.<img src='http://localhost:49791/Scripts/tinymce/plugins/emotions/img/smiley-smile.gif' alt='Smile' title='Smile' border='0' /></span></strong></p>";
-                                    
+
                                     ContentData.Add("sd", welcomebody);
                                     ContentData.Add("st", -1);
                                     ContentData.Add("v", ViewID);
@@ -351,7 +352,7 @@ namespace WRC_CMS.Controllers
                                     DefaultContent.Orientation = "0";
                                     DefaultContent.Data = JsonConvert.SerializeObject(ContentData);
                                     DefaultContent.Description = "Welcome";
-                                    DefaultContent.Order = 1;
+                                    //DefaultContent.Order = 1;
                                     DefaultContent.IsActive = true;
                                     DefaultContent.SiteID = SiteID;
                                     int ContentID = 0;

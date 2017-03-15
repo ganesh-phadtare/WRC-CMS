@@ -291,7 +291,7 @@
     </style>
 </head>
 
-<body>
+<body onload="javascript: toggleDIvDisplay(@Model.ContentView.Type); ">
     @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
 
     <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
@@ -337,7 +337,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding fourth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site DB"></i> Site DB
+                                <i><img style="width:32px; height:32px" src="/images/SiteDB.png"></i> Site DB
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -346,7 +346,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site Misc"></i> Site Misc
+                                <i><img style="width:32px; height:32px" src="/images/Misc1.png"></i> Site Misc
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -355,7 +355,16 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Menu"></i> Menu
+                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i></i> Menu
+                            </a>
+
+                            <div class="collapsible-body" id="childNav" style="display: none;">
+
+                            </div>
+                        </li>
+                        <li routerlinkactive="active" class="no-padding seventh">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Of View" href="@Url.Action("GetAllContentOfView", "ContentOfView", new { @Model.SiteID })">
+                                <i><img style="width:32px; height:32px" src="/images/Content.png"></i> Content Of View
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -371,11 +380,11 @@
                     <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
 
                 </ul>
-                <sidenav-button _ngcontent-xlf-78="">
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>
+                @*<sidenav-button _ngcontent-xlf-78="">
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 class="header-title">
                     <a href="http://localhost:49791/dashboard">
                         <img class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName </span>
@@ -406,7 +415,7 @@
                             <div _ngcontent-xlf-80="" class="attendance-wrapper p-top20" style="width: 100%;float: left;">
                                 <div _ngcontent-xlf-80="" class="row attendance-data">
 
-                                    <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 55% !important; ">
+                                    <div _ngcontent-xlf-80="" class="row attendance-data" id="DetailView" style=" width: 50% !important; ">
                                         <div _ngcontent-xlf-80="" class="col s12 padding-zero">
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
@@ -495,19 +504,27 @@
                                                                                                     </div>
                                                                                                 </div>*@
 
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                            @*<div class="form-group">
+                                                                                                    @Html.LabelFor(model => model.ContentView.Order, new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.EditorFor(model => model.ContentView.Order)
+                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.Order)
+                                                                                                    </div>
+                                                                                                </div>*@
+
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.Type, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Orientation)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Orientation)
+                                                                                                    @Html.EditorFor(model => model.ContentView.Type)
+                                                                                                    @* @Html.ValidationMessageFor(model => model.ContentView.Type)*@
                                                                                                 </div>
                                                                                             </div>
 
-                                                                                            <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentView.Order, new { @class = "control-label col-md-2" })
+                                                                                            <div class="form-group" hidden="hidden">
+                                                                                                @Html.LabelFor(model => model.ContentView.SearchType, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.Order)
-                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Order)
+                                                                                                    @Html.EditorFor(model => model.ContentView.SearchType)
+                                                                                                    @* @Html.ValidationMessageFor(model => model.ContentView.Type)*@
                                                                                                 </div>
                                                                                             </div>
 
@@ -517,6 +534,11 @@
                                                                                                     @{
                                                                                                         List<SelectListItem> listItems = new List<SelectListItem>();
                                                                                                         listItems.Add(new SelectListItem
+                                                                                                        {
+                                                                                                            Text = "--Select Type--",
+                                                                                                            Value = "-1"
+                                                                                                        });
+                                                                                                        listItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Static Content",
                                                                                                                  Value = "0"
@@ -525,7 +547,7 @@
                                                                                                              {
                                                                                                                  Text = "Content Of Page",
                                                                                                                  Value = "1",
-                                                                                                                 Selected = true
+                                                                                                                 //Selected = true
                                                                                                              });
                                                                                                         listItems.Add(new SelectListItem
                                                                                                              {
@@ -534,7 +556,7 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text", Model.ContentView.Type), "--Select Type--", new { @onchange = "toggleDIvDisplay(this.value)" })
+                                                                                                    @Html.DropDownList("Exemple", new SelectList(listItems, "Value", "Text", Model.ContentView.Type), null, new { @onchange = "toggleDIvDisplay(this.value)" })
                                                                                                 </div>
                                                                                             </div>
 
@@ -552,33 +574,13 @@
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))
                                                                                                 </div>
-                                                                                            </div>
 
-                                                                                            <div class="form-group" hidden="hidden">
-                                                                                                @if (Model.ContentView.Type == 0)
-                                                                                                {
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                    @*@('#StaticContentPanel').hide()
-                                                                                                        @('#SearchPanel').hide()
-                                                                                                        @('#ContentOfPagePanel').hide()*@
-                                                                                                }
-                                                                                                else if (Model.ContentView.Type == 1)
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                }
-                                                                                                else if (Model.ContentView.Type == 2)
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    @Html.Hidden("StaticContentPanel")
-                                                                                                    @Html.Hidden("ContentOfPagePanel")
-                                                                                                    @Html.Hidden("SearchPanel")
-                                                                                                }
+                                                                                                @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
+                                                                                                <div class="col-md-10">
+                                                                                                    @Html.TextBoxFor(model => model.ContentView.Orientation, new { @type = "number", @class = "span4", @min = "1", @max = "5" })
+                                                                                                    @*@Html.EditorFor(model => model.ContentView.Orientation, new { htmlAttributes = new { min = 0, max = 5 }, @type = "number" })*@
+                                                                                                    @Html.ValidationMessageFor(model => model.ContentView.Orientation)
+                                                                                                </div>
                                                                                             </div>
 
                                                                                             <div class="form-group" id="SearchPanel" hidden="hidden">
@@ -587,11 +589,10 @@
                                                                                                     @{
                                                                                                         List<SelectListItem> SearchItems = new List<SelectListItem>();
                                                                                                         SearchItems.Add(new SelectListItem
-                                                                                                             {
-                                                                                                                 Text = "--Select Search Type--",
-                                                                                                                 Value = "-1",
-                                                                                                                 Selected = true
-                                                                                                             });
+                                                                                                        {
+                                                                                                            Text = "--Select Search Type--",
+                                                                                                            Value = "-1"
+                                                                                                        });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Alphabetical Search",
@@ -600,8 +601,7 @@
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
                                                                                                                  Text = "Quick Search",
-                                                                                                                 Value = "1",
-                                                                                                                 Selected = true
+                                                                                                                 Value = "1"
                                                                                                              });
                                                                                                         SearchItems.Add(new SelectListItem
                                                                                                              {
@@ -610,7 +610,8 @@
                                                                                                              });
                                                                                                     }
 
-                                                                                                    @Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text"), "--Select Search Type--")
+                                                                                                    @*@Html.DropDownList("SearchType", new SelectList(SearchItems, "Value", "Text", Model.ContentView.SearchType))*@
+                                                                                                    @Html.ListBox("SearchType", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID), new { @class = "listbox" })
                                                                                                 </div>
                                                                                             </div>
 
@@ -668,7 +669,7 @@
                                         </div>
                                     </div>
 
-                                    <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 40% !important; ">
+                                    <div _ngcontent-xlf-80="" class="col s12 l6 padding-zero" style=" width: 48% !important; ">
                                         <div _ngcontent-xlf-80="" class="">
                                             <div _ngcontent-xlf-80="" class="table-container padding-zero">
                                                 <div _ngcontent-xlf-80="" class="row m-bottom5">
@@ -810,13 +811,20 @@
                 $('#cancel').unbind('click');
 
                 $('#cancel').on('click', function () {
+                    //var selected = $("#ContentView_Type").val();
+                    //alert(selected);
                     //alert(document.getElementById("ContentView_IsActive").value);
                     document.getElementById("ContentView_Name").value = "";
                     document.getElementById("ContentView_Description").value = "";
                     document.getElementById("ContentView_Orientation").value = "";
                     document.getElementById("ContentView_Order").value = "";
-                    document.getElementById("ContentView_IsActive").prop("checked") = false;
+                    document.getElementById("ContentView_IsActive").value = false;
                     document.getElementById("ContentView_Id").value = "";
+                    //document.getElementById("ContentView_Data").value = "";
+                    document.getElementById("ContentView_SearchType").value = -1;
+                    document.getElementById("ContentView_Type").value = -1;
+                    document.getElementById("Exemple").value = -1;
+
                     //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
                 });
 
@@ -827,14 +835,9 @@
                     var message = "";
                     selected.each(function () {
                         //message += $(this).text() + "\n";
-                        message += $(this).text() + " " + $(this).val() + "\n";
+                        message += $(this).val() + ",";
                     });
-                    var Data = "";
-                    //var e = document.getElementById("#ViewList");
-                    //var strUser = e.options[e.selectedIndex].value;
-
-                    alert(message);
-                    // alert(tinyMCE.get('#mce_editor_0_tbl').getContent());
+                    // alert(message);
                     $.ajax({
                         url: "/ContentStyle/CreateUpdContent",
                         type: 'POST',
@@ -846,12 +849,12 @@
                             Orientation: $("#ContentView_Orientation").val(),
                             Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
                             Description: $("#ContentView_Description").val(),
-                            Order: $("#ContentView_Order").val(),
+                            //Order: $("#ContentView_Order").val(),
                             IsActive: $("#ContentView_IsActive").prop("checked"),
                             SearchType: $("select#SearchType option:selected").val(),
                             Siteid: $("#SiteID").val(),
                             //ViewList:  $("#ViewList option:selected").val(),
-                            ViewList: $("#ViewList option:selected").val(),
+                            ViewList: message,
                             Id: $("#ContentView_Id").val()
                             //ViewID: $("#ContentView_ViewID").val(),
                             //ViewID: $("#DDLList option:selected").val(),
@@ -891,45 +894,11 @@
                 }
             }
 
-        </script>
-    }
-
-    @*@section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-            <script type="text/javascript">
-                $(document).ready(function () {
-
-                    $('#Submit').unbind('click');
-
-                    $('#Submit').on('click', function () {
-                        $.ajax({
-                            url: "/AddView/Test",
-                            type: 'POST',
-                            contentType: "application/json; charset=utf-8",
-                            dataType: 'json',
-                            data: JSON.stringify({
-                                Name: $("#NewView_Name").val(),
-                                URL: $("#NewView_URL").val(),
-                                Title: $("#NewView_Title").val(),
-                                IsActive: $('#NewView_IsActive').prop("checked"),
-                                IsDefault: $('#NewView_IsDem').prop("checked"),
-                                Authorized: $('#NewView_IsAuth').prop("checked"),
-                                CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                                Logo: $("#file").val(),
-                                Id: $("#Id").val(),
-                                SiteID: $("#SiteID").val(),
-                            }),
-                            async: false,
-                            success: function (data) {
-                                alert("Success");
-                            },
-                            failure: function (data) {
-                                alert("Fail");
-                            },
-                        });
-                    });
+            $(function () {
+                $('.listbox').multiselect({
+                    includeSelectAllOption: true
                 });
-            </script>
-        }*@
-</body>
+            });
+        </script>
+    </body>
 </html>

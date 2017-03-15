@@ -325,14 +325,14 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding third">
                             <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = @Model.SiteID })">
-                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Views
+                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style
                             </a>
                             <div class="collapsible-body" id="childNav" style="display: none;">
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding fourth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site DB" href="@Url.Action("GetAllSiteDb", "SiteDb", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site DB"></i> Site DB
+                                <i><img style="width:32px; height:32px" src="/images/SiteDB.png"></i> Site DB
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -341,7 +341,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding fifth">
                             <a class="collapsible-header" routerlinkactive="active" title="Site Misc" href="@Url.Action("GetAllSiteMisc", "SiteMisc", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Site Misc"></i> Site Misc
+                                <i><img style="width:32px; height:32px" src="/images/Misc1.png"></i> Site Misc
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -350,17 +350,16 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteID })">
-                                <i class="fa fa-money" title="Menu"></i> Menu
+                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i></i> Menu
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
 
                             </div>
                         </li>
-                        
-                        <li routerlinkactive="active" class="no-padding sixth">
-                            <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = ViewBag.CurrSiteID })">
-                                <i class="fa fa-money" title="Menu"></i> Menu
+                        <li routerlinkactive="active" class="no-padding seventh">
+                            <a class="collapsible-header" routerlinkactive="active" title="Content Of View" href="@Url.Action("GetAllContentOfView", "ContentOfView", new { @Model.SiteID })">
+                                <i><img style="width:32px; height:32px" src="/images/Content.png"></i> Content Of View
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -377,13 +376,13 @@
                     <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
 
                 </ul>
-                <sidenav-button _ngcontent-xlf-78="">
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="@Url.Action("Index", "Dashboard")">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>
+                @* <sidenav-button _ngcontent-xlf-78="">
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="@Url.Action("Index", "Dashboard")">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 _ngcontent-xlf-78="" class="header-title" style=" height: 100%; ">
-                    <a _ngcontent-xlf-78="" href="@Url.Action("Index", "Dashboard")"><img _ngcontent-xlf-78="" class="header-logo responsive-img" src="./VW-Refresh_files/logo-img.png"> @Model.SiteName</span></a>
+                    <a _ngcontent-xlf-78="" href="@Url.Action("Index", "Dashboard")"><img _ngcontent-xlf-78="" class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName</span></a>
                 </h5>
             </nav>
         </div>
@@ -544,7 +543,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.Password, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.Password)
+                                                                                                    @*@Html.EditorFor(model => model.DetailView.Password)*@
+                                                                                                    @Html.PasswordFor(model => model.DetailView.Password)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.Password)
                                                                                                 </div>
                                                                                             </div>
@@ -624,7 +624,7 @@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Server)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Database)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.UserID)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Password)</th>
+                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Password)</th>*@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -642,9 +642,9 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.UserID)
                                                                             </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.Password)
-                                                                            </td>
+                                                                            </td>*@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditSiteDB", new { SiteDBID = item.Id, SiteID = item.SiteId }) |
                                                                                 @Html.ActionLink("Delete", "DeleteSiteDB", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })

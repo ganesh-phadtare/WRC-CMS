@@ -60,31 +60,11 @@ namespace WRC_CMS.Controllers
                 dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
-                dicParams.Add("@Logo", new ComplexDataModel(typeof(Byte[]), GetImage()));
+                dicParams.Add("@Logo", new ComplexDataModel(typeof(Byte[]), CommonClass.GetImage(Server.MapPath(@"..\Images\bb.jpg"))));
                 dicParams.Add("@Title", MockData.Product.ProductName());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
 
                 proxy.ExecuteNonQuery("SP_SiteAddUp", dicParams);
-            }
-        }
-
-        private object GetImage()
-        {
-            using (var ms = new MemoryStream())
-            {
-                Image imgToResize = Image.FromFile(Server.MapPath(@"..\Images\bb.jpg"));
-
-                Bitmap b = new Bitmap(100, 100);
-                Graphics g = Graphics.FromImage((Image)b);
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-
-                g.DrawImage(imgToResize, 0, 0, 100, 100);
-                g.Dispose();
-
-                b.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
-
-                return ms.ToArray();// string.Concat(ms.ToArray().Select(k => Convert.ToString(k, 2)));
-                //return 0101010101010;
             }
         }
 
@@ -96,7 +76,7 @@ namespace WRC_CMS.Controllers
                 dicParams.Add("@Id", -1);
                 dicParams.Add("@Name", MockData.Company.Name());
                 dicParams.Add("@url", MockData.Internet.DomainName());
-                dicParams.Add("@Logo", GetImage());
+                dicParams.Add("@Logo", CommonClass.GetImage(""));
                 dicParams.Add("@Title", MockData.Product.ProductName());
                 dicParams.Add("@IsActive", MockData.RandomNumber.Next(0, 1));
                 dicParams.Add("@Authorized", MockData.RandomNumber.Next(0, 1));
