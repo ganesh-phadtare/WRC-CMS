@@ -330,7 +330,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding third">
                             <a class="collapsible-header" routerlinkactive="active" title="Content Style" href="@Url.Action("GetContentPage", "ContentStyle", new { SiteId = @Model.SiteID })">
-                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Views
+                                <i><img style="width:32px; height:32px" src="/images/Content1.png"></i> Content Style
                             </a>
                             <div class="collapsible-body" id="childNav" style="display: none;">
                             </div>
@@ -419,7 +419,9 @@
                                         <div _ngcontent-xlf-80="" class="col s12 padding-zero">
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
-                                                    <h4 _ngcontent-xlf-80="">Create/Edit Content</h4>
+                                                    <h4 _ngcontent-xlf-80="">
+                                                        @Html.ActionLink("Create Content Style", "GetContentPage", new { SiteId = Model.SiteID })
+                                                    </h4>   
 
                                                 </div>
                                                 <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
@@ -572,7 +574,8 @@
                                                                                             <div class="form-group" id="ContentOfPagePanel" hidden="hidden">
                                                                                                 @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewList[0]))
+                                                                                                    @*@Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ContentView.ViewID))*@
+                                                                                                    @Html.ListBox("ViewList1", new MultiSelectList(Model.ViewList, "Oid", "Name",@Model.ContentView.VTyList))                                                                                                    
                                                                                                 </div>
 
                                                                                                 @Html.LabelFor(model => model.ContentView.Orientation, new { @class = "control-label col-md-2" })
@@ -824,7 +827,7 @@
                     document.getElementById("ContentView_SearchType").value = -1;
                     document.getElementById("ContentView_Type").value = -1;
                     document.getElementById("Exemple").value = -1;
-                    document.getElementById("SearchType").value = -1;
+                    document.getElementById("ViewList1").value = -1;
                     //tinyMCE.activeEditor.getContent({ format: 'html' }) = "";
                 });
 

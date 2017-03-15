@@ -218,6 +218,7 @@ namespace WRC_CMS.Repository
                             CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
+                            selected = true,
                         }).ToList();
             }
             return ViewList;
@@ -336,7 +337,7 @@ namespace WRC_CMS.Repository
                             Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
                             //Order = Convert.ToInt32(row["Order"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                           // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
+                            // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                         }).ToList();
             }
             return ContentList;
@@ -366,7 +367,7 @@ namespace WRC_CMS.Repository
             return SearchList;
         }
 
-        public static async Task<List<ContentOfViewModel>> GetContentViews(WebApiProxy proxy,int SiteId)
+        public static async Task<List<ContentOfViewModel>> GetContentViews(WebApiProxy proxy, int SiteId)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ViewModel> Views = GetAllViews(proxy).Result;
@@ -384,13 +385,13 @@ namespace WRC_CMS.Repository
                         select new ContentOfViewModel
                         {
                             Id = Convert.ToInt32(row["Id"].ToString()),
-                            ContentId =  Convert.ToInt32(row["ContentId"].ToString()),
-                            ViewId =  Convert.ToInt32(row["ViewId"].ToString()),
+                            ContentId = Convert.ToInt32(row["ContentId"].ToString()),
+                            ViewId = Convert.ToInt32(row["ViewId"].ToString()),
                             ViewName = Views.FirstOrDefault(i => i.Oid == Convert.ToInt32(row["ViewId"].ToString())).Name,
                             ContentName = Contents.FirstOrDefault(c => c.Id == Convert.ToInt32(row["ContentId"].ToString())).Name,
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                           // Order = Convert.ToInt32(row["Order"].ToString()),                            
+                            Order = Convert.ToInt32(row["Order"].ToString()),                            
                         }).ToList();
             }
             return new List<ContentOfViewModel>();
