@@ -40,6 +40,7 @@ namespace WRC_CMS.Models
         public string Orientation { get; set; }
         public int SearchType { get; set; }
         public List<int> STyList { get; set; }
+        public List<int> VTyList { get; set; }
     }
 
     public class CombineContentModel

@@ -42,6 +42,8 @@ namespace WRC_CMS.Controllers
             combineContentModel.ContentViewList = ContentView;
             combineContentModel.ViewList = ObjViewList;
             combineContentModel.ContentList = ObjContentList;
+            combineContentModel.ContentId = -1;
+            combineContentModel.ViewId = -1;
             if (ObjContentList.Count > 0)
             {
                 combineContentModel.SiteId = ObjContentList[0].SiteID;
