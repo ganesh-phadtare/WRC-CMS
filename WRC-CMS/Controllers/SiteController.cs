@@ -352,7 +352,7 @@ namespace WRC_CMS.Controllers
                                     DefaultContent.Orientation = "0";
                                     DefaultContent.Data = JsonConvert.SerializeObject(ContentData);
                                     DefaultContent.Description = "Welcome";
-                                    DefaultContent.Order = 1;
+                                    //DefaultContent.Order = 1;
                                     DefaultContent.IsActive = true;
                                     DefaultContent.SiteID = SiteID;
                                     int ContentID = 0;

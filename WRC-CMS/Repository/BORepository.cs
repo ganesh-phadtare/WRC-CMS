@@ -169,7 +169,7 @@ namespace WRC_CMS.Repository
             dicParams.Add("@Orientation", ContentStyleModelObject.Orientation);
             dicParams.Add("@Data", ContentStyleModelObject.Data);
             dicParams.Add("@Description", ContentStyleModelObject.Description);
-            dicParams.Add("@Order", ContentStyleModelObject.Order);
+            //dicParams.Add("@Order", ContentStyleModelObject.Order);
             if (ContentStyleModelObject.IsActive)
                 dicParams.Add("@IsActive", "1");
             else
@@ -334,9 +334,9 @@ namespace WRC_CMS.Repository
                             Type = Convert.ToInt32(row["Type"].ToString()),
                             Orientation = row["Orientation"].ToString(),
                             Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                            Order = Convert.ToInt32(row["Order"].ToString()),
+                            //Order = Convert.ToInt32(row["Order"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                           // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
+                            // SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                         }).ToList();
             }
             return ContentList;
@@ -356,7 +356,7 @@ namespace WRC_CMS.Repository
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new SiteModel
                         {
-                            Oid = Convert.ToInt32(row["Oid"].ToString()),
+                            Oid = Convert.ToInt32(row["Id"].ToString()),
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             URL = row["url"].ToString(),
@@ -366,7 +366,7 @@ namespace WRC_CMS.Repository
             return SearchList;
         }
 
-        public static async Task<List<ContentOfViewModel>> GetContentViews(WebApiProxy proxy,int SiteId)
+        public static async Task<List<ContentOfViewModel>> GetContentViews(WebApiProxy proxy, int SiteId)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ViewModel> Views = GetAllViews(proxy).Result;
@@ -384,8 +384,8 @@ namespace WRC_CMS.Repository
                         select new ContentOfViewModel
                         {
                             Id = Convert.ToInt32(row["Id"].ToString()),
-                            ContentId =  Convert.ToInt32(row["ContentId"].ToString()),
-                            ViewId =  Convert.ToInt32(row["ViewId"].ToString()),
+                            ContentId = Convert.ToInt32(row["ContentId"].ToString()),
+                            ViewId = Convert.ToInt32(row["ViewId"].ToString()),
                             ViewName = Views.FirstOrDefault(i => i.Oid == Convert.ToInt32(row["ViewId"].ToString())).Name,
                             ContentName = Contents.FirstOrDefault(c => c.Id == Convert.ToInt32(row["ContentId"].ToString())).Name,
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),

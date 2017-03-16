@@ -26,7 +26,7 @@ namespace WRC_CMS.Models
 
         [Required(ErrorMessage = "Orientation is required.")]
         [StringLength(100, ErrorMessage = "Orientation cannot be longer than 100 characters.")]
-        public string Orientation { get; set; }
+        public string Orientation { get; set; }        
     }
 
     public class CombineModel

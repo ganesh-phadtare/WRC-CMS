@@ -36,9 +36,11 @@ namespace WRC_CMS.Models
         [UIHint("tinymce_full")]
         public string Data { get; set; }
 
-        public int Order { get; set; }
+        //public int Order { get; set; }
         public string Orientation { get; set; }
         public int SearchType { get; set; }
+        public List<int> STyList { get; set; }
+        public List<int> VTyList { get; set; }
     }
 
     public class CombineContentModel
@@ -50,10 +52,9 @@ namespace WRC_CMS.Models
         public int SiteID { get; set; }
         public List<ViewModel> ViewList { get; set; }
 
-        public int Type { get; set; }
-        public string Data { get; set; }
-        public int Order { get; set; }
-        public string Orientation { get; set; }
-
+        //public int Type { get; set; }
+        //public string Data { get; set; }
+       //public int Order { get; set; }       
+        //public string Orientation { get; set; }
     }
 }

@@ -206,6 +206,7 @@ namespace WRC_CMS.Controllers
             //List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
             List<SiteModel> Sites = BORepository.GetAllSites(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
+           
 
             dict.Add("@Id", ContentId);
             dict.Add("@LoadOnlyActive", 0);
@@ -229,7 +230,7 @@ namespace WRC_CMS.Controllers
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
                         Data = (row["Data"].ToString() == "") ? "" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                        Order = Convert.ToInt32(row["Order"].ToString()),
+                        //Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
         }
@@ -242,11 +243,13 @@ namespace WRC_CMS.Controllers
             List<ContentStyleModel> contents = new List<ContentStyleModel>();
             List<ViewModel> ObjViewList = new List<ViewModel>();
             CombineContentModel combineContentModel = new CombineContentModel();
+            List<SiteModel> Sites = new List<SiteModel>();
 
             await Task.Run(() =>
             {
                 contents.AddRange(GetAllContents(SiteId, 0).Result);
                 ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
+                Sites = BORepository.GetAllSites(proxy).Result;
             });
 
             combineContentModel.ContentView = new ContentStyleModel();
@@ -254,6 +257,7 @@ namespace WRC_CMS.Controllers
             combineContentModel.ContentView.SearchType = -1;
             combineContentModel.ContentList = contents;
             combineContentModel.ViewList = ObjViewList;
+            combineContentModel.ContentView.Orientation = "1";
 
             if (contents.Count > 0)
             {
@@ -261,14 +265,18 @@ namespace WRC_CMS.Controllers
                 combineContentModel.SiteName = contents[0].SiteName;
             }
             combineContentModel.SiteID = SiteId;
+            combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
             PubSiteID = SiteId;
             return View("ContentPanel", combineContentModel);
         }
 
-        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, int Order, string IsActive, int Siteid, string ViewList, int SearchType = 0, int Id = 0)
+        public async Task<ActionResult> CreateUpdContent(string Name, int CType, string Orientation, string Data, string Description, string IsActive, int Siteid, string ViewList, string SearchType = "", int Id = 0)
         {
             try
             {
+                if (string.IsNullOrEmpty(Name) || CType == -1 || (CType == 1 && (Convert.ToInt32((Orientation == "" ? "0" : Orientation)) <= 0 || Convert.ToInt32((Orientation == "" ? "0" : Orientation)) >= 5)))
+                    return RedirectToAction("GetContentPage", new { SiteId = Siteid });
+
                 if (ModelState.IsValid)
                 {
                     int ContentID = 0;
@@ -276,9 +284,13 @@ namespace WRC_CMS.Controllers
                         Id = -1;
                     Dictionary<string, object> ContentData = new Dictionary<string, object>();
                     Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                    ContentData.Add("sd", Data);
-                    ContentData.Add("st", SearchType);
-                    ContentData.Add("v", ViewList);
+
+                    if (CType == 0)
+                        ContentData.Add("sd", Data);
+                    else if (CType == 1)
+                        ContentData.Add("v", ViewList.ToString().Substring(0, ViewList.Length - 1));
+                    else if (CType == 2)
+                        ContentData.Add("st", SearchType.ToString().Substring(0, SearchType.Length - 1));
 
                     dicParams.Add("@Id", Id);
                     //dicParams.Add("@View", ViewID);
@@ -287,7 +299,7 @@ namespace WRC_CMS.Controllers
                     dicParams.Add("@Orientation", Orientation);
                     dicParams.Add("@Data", JsonConvert.SerializeObject(ContentData));
                     dicParams.Add("@Description", Description);
-                    dicParams.Add("@Order", Order);
+                    //dicParams.Add("@Order", Order);
                     dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
                     //dicParams.Add("@Search", SearchType);
                     dicParams.Add("@Siteid", Siteid);
@@ -352,6 +364,8 @@ namespace WRC_CMS.Controllers
                 CombineContentModel combineContentModel = new CombineContentModel();
                 ContentStyleModel objContentstyle = new ContentStyleModel();
                 Dictionary<string, object> dictData = new Dictionary<string, object>();
+                //List<int> STyList =new List<int> ();
+
                 await Task.Run(() =>
                 {
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
@@ -377,24 +391,28 @@ namespace WRC_CMS.Controllers
                 //});
                 combineContentModel.ContentView = contents.FirstOrDefault(item => item.Id == Contentid);
                 combineContentModel.ContentList = contents;
-                combineContentModel.ViewList = ObjViewList;
+                combineContentModel.ViewList = ObjViewList;                
                 //ViewBag.Site = PubSiteID;
                 foreach (var item in contents)
                 {
                     if (item.Id == Contentid)
                     {
-                        combineContentModel.Order = item.Order;
-                        combineContentModel.Orientation = item.Orientation;
-                        combineContentModel.Type = item.Type;
+                        //combineContentModel.Order = item.Order;
+                        combineContentModel.ContentView.Orientation = item.Orientation;
+                        combineContentModel.ContentView.Type = item.Type;
                         dictData = JsonConvert.DeserializeObject<Dictionary<string, object>>(item.Data.ToString());
                         foreach (var _item in dictData)
                         {
                             if (_item.Key == "sd")
                                 combineContentModel.ContentView.Data = _item.Value.ToString();
                             else if (_item.Key == "st")
-                                combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());
+                                //combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());                                
+                                combineContentModel.ContentView.STyList = new List<int>(Array.ConvertAll(_item.Value.ToString().Split(','), int.Parse));
                             else if (_item.Key == "v")
-                                combineContentModel.ContentView.ViewID = (_item.Value == null ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
+                                combineContentModel.ContentView.VTyList = new List<int>(Array.ConvertAll((string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : _item.Value).ToString().Split(','), int.Parse));
+                            //(string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
+
+                               
                             else
                             { }
                         }

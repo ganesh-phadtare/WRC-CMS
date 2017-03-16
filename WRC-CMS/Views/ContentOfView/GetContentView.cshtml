@@ -425,9 +425,8 @@
                                             <div _ngcontent-xlf-80="" class="apply-for-leave-container">
                                                 <div _ngcontent-xlf-80="" class="header">
                                                     <h4 _ngcontent-xlf-80="">
-                                                        @Html.ActionLink("Manage Content Of View", "GetAllContentOfView", new { SiteId = Model.SiteId })
-                                                    </h4>
-
+                                                        @Html.ActionLink("Create Content Of View", "GetAllContentOfView", new { SiteId = Model.SiteId })
+                                                    </h4>                                                   
                                                 </div>
                                                 <form _ngcontent-xlf-80="" class="ng-untouched ng-pristine ng-valid">
                                                     <div _ngcontent-xlf-80="">
@@ -471,21 +470,23 @@
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ContentList, new { @class = "control-label col-md-2" })
+                                                                                                @Html.Label("Content List", new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @*@Html.DropDownList("ContentList", new SelectList(Model.ContentList, Model.ContentViewDetails.ContentId),"--Select Key--", new { @onchange = "OnChange(this.value)" })*@
                                                                                                     @* @Html.DropDownList("ContentList", new SelectList(Model.ContentList, "Id", "Name",  Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })*@
                                                                                                     @*@Html.DropDownList("Keys", new SelectList(@Model.ContentList, Model.ContentViewDetails.ContentId), "--Select Key--", null)*@
-                                                                                                    @Html.DropDownList("ContentList", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--", new { @onchange = "OnChange(this.value,this.text)" })
+                                                                                                    @Html.DropDownList("ContentList1", new SelectList(@Model.ContentList, "Id", "Name", Model.ContentId), "--Select Content--")
 
                                                                                                     @Html.Hidden("CId", Model.ContentId)
                                                                                                 </div>
                                                                                             </div>
 
                                                                                             <div class="form-group">
-                                                                                                @Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })
+                                                                                                @Html.Label("View List", new { @class = "control-label col-md-2" })
+                                                                                                @*@Html.LabelFor(model => model.ViewList, new { @class = "control-label col-md-2" })*@
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.ListBox("ViewList", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))
+                                                                                                    @*@Html.ListBox("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId))*@
+                                                                                                    @Html.DropDownList("ViewList1", new SelectList(Model.ViewList, "Oid", "Name", Model.ViewId), "--Select View--")
                                                                                                     @Html.Hidden("VId", Model.ContentViewDetails.ViewId)
                                                                                                 </div>
                                                                                             </div>
@@ -504,7 +505,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentViewDetails.Order, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentViewDetails.Order)
+                                                                                                    @Html.TextBoxFor(model => model.ContentViewDetails.Order, new { @type = "number", @class = "span4", @min = "1" })                                                                                                    
+                                                                                                    @*@Html.EditorFor(model => model.ContentViewDetails.Order)*@
                                                                                                     @Html.ValidationMessageFor(model => model.ContentViewDetails.Order)
                                                                                                 </div>
                                                                                             </div>
@@ -577,6 +579,7 @@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.ViewName)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentViewDetails.Order)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
+                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Order</th>*@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
@@ -672,34 +675,36 @@
 
                 $('#cancel').on('click', function () {
                     document.getElementById("ContentViewDetails_Order").value = "";
-                    document.getElementById("ContentViewDetails_ContentId").value = "";
-                    document.getElementById("ContentViewDetails_ViewId").value = "";
-                    document.getElementById("ContentList").value = "";
-                    document.getElementById("ViewList").value = "";
+                    document.getElementById("ContentId").value = "";
+                    document.getElementById("ViewId").value = "";
+                    document.getElementById("ContentList1").value = "";
+                    document.getElementById("ViewList1").value = "";
                     document.getElementById("CId").value = "";
                     document.getElementById("VId").value = "";
+                    Model.ContentId
                 });
 
                 $('#Submit').on('click', function () {
                     //if (document.getElementById("Keys").value == "")
                     //var data1 = $("#ContentViewDetails_SiteId").val();//$("#ContentViewDetails_SiteId").val(); //$("#ContentViewDetails_Order").val();
-                    var selected = $("#ContentList option:selected");
+                    //var selected = $("#ContentList option:selected");
+                    var selected = $("#ViewList1 option:selected");
                     var message = "";
                     selected.each(function () {
                         //message += $(this).text() + "\n";
-                        message += $(this).text() + " " + $(this).val() + "\n";
+                        message += $(this).val() + ",";
                     });
-                    var s = "";
-                    s = s + $("#SiteId");
-                    //alert(message +""+ s);
+                    //var s = "";
+                    //s = s + $("#SiteId");
+                    alert(message);
                     $.ajax({
                         url: "/ContentOfView/CreateUpdContentOfView",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
                         data: JSON.stringify({
-                            ContentId: $("#CId").val(),//$("#ContentList option:selected").val(),
-                            ViewId: $("#VId").val(), //$("#ViewList option:selected").val(),
+                            ContentId: $("#ContentList1 option:selected").val(),//$("#CId").val(),
+                            ViewId: $("#ViewList1 option:selected").val(),//$("#VId").val(), 
                             SiteId: $("#SiteID").val(),
                             Order: $("#ContentViewDetails_Order").val(),
                             Id: $("#Id").val()

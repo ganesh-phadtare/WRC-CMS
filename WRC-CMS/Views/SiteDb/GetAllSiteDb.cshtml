@@ -543,7 +543,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.Password, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.Password)
+                                                                                                    @*@Html.EditorFor(model => model.DetailView.Password)*@
+                                                                                                    @Html.PasswordFor(model => model.DetailView.Password)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.Password)
                                                                                                 </div>
                                                                                             </div>
@@ -623,7 +624,7 @@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Server)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Database)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.UserID)</th>
-                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Password)</th>
+                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Password)</th>*@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
                                                                     </tr>
                                                                 </thead>
@@ -641,9 +642,9 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.UserID)
                                                                             </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.Password)
-                                                                            </td>
+                                                                            </td>*@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditSiteDB", new { SiteDBID = item.Id, SiteID = item.SiteId }) |
                                                                                 @Html.ActionLink("Delete", "DeleteSiteDB", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
