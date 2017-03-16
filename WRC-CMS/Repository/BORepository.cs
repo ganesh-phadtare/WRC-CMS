@@ -35,6 +35,7 @@ namespace WRC_CMS.Repository
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             URL = row["url"].ToString(),
+                            Logo = GetRowData<byte[]>(row["Logo"]),
                             IsActive = bool.Parse(row["IsActive"].ToString())
                         }).ToList();
             }
@@ -311,13 +312,17 @@ namespace WRC_CMS.Repository
         }
 
 
-        public static async Task<List<ContentStyleModel>> GetAllContents(WebApiProxy proxy, int SiteId)
+        public static async Task<List<ContentStyleModel>> GetAllContents(WebApiProxy proxy, int SiteId, bool loadOnlyActive = false)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
-            dict.Add("@LoadOnlyActive", 0);
+
+            if (loadOnlyActive)
+                dict.Add("@LoadOnlyActive", 1);
+            else
+                dict.Add("@LoadOnlyActive", 0);
             dict.Add("@SiteId", SiteId);
 
             var dataSet = await proxy.ExecuteDataset("SP_ContentsSelect", dict);
@@ -342,7 +347,44 @@ namespace WRC_CMS.Repository
             return ContentList;
         }
 
+        public static async Task<List<ViewContentModel>> GetAllContents(WebApiProxy proxy, int siteId, int viewId)
+        {
+            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            List<ViewContentModel> ContentList = new List<ViewContentModel>();
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            dict.Add("@ViewId", viewId);
+            dict.Add("@SiteId", siteId);
 
+            var dataSet = await proxy.ExecuteDataset("SP_GetViewContents", dict);
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            {
+                ContentList = dataSet.Tables[0].AsEnumerable().Select(row =>
+                               new ViewContentModel
+                               {
+                                   Id = Convert.ToInt32(row["Id"].ToString()),
+                                   Name = row["Name"].ToString(),
+                                   Type = GetRowData<Int32>(row["Type"]),
+                                   Orientation = GetRowData<string>(row["Orientation"]),
+                                   Data = JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
+                                   Order = GetRowData<Int32>(row["Order"]),
+                                   MaxOrder = Convert.ToInt32(row["MaxOrder"]),
+                                   ViewID = viewId,
+                                   SiteID = siteId
+                               }).OrderBy(t => t.Order).ToList();
+            }
+            return ContentList;
+        }
+
+        public static T GetRowData<T>(object dr)
+        {
+            if (!object.ReferenceEquals(dr, null) && !(dr is System.DBNull))
+            {
+                if (typeof(T) == typeof(byte[]))
+                    return (T)Convert.ChangeType(System.Text.Encoding.ASCII.GetBytes(Convert.ToString(dr)), typeof(T));
+                return (T)Convert.ChangeType(dr, typeof(T));
+            }
+            return default(T);
+        }
 
         public static async Task<List<SiteModel>> GetSearchSite(WebApiProxy proxy, string viewObject)
         {
@@ -360,6 +402,7 @@ namespace WRC_CMS.Repository
                             Name = row["Name"].ToString(),
                             Title = row["Title"].ToString(),
                             URL = row["url"].ToString(),
+                            Logo = GetRowData<byte[]>(row["Logo"]),
                             IsActive = bool.Parse(row["IsActive"].ToString())
                         }).ToList();
             }
@@ -390,7 +433,7 @@ namespace WRC_CMS.Repository
                             ContentName = Contents.FirstOrDefault(c => c.Id == Convert.ToInt32(row["ContentId"].ToString())).Name,
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
-                            Order = Convert.ToInt32(row["Order"].ToString()),                            
+                            Order = Convert.ToInt32(row["Order"].ToString()),
                         }).ToList();
             }
             return new List<ContentOfViewModel>();

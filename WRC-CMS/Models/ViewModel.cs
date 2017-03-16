@@ -9,6 +9,12 @@ namespace WRC_CMS.Models
 {
     public class ViewModel : BaseModel
     {
+        public ViewModel()
+        {
+            ViewAllContents = new List<ContentStyleModel>();
+            ViewContents = new List<ViewContentModel>();
+        }
+
         public bool IsDefault { get; set; }
         public bool Authorized { get; set; }
         [Display(Name = "Menu")]
@@ -26,7 +32,12 @@ namespace WRC_CMS.Models
 
         [Required(ErrorMessage = "Orientation is required.")]
         [StringLength(100, ErrorMessage = "Orientation cannot be longer than 100 characters.")]
-        public string Orientation { get; set; }        
+
+        public string Orientation { get; set; }
+
+        public List<ViewContentModel> ViewContents { get; set; }
+
+        public List<ContentStyleModel> ViewAllContents { get; set; }
     }
 
     public class CombineModel
