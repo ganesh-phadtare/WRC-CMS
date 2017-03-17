@@ -542,7 +542,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.DetailView.IsExternal, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.DetailView.IsExternal)
+                                                                                                    @*@Html.EditorFor(model => model.DetailView.IsExternal)*@
+                                                                                                    @Html.CheckBox("IsExternal1", Model.DetailView.IsExternal)                                                                                                    
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.IsExternal)
                                                                                                 </div>
                                                                                             </div>
@@ -808,8 +809,9 @@
 
                 $('#cancel').on('click', function () {
                     document.getElementById("DetailView_Name").value = "";
-                    document.getElementById("DetailView_URL").value = "";
-                    document.getElementById("DetailView_IsExternal").value = false;
+                    document.getElementById("DetailView_URL").value = "";                    
+                    $('input[name=IsExternal1]').attr('checked', false);
+                    //document.getElementById("DetailView_IsExternal").value = false;
                     document.getElementById("DetailView_Order").value = 0;
                     document.getElementById("Views").value = "";
                 });

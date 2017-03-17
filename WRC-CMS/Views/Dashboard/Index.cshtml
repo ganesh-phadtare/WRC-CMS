@@ -342,9 +342,6 @@
 
                     <div class="col  m6" style="width: 70%;">
                         <input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard")?viewObject=' + document.getElementById('Name').value" title="Search Site Title" />
-                        @*<input id="submit" type="button" class="waves-effect waves-light btn custom-btn submit" value="Search" onclick="location.href='@Url.Action("Index1", "Dashboard", new { viewObject = "v" })'" />*@
-                        @*@Html.ActionLink("Search", "Index1", new { viewObject = "v" }, new { @class = "invalidControl ng-pristine ng-valid ng-touched" })*@
-                        @*<input id="submit" type="submit" value="Search" class="waves-effect waves-light btn custom-btn submit" />*@
                     </div>
 
                     <div class="data-footer" style=" width: 100%;">
@@ -364,7 +361,7 @@
                                 <div class="col s12 blue-bg-section padding15 emp-wrapper right-align">
                                     <div><img alt="" class="circle responsive-img" src="/images/rsz_1rsz_no-image.png"></div>
                                     <div>
-                                        <h5>@Html.ActionLink(item.Oid.ToString(), "")</h5>
+                                        <h5>@Html.Label(item.Oid.ToString(), "")</h5>
                                         <h5>@Html.ActionLink(item.Title, "GetAllViewDetails", "AddView", new { id = item.Oid }, "") </h5>
                                     </div>
                                 </div>
@@ -397,22 +394,6 @@
             <div class="col s6 m6 l6 right-align m-top20 branding">
                 © 2016 V2Solutions, Inc.
             </div>
-            @*<div class="col s6 m6 l6 right-align" id="browsers">
-                    <ul class="right">
-                        <li>
-                            <i aria-hidden="true" class="fa fa-chrome"></i>
-                            <h6 class="margin-zero">Ver 50+</h6>
-                        </li>
-                        <li>
-                            <i aria-hidden="true" class="fa fa-firefox"></i>
-                            <h6 class="margin-zero">Ver 46+ (64-bit)</h6>
-                        </li>
-                        <li>
-                            <i aria-hidden="true" class="fa fa-safari"></i>
-                            <h6 class="margin-zero">Ver 10+</h6>
-                        </li>
-                    </ul>
-                </div>*@
         </div>
     </footer>
     <loader-component _nghost-kxb-11="">
