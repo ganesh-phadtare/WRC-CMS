@@ -14,7 +14,6 @@ namespace WRC_CMS.Models
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; }
-        private string _Description { get; set; }
         public string Description { get; set; }
 
         public bool IsActive { get; set; }
@@ -42,6 +41,47 @@ namespace WRC_CMS.Models
         public List<int> STyList { get; set; }
         public List<int> VTyList { get; set; }
     }
+
+
+    public struct ViewContentModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Type { get; set; }
+        public string Orientation { get; set; }
+        [AllowHtml]
+        [UIHint("tinymce_full")]
+        public string Data { get; set; }
+        public int Order { get; set; }
+        public int MaxOrder { get; set; }
+
+        public bool IsUp
+        {
+            get
+            {
+                if (Order == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool IsDown
+        {
+            get
+            {
+                if (MaxOrder == Order)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+        public int ViewID { get; set; }
+        public int SiteID { get; set; }
+    }
+
 
     public class CombineContentModel
     {

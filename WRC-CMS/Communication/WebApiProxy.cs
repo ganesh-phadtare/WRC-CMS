@@ -74,15 +74,15 @@ namespace WRC_CMS.Communication
             {
                 var result = await __client.PostAsync(string.Format("view/ExecuteDS/{0}", commandName), contentPost);
                 var compressedResoponse = result.Content.ReadAsStringAsync().Result;
-                if (!string.IsNullOrEmpty(compressedResoponse))
-                {
-                    compressedResoponse = compressedResoponse.Substring(1).Substring(0, compressedResoponse.Length - 2);
-                    string unCompressedData = GZip.GZipCompressDecompress.UnZip(compressedResoponse);
+                //if (!string.IsNullOrEmpty(compressedResoponse))
+                //{
+                //    compressedResoponse = compressedResoponse.Substring(1).Substring(0, compressedResoponse.Length - 2);
+                //    string unCompressedData = GZip.GZipCompressDecompress.UnZip(compressedResoponse);
 
-                    return JsonConvert.DeserializeObject<DataSet>(unCompressedData);
+                //    return JsonConvert.DeserializeObject<DataSet>(unCompressedData);
 
-                }
-                return new DataSet();
+                //}
+                return JsonConvert.DeserializeObject<DataSet>(compressedResoponse);
             }
             catch (Exception ex)
             {
