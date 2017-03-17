@@ -114,6 +114,17 @@ namespace WRC_CMS.Controllers
                     com.SiteID = views[0].SiteID;
                 }
                 ViewBag.CurrSiteID = SiteID;
+
+                await Task.Run(() =>
+                {
+                    com.NewView.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID).Result.ToList());
+                });
+
+                await Task.Run(() =>
+                {
+                    com.NewView.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
+                });
+
                 return View("ViewsLV", com);
             }
             else
@@ -164,6 +175,42 @@ namespace WRC_CMS.Controllers
             }
         }
 
+        public ActionResult AddViewContent(int contentId, int siteId)
+        {
+            try
+            {
+                return RedirectToAction("GetAllViewDetails", new { id = siteId });
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public async Task<ActionResult> DeleteViewContent(int id, int SiteID)
+        {
+            try
+            {
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Id", id);
+                proxy.ExecuteNonQuery("SP_ViewContentsDel", dicParams);
+
+                ModelState.Clear();
+                List<ViewModel> views = new List<ViewModel>();
+                await Task.Run(() =>
+                {
+                    views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
+                });
+
+                return RedirectToAction("GetAllViewDetails", new { id = SiteID });
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
         public async Task<ActionResult> ReturnToMainView(int id)
         {
             ModelState.Clear();
@@ -181,6 +228,16 @@ namespace WRC_CMS.Controllers
                 com.SiteID = views[0].SiteID;
             }
             ViewBag.CurrSiteID = id;
+
+            await Task.Run(() =>
+            {
+                com.NewView.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, true).Result.ToList());
+            });
+
+            await Task.Run(() =>
+                {
+                    com.NewView.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
+                });
             return View("ViewsLV", com);
         }
 

@@ -323,7 +323,7 @@ namespace WRC_CMS.Controllers
                                 ViewModel DefaultView = new ViewModel();
                                 DefaultView.Name = "Home";
                                 DefaultView.Title = "Home";
-                                DefaultView.Logo = Encoding.ASCII.GetBytes("Hello");
+                                DefaultView.Logo = (byte[])CommonClass.GetImage(Server.MapPath(@"..\images\V2ViewLogo.png"));
                                 DefaultView.Orientation = "0";
                                 DefaultView.IsActive = true;
                                 DefaultView.Authorized = true;

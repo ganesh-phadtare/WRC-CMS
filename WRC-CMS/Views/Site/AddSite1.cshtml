@@ -291,8 +291,8 @@
     </style>
 </head>
 
-<body>   
-    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">        
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
         <div _ngcontent-xlf-78="" class="navigation-div">
             <div _ngcontent-xlf-78="" id="top-div-msg">
                 <!--<div _ngcontent-xlf-78="" class="row m-bottom0 card-heading">
@@ -353,10 +353,10 @@
 
                 </ul>
                 @*<sidenav-button _ngcontent-xlf-78="">
-                    <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
-                        <i aria-hidden="true" class="fa fa-bars"></i>
-                    </a>
-                </sidenav-button>*@
+                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
+                            <i aria-hidden="true" class="fa fa-bars"></i>
+                        </a>
+                    </sidenav-button>*@
                 <h5 class="header-title">
                     <a href="http://localhost:49791/dashboard"><img class="header-logo responsive-img" src="/images/logo-img.png"> WRC <span>CMS Application </span></a>
                 </h5>
@@ -516,6 +516,17 @@
                                                                                                     @Html.TextBoxFor(model => model.SiteView.Logo, new { type = "file" })
                                                                                                     @*<input type="file" name="file" />*@
                                                                                                     @Html.ValidationMessageFor(model => model.SiteView.Logo)
+
+                                                                                                    @*@{
+                                                                                                        var imgSrc = "";
+                                                                                                        if (Model.SiteView != null && Model.SiteView.Logo != null)
+                                                                                                        {
+                                                                                                            var base64 = Convert.ToBase64String(Model.SiteView.Logo);
+                                                                                                            imgSrc = String.Format("data:image;base64,{0}", base64);
+                                                                                                        }
+                                                                                                    }*@
+
+                                                                                                    <img src="@Model.SiteView.LogoImage" />
                                                                                                 </div>
                                                                                             </div>
 
