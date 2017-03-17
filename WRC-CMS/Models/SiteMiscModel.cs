@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using WRC_CMS.Repository;
 
 namespace WRC_CMS.Models
 {
-    public class SiteMiscModel
+    public class SiteMiscModel : ICommon
     {
+
         public SiteMiscModel()
         {
             Keys = new List<string>();
@@ -42,6 +44,11 @@ namespace WRC_CMS.Models
         public string Value { get; set; }
         public int SiteId { get; set; }
         public string SiteName { get; set; }
+
+        public int CurrentObjectId
+        {
+            get { return Id; }
+        }
     }
 
     public class SiteMiscModelLD

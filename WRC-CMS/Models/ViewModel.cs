@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WRC_CMS.Repository;
 
 namespace WRC_CMS.Models
 {
-    public class ViewModel : BaseModel
+    public class ViewModel : BaseModel, ICommon
     {
         public ViewModel()
         {
@@ -23,10 +24,7 @@ namespace WRC_CMS.Models
 
         public List<ContentStyleModel> Contents { get; set; }
 
-
         public List<SiteModel> Site { get; set; }
-        [Required(ErrorMessage = "Site is required.")]
-        [StringLength(100, ErrorMessage = "Site cannot be longer than 100 characters.")]
         [Display(Name = "Site")]
         public string SelectSite { get; set; }
 
@@ -37,7 +35,12 @@ namespace WRC_CMS.Models
 
         public List<ViewContentModel> ViewContents { get; set; }
 
-        public List<ContentStyleModel> ViewAllContents { get; set; }
+        public List<ContentStyleModel> ViewAllContents { get; set; }        
+
+        public int CurrentObjectId
+        {
+            get { return Oid; }
+        }
     }
 
     public class CombineModel

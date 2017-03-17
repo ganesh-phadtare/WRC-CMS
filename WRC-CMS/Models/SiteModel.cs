@@ -7,7 +7,10 @@ using System.Web;
 namespace WRC_CMS.Models
 {
     public class SiteModel : BaseModel
-    {  
+    {
+
+        [Required(ErrorMessage = "URL is required.")]
+        public string URL { get; set; }
         //[Display(Name = "Site")]       
         public List<ViewModel> ViewList { get; set; }     
     }

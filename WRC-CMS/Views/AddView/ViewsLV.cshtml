@@ -520,7 +520,6 @@
                                                                                                 @Html.LabelFor(model => model.NewView.Name, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.EditorFor(model => model.NewView.Name)
-                                                                                                    @Html.Hidden("Id", Model.NewView.Oid)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
                                                                                                     @Html.ValidationMessageFor(model => model.NewView.Name)
                                                                                                 </div>
@@ -711,7 +710,7 @@
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { id = item.Oid, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Delete", "DeleteView", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -875,6 +874,7 @@
 
                 if ('@ViewData["DeletionError"]' != null && '@ViewData["DeletionError"]' != "")
                     alert('@ViewData["DeletionError"]');
+
                 $('#Submit').unbind('click');
                 $('#cancel').unbind('click');
 
@@ -910,26 +910,28 @@
                 });
 
                 $('#Submit').on('click', function () {
+                    var ViewObject = {
+                        Name: $("#NewView_Name").val(),
+                        Title: $("#NewView_Title").val(),
+                        IsActive: $('#NewView_IsActive').prop("checked"),
+                        IsDefault: $('#NewView_IsDefault').prop("checked"),
+                        Authorized: $('#NewView_Authorized').prop("checked"),
+                        CreateMenu: $('#NewView_CreateMenu').prop("checked"),
+                        Logo: $("#file").val(),
+                        Oid: '@Model.NewView.Oid',
+                        Orientation: $("#NewView_Orientation").val(),
+                        SiteID: $("#SiteID").val(),
+                    }
                     $.ajax({
-                        url: "/AddView/Test",
+                        url: "/AddView/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDefault: $('#NewView_IsDefault').prop("checked"),
-                            Authorized: $('#NewView_Authorized').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#NewView_file").val(),
-                            Oid: $("#Id").val(),
-                            Orientation: $("#NewView_Orientation").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
+                        data: JSON.stringify(ViewObject),
                         async: false,
+                        data: JSON.stringify(ViewObject),
                         success: function (data) {
-                            alert("Success");
+                            alert(data.status);
                         },
                         failure: function (data) {
                             alert("Fail");

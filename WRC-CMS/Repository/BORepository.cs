@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using WRC_CMS.Communication;
 using WRC_CMS.Models;
 
@@ -12,6 +14,35 @@ namespace WRC_CMS.Repository
 {
     public class BORepository
     {
+        public static Dictionary<string, string> GetProcedureInfo(object ModelObject)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            if (ModelObject is ViewModel)
+            {
+                dic.Add("ProcedureName", "SP_ViewAddUp");
+                dic.Add("Oid", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("Title", "@Title");
+                dic.Add("Logo", "@Logo");
+                dic.Add("Orientation", "@Orientation");
+                dic.Add("IsActive", "@IsActive");
+                dic.Add("Authorized", "@Authorized");
+                dic.Add("IsDefault", "@IsDefault");
+                dic.Add("SiteID", "@SiteId");
+                return dic;
+            }
+            else if (ModelObject is SiteMiscModel)
+            {
+                dic.Add("ProcedureName", "SP_SiteMiscAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Key", "@Key");
+                dic.Add("Value", "@Value");
+                dic.Add("SiteId", "@SiteId");
+                return dic;
+            }
+            return null;
+        }
+
         public bool AddRecord(object obj)
         {
             return true;
@@ -40,6 +71,49 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return SiteList;
+        }
+
+        public static async Task<string> AddUpdateRecord(ICommon CommonModelObjet, ModelStateDictionary ModelState, WebApiProxy proxy)
+        {
+            if (ModelState.IsValid)
+            {
+                int ViewID = 0;
+                await Task.Run(() =>
+                {
+                    if (CommonModelObjet.CurrentObjectId == 0)
+                        ViewID = BORepository.AddUpdateRecord<ICommon>(proxy, CommonModelObjet, true).Result;
+                    else
+                        ViewID = BORepository.AddUpdateRecord<ICommon>(proxy, CommonModelObjet, false).Result;
+                });
+
+                if (ViewID > 0)
+                    return "Record Saved successfully.";
+            }
+
+            return "Problem occured while saving record, kindly contact our support team.";
+        }
+
+        public static async Task<int> AddUpdateRecord<T>(WebApiProxy proxy, T ModelObject, bool IsNewObject = false) where T : class
+        {
+            Dictionary<string, string> ProcedureInfo = GetProcedureInfo(ModelObject);
+            System.ComponentModel.PropertyDescriptorCollection pdc = System.ComponentModel.TypeDescriptor.GetProperties(ModelObject);
+            Dictionary<string, object> dicParams = pdc.Cast<PropertyDescriptor>().Where(item => ProcedureInfo.ContainsKey(item.Name)).ToDictionary(key => ProcedureInfo[key.Name], value => value.GetValue(ModelObject));
+            if (IsNewObject)
+                dicParams["@Id"] = -1;
+
+            if (dicParams.ContainsKey("@Logo"))
+                dicParams["@Logo"] = 1014;
+            DataSet dataSet = await proxy.ExecuteDataset(ProcedureInfo["ProcedureName"], dicParams);
+
+            if (dataSet != null && dataSet.Tables != null && dataSet.Tables.Count > 0)
+            {
+                if (dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+                {
+                    int ID = Convert.ToInt32(dataSet.Tables[0].Rows[0][0].ToString());
+                    return ID;
+                }
+            }
+            return -1;
         }
 
         public static async Task<int> AddView(WebApiProxy proxy, ViewModel ViewObject, bool IsNewObject = false)
@@ -195,12 +269,12 @@ namespace WRC_CMS.Repository
             return -1;
         }
 
-        public static async Task<List<ViewModel>> GetAllViews(WebApiProxy proxy)
+        public static async Task<List<ViewModel>> GetAllViews(WebApiProxy proxy, int Id = -1)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             List<ViewModel> ViewList = new List<ViewModel>();
             Dictionary<string, object> dict = new Dictionary<string, object>();
-            dict.Add("@Id", -1);
+            dict.Add("@Id", Id);
             dict.Add("@LoadOnlyActive", 0);
             dict.Add("@ViewName", "");
             var dataSet = await proxy.ExecuteDataset("SP_ViewSelect", dict);

@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Communication\WebApiProxy.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BulkDataController.cs" />
     <Compile Include="Controllers\ContentOfViewController.cs" />
     <Compile Include="Controllers\ContentStyleController.cs" />
@@ -600,6 +601,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
