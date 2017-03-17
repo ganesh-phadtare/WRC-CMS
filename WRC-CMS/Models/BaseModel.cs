@@ -17,9 +17,6 @@ namespace WRC_CMS.Models
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "URL is required.")]
-        public string URL { get; set; }
-
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(250, ErrorMessage = "Name cannot be longer than 250 characters.")]
         public string Title { get; set; }
