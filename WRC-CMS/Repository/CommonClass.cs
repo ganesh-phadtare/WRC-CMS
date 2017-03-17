@@ -8,6 +8,10 @@ using System.Web.Mvc;
 
 namespace WRC_CMS.Repository
 {
+    public interface ICommon
+    {
+        int CurrentObjectId { get; }
+    }
     public class CommonClass
     {
         public static object GetImage(Stream imgToResize)

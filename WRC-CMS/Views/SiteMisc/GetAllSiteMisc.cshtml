@@ -783,7 +783,7 @@
                 $('#Submit').unbind('click');
                 $('#cancel').unbind('click');
 
-                $('#cancel').on('click', function () {                    
+                $('#cancel').on('click', function () {
                     document.getElementById("DetailView_Value").value = "";
                     document.getElementById("Keys").value = "";
                 });
@@ -791,20 +791,22 @@
                 $('#Submit').on('click', function () {
                     if (document.getElementById("Keys").value == "")
                         alert("Key is required.");
+                    alert($("#Oid").val());
+                    var ViewObject = {
+                        Key: $("#DetailView_Key").val(),
+                        Value: $("#DetailView_Value").val(),
+                        Id: $("#Oid").val(),
+                        SiteID: $("#SiteID").val(),
+                    }
                     $.ajax({
-                        url: "/SiteMisc/AddSiteMisc",
+                        url: "/SiteMisc/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Key: $("#DetailView_Key").val(),
-                            Value: $("#DetailView_Value").val(),
-                            Oid: $("#Oid").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
+                        data: JSON.stringify(ViewObject),
                         async: false,
                         success: function (data) {
-                            alert("Success");
+                            alert(data.status);
                         },
                         failure: function (data) {
                             alert("Fail");
