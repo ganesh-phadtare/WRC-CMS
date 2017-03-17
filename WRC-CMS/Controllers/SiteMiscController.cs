@@ -10,61 +10,20 @@ using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
 {
-    public class SiteMiscController : Controller
+    public class SiteMiscController : BaseController
     {
         WebApiProxy proxy = new WebApiProxy();
 
-        public async Task<ActionResult> AddSiteMisc(string Key, string Value, int Oid, int SiteID)
+        public async Task<JsonResult> AddUpdateRecord(SiteMiscModel ModelObject)
         {
-            if (string.IsNullOrEmpty(Key) || string.IsNullOrEmpty(Value))
-                return RedirectToAction("GetAllSiteMisc");
-
-            SiteMiscModel SiteMisc = new SiteMiscModel();
-            if (Oid > 0)
-                SiteMisc.Id = Oid;
-            SiteMisc.Key = Key;
-            SiteMisc.Value = Value;
-            SiteMisc.SiteId = SiteID;
-            try
+            string Status = string.Empty;
+            await Task.Run(() =>
             {
-                if (ModelState.IsValid)
-                {
-                    int SiteDBID = 0;
-
-                    await Task.Run(() =>
-                    {
-                        if (Oid == 0)
-                            SiteDBID = BORepository.AddSiteMisc(proxy, SiteMisc, true).Result;
-                        else
-                            SiteDBID = BORepository.AddSiteMisc(proxy, SiteMisc, false).Result;
-                    });
-                    if (SiteDBID > 0)
-                        ViewBag.Message = "Site Misc added successfully.";
-                    else
-                        ViewBag.Message = "Problem occured while adding Site Misc, kindly contact our support team.";
-
-                    List<SiteMiscModel> SiteMiscs = new List<SiteMiscModel>();
-                    await Task.Run(() =>
-                    {
-                        SiteMiscs.AddRange(BORepository.GetAllSiteMISC(proxy).Result.Where(item => item.SiteId == SiteID));
-                    });
-
-                    ActionResult MainView = null;
-                    await Task.Run(() =>
-                    {
-                        MainView = ReturnToMainView(SiteID).Result;
-                    });
-                    return MainView;
-
-                }
-
-                return View();
+                Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
             }
-            catch
-            {
-                return View();
-            }
-        }
+            );
+            return Json(new { status = Status });
+        }        
 
         public async Task<ActionResult> EditSiteMisc(int SiteMISCID = 0, int SiteID = 0)
         {
@@ -121,7 +80,7 @@ namespace WRC_CMS.Controllers
         }
 
         public async Task<ActionResult> GetAllSiteMisc(int SiteId)
-        {            
+        {
             ActionResult View = null;
             await Task.Run(() =>
             {
