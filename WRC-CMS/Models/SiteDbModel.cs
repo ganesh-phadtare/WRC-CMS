@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WRC_CMS.Repository;
 
 namespace WRC_CMS.Models
 {
-    public class SiteDbModel
+    public class SiteDbModel : ICommon
     {
         public int Id { get; set; }
 
@@ -42,6 +43,11 @@ namespace WRC_CMS.Models
 
         public List<SiteModel> Site { get; set; }
 
+
+        public int CurrentObjectId
+        {
+            get { return Id; }
+        }
     }
 
     public class SiteDbModelLD
