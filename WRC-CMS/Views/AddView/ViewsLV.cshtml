@@ -910,7 +910,7 @@
                 });
 
                 $('#Submit').on('click', function () {
-                    var ViewObject = {
+                    var ModelObject = {
                         Name: $("#NewView_Name").val(),
                         Title: $("#NewView_Title").val(),
                         IsActive: $('#NewView_IsActive').prop("checked"),
@@ -927,9 +927,7 @@
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify(ViewObject),
-                        async: false,
-                        data: JSON.stringify(ViewObject),
+                        data: JSON.stringify(ModelObject),
                         success: function (data) {
                             alert(data.status);
                         },
