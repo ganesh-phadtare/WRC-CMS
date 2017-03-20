@@ -755,7 +755,7 @@
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#ViewList option:selected");
+                    var selected = $("#ViewList1 option:selected");
                     var ST = $("#SearchType option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
@@ -771,27 +771,44 @@
                         message1 += $(this).val() + ",";
                     });
 
+                    //alert($("#IsActive1").prop("checked"));
+                    alert(message);
+                    var modeldata={
+                        Name: $("#ContentView_Name").val(),
+                        Type: $("select#Exemple option:selected").val(),
+                        Orientation: $("#ContentView_Orientation").val(),
+                        Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
+                        Description: $("#ContentView_Description").val(),
+                        IsActive: $("#IsActive1").prop("checked"),
+                        searchty: message1,
+                        SiteID: $("#SiteID").val(),
+                        views: message,
+                        Id: $("#ContentView_Id").val()
+                    }
                     $.ajax({
-                        url: "/ContentStyle/CreateUpdContent",
+                        url: "/ContentStyle/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#ContentView_Name").val(),
-                            CType: $("select#Exemple option:selected").val(),
-                            Orientation: $("#ContentView_Orientation").val(),
-                            Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
-                            Description: $("#ContentView_Description").val(),
-                            //Order: $("#ContentView_Order").val(),
-                            IsActive: $("#ContentView_IsActive").prop("checked"),
-                            SearchType:message1,//$("select#SearchType option:selected").val(),
-                            Siteid: $("#SiteID").val(),
-                            //ViewList:  $("#ViewList option:selected").val(),
-                            ViewList: message,
-                            Id: $("#ContentView_Id").val()
-                            //ViewID: $("#ContentView_ViewID").val(),
-                            //ViewID: $("#DDLList option:selected").val(),
-                        }),
+                        data: JSON.stringify(
+                            modeldata
+                            //{
+                            //Name: $("#ContentView_Name").val(),
+                            //CType: $("select#Exemple option:selected").val(),
+                            //Orientation: $("#ContentView_Orientation").val(),
+                            //Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
+                            //Description: $("#ContentView_Description").val(),
+                            ////Order: $("#ContentView_Order").val(),
+                            //IsActive: $("#ContentView_IsActive").prop("checked"),
+                            //SearchType:message1,//$("select#SearchType option:selected").val(),
+                            //Siteid: $("#SiteID").val(),
+                            ////ViewList:  $("#ViewList option:selected").val(),
+                            //ViewList: message,
+                            //Id: $("#ContentView_Id").val()
+                            ////ViewID: $("#ContentView_ViewID").val(),
+                            ////ViewID: $("#DDLList option:selected").val(),
+                            //}
+                        ),
                         async: false,
                         success: function (data) {
                             alert("Success");

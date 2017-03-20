@@ -31,6 +31,19 @@ namespace WRC_CMS.Repository
                 dic.Add("SiteID", "@SiteId");
                 return dic;
             }
+            else if (ModelObject is SiteDbModel)
+            {
+                dic.Add("ProcedureName", "SP_SiteDBAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("Server", "@Server");
+                dic.Add("Database", "@Database");
+                dic.Add("UserID", "@UserID");
+                dic.Add("Password", "@Password");
+                dic.Add("Description", "@Description");
+                dic.Add("@SiteId", "@SiteId");
+                return dic;
+            }
             else if (ModelObject is SiteMiscModel)
             {
                 dic.Add("ProcedureName", "SP_SiteMiscAddUp");
@@ -40,6 +53,20 @@ namespace WRC_CMS.Repository
                 dic.Add("SiteId", "@SiteId");
                 return dic;
             }
+            else if (ModelObject is ContentStyleModel)
+            {
+                dic.Add("ProcedureName", "SP_ContentsAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name","@Name");
+                dic.Add("Type","@Type");
+                dic.Add("Orientation","@Orientation");
+                dic.Add("Data","@Data");
+                dic.Add("Description","@Description");
+                dic.Add("IsActive","@IsActive");
+                dic.Add("SiteID", "@SiteID");
+                return dic;
+            }
+
             return null;
         }
 
