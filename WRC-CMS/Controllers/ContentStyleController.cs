@@ -232,7 +232,7 @@ namespace WRC_CMS.Controllers
             else if (modeldata.Type == 1)
                 ContentData.Add("v", modeldata.views.ToString().Substring(0, modeldata.views.Length - 1));
             else if (modeldata.Type == 2)
-                ContentData.Add("st", modeldata.SearchType.ToString().Substring(0, modeldata.searchty.Length - 1));
+                ContentData.Add("st", modeldata.searchty.ToString().Substring(0, modeldata.searchty.Length - 1));
 
             modeldata.Data = JsonConvert.SerializeObject(ContentData);
 

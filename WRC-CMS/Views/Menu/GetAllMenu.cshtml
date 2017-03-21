@@ -509,7 +509,7 @@
                                                                                                 @Html.LabelFor(model => model.DetailView.View, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
                                                                                                     @Html.DropDownList("Views", new SelectList(@Model.DetailView.View, "Oid", "Name", Model.DetailView.ViewId), "--Select View--", new { @onchange = "OnChange(this.value,this.text)" })
-                                                                                                    @Html.Hidden("Oid", Model.DetailView.Oid)
+                                                                                                    @Html.Hidden("Id", Model.DetailView.Id)
                                                                                                     @Html.Hidden("SiteID", Model.SiteID)
                                                                                                     @Html.ValidationMessageFor(model => model.DetailView.View)
                                                                                                 </div>
@@ -641,8 +641,8 @@
                                                                                 @Html.DisplayFor(modelItem => item.URL)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.ActionLink("Edit", "EditMenu", new { MenuID = item.Oid, SiteID = item.SiteId }) |
-                                                                                @Html.ActionLink("Delete", "DeleteMenu", new { id = item.Oid, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Edit", "EditMenu", new { MenuID = item.Id, SiteID = item.SiteId }) |
+                                                                                @Html.ActionLink("Delete", "DeleteMenu", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -819,20 +819,32 @@
                 $('#Submit').on('click', function () {
                     if (document.getElementById("Views").value == "")
                         alert("View is required.");
+
+                    var modeldata = {
+                        Name: $("#DetailView_Name").val(),
+                        URL: $("#DetailView_URL").val(),
+                        IsExternal: $("#DetailView_IsExternal").prop("checked"),
+                        Order: $("#DetailView_Order").val(),
+                        Id: $("#Id").val(),
+                        ViewId: $("#DetailView_ViewId").val(),
+                        SiteID: $("#SiteID").val(),
+                    }
                     $.ajax({
-                        url: "/Menu/AddMenu",
+                        url: "/Menu/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#DetailView_Name").val(),
-                            URL: $("#DetailView_URL").val(),
-                            IsExternal: $("#DetailView_IsExternal").prop("checked"),
-                            Order: $("#DetailView_Order").val(),
-                            Oid: $("#Oid").val(),
-                            ViewId: $("#DetailView_ViewId").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
+                        data: JSON.stringify(modeldata
+                            //{
+                            //Name: $("#DetailView_Name").val(),
+                            //URL: $("#DetailView_URL").val(),
+                            //IsExternal: $("#DetailView_IsExternal").prop("checked"),
+                            //Order: $("#DetailView_Order").val(),
+                            //Id: $("#Id").val(),
+                            //ViewId: $("#DetailView_ViewId").val(),
+                            //SiteID: $("#SiteID").val(),
+                            //}
+                        ),
                         async: false,
                         success: function (data) {
                             alert("Success");
