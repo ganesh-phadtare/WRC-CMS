@@ -680,7 +680,7 @@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Id, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
-                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Id, IsDefault = item.IsDefault, Siteid = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { id = item.Id, IsDefault = item.IsDefault, Siteid = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }

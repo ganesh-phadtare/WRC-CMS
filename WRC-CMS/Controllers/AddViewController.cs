@@ -10,7 +10,7 @@ using WRC_CMS.Models;
 using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
-{   
+{
     public class AddViewController : BaseController
     {
         public WebApiProxy proxy = new WebApiProxy();
@@ -98,29 +98,29 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> DeleteViewContent(int id, int SiteID)
-        {
-            try
-            {
-                Dictionary<string, object> dicParams = new Dictionary<string, object>();
-                dicParams.Add("@Id", id);
-                proxy.ExecuteNonQuery("SP_ViewContentsDel", dicParams);
+        //public async Task<ActionResult> DeleteViewContent(int id, int SiteID)
+        //{
+        //    try
+        //    {
+        //        Dictionary<string, object> dicParams = new Dictionary<string, object>();
+        //        dicParams.Add("@Id", id);
+        //        proxy.ExecuteNonQuery("SP_ViewContentsDel", dicParams);
 
-                ModelState.Clear();
-                List<ViewModel> views = new List<ViewModel>();
-                await Task.Run(() =>
-                {
-                    views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
-                });
+        //        ModelState.Clear();
+        //        List<ViewModel> views = new List<ViewModel>();
+        //        await Task.Run(() =>
+        //        {
+        //            views.AddRange(BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID));
+        //        });
 
-                return RedirectToAction("GetAllViewDetails", new { id = SiteID });
+        //        return RedirectToAction("GetAllViewDetails", new { id = SiteID });
 
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         public async Task<ActionResult> ReturnToMainView(int id)
         {
@@ -159,6 +159,20 @@ namespace WRC_CMS.Controllers
                  View = ReturnToMainView(id).Result;
              });
             return View;
+        }
+
+        public ActionResult DeleteRecord(int ViewID, bool IsDefault, int SiteID)
+        {
+            if (!IsDefault)
+            {
+                string Status = string.Empty;
+                ViewModel modeldata = new ViewModel();
+                modeldata.Oid = ViewID;
+                modeldata.SiteID = SiteID;
+
+                Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+            }
+            return RedirectToAction("GetAllViewDetails", new { id = SiteID });
         }
     }
 }

@@ -618,7 +618,8 @@
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditSiteMisc", new { SiteMISCID = item.Id, SiteID = item.SiteId }) |
-                                                                                @Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @*@Html.ActionLink("Delete", "DeleteSiteMisc", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
