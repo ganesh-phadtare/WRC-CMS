@@ -32,7 +32,7 @@ namespace WRC_CMS.Models
         public string SiteName { get; set; }
         public int Type { get; set; }
 
-        [Required(ErrorMessage = "Data is required.")]
+        //[Required(ErrorMessage = "Data is required.")]
         [AllowHtml]
         [UIHint("tinymce_full")]
         public string Data { get; set; }
