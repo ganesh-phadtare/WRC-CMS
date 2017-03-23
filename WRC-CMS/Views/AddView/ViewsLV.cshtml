@@ -712,7 +712,8 @@
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @*@Html.ActionLink("Delete", "DeleteView", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -938,7 +939,7 @@
                 });
 
                 $('#Submit').on('click', function () {
-                    var ViewObject = {
+                    var ModelObject = {
                         Name: $("#NewView_Name").val(),
                         Title: $("#NewView_Title").val(),
                         IsActive: $('#NewView_IsActive').prop("checked"),
@@ -955,24 +956,8 @@
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-<<<<<<< Updated upstream
-                        data: JSON.stringify(ViewObject),
-=======
-                        data: JSON.stringify({
-                            Name: $("#NewView_Name").val(),
-                            Title: $("#NewView_Title").val(),
-                            IsActive: $('#NewView_IsActive').prop("checked"),
-                            IsDefault: $('#NewView_IsDefault').prop("checked"),
-                            Authorized: $('#NewView_Authorized').prop("checked"),
-                            CreateMenu: $('#NewView_CreateMenu').prop("checked"),
-                            Logo: $("#NewView_Logo").val(),
-                            Oid: $("#Id").val(),
-                            Orientation: $("#NewView_Orientation").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
->>>>>>> Stashed changes
                         async: false,
-                        data: JSON.stringify(ViewObject),
+                        data: JSON.stringify(ModelObject),
                         success: function (data) {
                             alert(data.status);
                         },

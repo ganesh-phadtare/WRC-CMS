@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WRC_CMS.Repository;
 
 namespace WRC_CMS.Models
 {
-    public class MenuModel
+    public class MenuModel:ICommon
     {
-        public int Oid { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Name is required.")]
         [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
@@ -32,6 +33,10 @@ namespace WRC_CMS.Models
 
         public List<ViewModel> View { get; set; }
         public List<SiteModel> Site { get; set; }
+        public int CurrentObjectId
+        {
+            get { return Id; }
+        } 
     }
 
     public class MenuModelLD

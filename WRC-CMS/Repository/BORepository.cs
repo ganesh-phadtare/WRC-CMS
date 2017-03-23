@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,10 +15,40 @@ namespace WRC_CMS.Repository
 {
     public class BORepository
     {
-        public static Dictionary<string, string> GetProcedureInfo(object ModelObject)
+        public static Dictionary<string, string> GetProcedureInfo(object ModelObject, bool IsDelete = false)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            if (ModelObject is ViewModel)
+            if (ModelObject is ContentStyleModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_ContentsDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is ViewModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_ViewDel");
+                dic.Add("Oid", "@Id");
+                return dic;
+            }
+            else if (ModelObject is MenuModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_MenuDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is SiteDbModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_SiteDBDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is SiteMiscModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_SiteMiscDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is ViewModel)
             {
                 dic.Add("ProcedureName", "SP_ViewAddUp");
                 dic.Add("Oid", "@Id");
@@ -31,6 +62,19 @@ namespace WRC_CMS.Repository
                 dic.Add("SiteID", "@SiteId");
                 return dic;
             }
+            else if (ModelObject is SiteDbModel)
+            {
+                dic.Add("ProcedureName", "SP_SiteDBAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("Server", "@Server");
+                dic.Add("Database", "@Database");
+                dic.Add("UserID", "@UserID");
+                dic.Add("Password", "@Password");
+                dic.Add("Description", "@Description");
+                dic.Add("SiteId", "@SiteId");
+                return dic;
+            }
             else if (ModelObject is SiteMiscModel)
             {
                 dic.Add("ProcedureName", "SP_SiteMiscAddUp");
@@ -40,6 +84,42 @@ namespace WRC_CMS.Repository
                 dic.Add("SiteId", "@SiteId");
                 return dic;
             }
+            else if (ModelObject is ContentStyleModel)
+            {
+                dic.Add("ProcedureName", "SP_ContentsAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("Type", "@Type");
+                dic.Add("Orientation", "@Orientation");
+                dic.Add("Data", "@Data");
+                dic.Add("Description", "@Description");
+                dic.Add("IsActive", "@IsActive");
+                dic.Add("SiteID", "@SiteID");
+                return dic;
+            }
+            else if (ModelObject is ContentOfViewModel)
+            {
+                dic.Add("ProcedureName", "SP_ContentOfViewAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("ContentId", "@ContentId");
+                dic.Add("ViewId", "@ViewId");
+                dic.Add("SiteId", "@SiteId");
+                dic.Add("Order", "@Order");
+                return dic;
+            }
+            else if (ModelObject is MenuModel)
+            {
+                dic.Add("ProcedureName", "SP_MenuAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("URL", "@URL");
+                dic.Add("IsExternal", "@IsExternal");
+                dic.Add("Order", "@Order");
+                dic.Add("ViewId", "@ViewId");
+                dic.Add("SiteId", "@SiteId");
+                return dic;
+            }
+
             return null;
         }
 
@@ -214,7 +294,7 @@ namespace WRC_CMS.Repository
             if (IsNewObject)
                 dicParams.Add("@Id", -1);
             else
-                dicParams.Add("@Id", MenuObject.Oid);
+                dicParams.Add("@Id", MenuObject.Id);
             dicParams.Add("@Name", MenuObject.Name);
             dicParams.Add("@URL", MenuObject.URL);
             dicParams.Add("@IsExternal", MenuObject.IsExternal);
@@ -371,7 +451,7 @@ namespace WRC_CMS.Repository
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new MenuModel
                         {
-                            Oid = Convert.ToInt32(row["Id"].ToString()),
+                            Id = Convert.ToInt32(row["Id"].ToString()),
                             Name = row["Name"].ToString(),
                             URL = row["URL"].ToString(),
                             IsExternal = Convert.ToBoolean(row["IsExternal"].ToString()),
@@ -511,6 +591,23 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return new List<ContentOfViewModel>();
+        }
+
+        public static int Delete<T>(WebApiProxy proxy, T ModelObject) where T : class
+        {
+            try
+            {
+                Dictionary<string, string> ProcedureInfo = GetProcedureInfo(ModelObject, true);
+                System.ComponentModel.PropertyDescriptorCollection pdc = System.ComponentModel.TypeDescriptor.GetProperties(ModelObject);
+                Dictionary<string, object> dicParams = pdc.Cast<PropertyDescriptor>().Where(item => ProcedureInfo.ContainsKey(item.Name)).ToDictionary(key => ProcedureInfo[key.Name], value => value.GetValue(ModelObject));
+
+                proxy.ExecuteNonQuery(ProcedureInfo["ProcedureName"], dicParams);
+                return 1;
+            }
+            catch (SqlException ex)
+            {
+                throw new HttpException(500, ex.ToString());
+            }
         }
     }
 }
