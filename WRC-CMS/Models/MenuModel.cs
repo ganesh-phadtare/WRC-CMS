@@ -37,6 +37,31 @@ namespace WRC_CMS.Models
         {
             get { return Id; }
         } 
+
+        public int MaxOrder { get; set; }
+        public bool IsUp
+        {
+            get
+            {
+                if (Order == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        public bool IsDown
+        {
+            get
+            {
+                if (MaxOrder == Order)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 
     public class MenuModelLD
