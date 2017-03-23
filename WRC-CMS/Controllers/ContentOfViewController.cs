@@ -33,10 +33,10 @@ namespace WRC_CMS.Controllers
             ContentOfViewModel obj = new ContentOfViewModel();
             await Task.Run(() =>
             {
-                ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result.Where(item => item.SiteId == SiteId));
-                ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
+                ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result);
+                ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteId).Result);
                 ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteId).Result);
-                Sites = BORepository.GetAllSites(proxy).Result;
+                Sites = BORepository.GetAllSites(proxy, SiteId).Result;
             });
             CombineContentViewModel combineContentModel = new CombineContentViewModel();
             combineContentModel.ContentViewDetails = new ContentOfViewModel();
@@ -132,8 +132,8 @@ namespace WRC_CMS.Controllers
                 List<ViewModel> ObjViewList = new List<ViewModel>();
                 await Task.Run(() =>
                 {
-                    ContentView.AddRange(BORepository.GetContentViews(proxy, SiteID).Result.Where(item => item.SiteId == SiteID));
-                    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteID));
+                    ContentView.AddRange(BORepository.GetContentViews(proxy, SiteID).Result);
+                    ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteID).Result);
                     ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteID).Result);
                 });
                 CombineContentViewModel combineContentModel = new CombineContentViewModel();

@@ -617,13 +617,14 @@
                                                 <div _ngcontent-xlf-80="" class="row m-bottom5">
                                                     <div _ngcontent-xlf-80="" class="col s12 padding-zero">
                                                         <div _ngcontent-xlf-80="" class="table-responsive">
-                                                            <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
+                                                            <table _ngcontent-xlf-80="" class="striped responsive-table scroll" id="MenuListTableBody">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.ViewName)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.Name)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.DetailView.URL)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>
+                                                                        <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Move Up/Down</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody _ngcontent-xlf-80="" class="leave-tbody">
@@ -645,98 +646,12 @@
                                                                                 @*@Html.ActionLink("Delete", "DeleteMenu", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
                                                                                 @Html.ActionLink("Delete", "DeleteRecord", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
+                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                <input type="button" value="Λ" class="" id="btUp" onclick="OnBtnUpClick(@item.Id, true);" disabled="@item.IsUp" title="Click to move record up." /> |
+                                                                                <input type="button" value="V" class="" id="btDown" onclick="OnBtnUpClick(@item.Id, false);" disabled="@item.IsDown" title="Click to move record down." />
+                                                                            </td>
                                                                         </tr>
                                                                     }
-
-
-                                                                    @*<tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">02/17/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>02/17/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Cousin was not well due to Jaundice, Police also called for verification of passport process.<br> Auto - Approve by Admin</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">02/08/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>02/08/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Scheduled Appointment for Passport.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/27/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/27/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Have some work related to marriage certificate and other documents.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/18/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/18/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Not came due to some medical emergency at home.</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr _ngcontent-xlf-80="">
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">01/06/2017 <span _ngcontent-xlf-80=""><img _ngcontent-xlf-80="" class="arrow-right-img" src="./VW-Refresh_files/arrow-right.png"></span>01/06/2017</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">1</td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    Leave
-                                                                                </span>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                <div _ngcontent-xlf-80="" class="break-word"><span _ngcontent-xlf-80="">Not well due to Fever and Loose Motions. (UnPlanned Leave.)</span></div>
-                                                                            </td>
-                                                                            <td _ngcontent-xlf-80="" class="col-width-20">
-
-                                                                                <span _ngcontent-xlf-80="">
-                                                                                    <i _ngcontent-xlf-80="" aria-hidden="true" class="fa fa-check status-approved" title="Approved"></i>
-                                                                                </span>
-                                                                            </td>
-                                                                        </tr>*@
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -803,6 +718,27 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script type="text/javascript">
+            function OnBtnUpClick(recordId, isUpClicked) {
+                $.ajax({
+                    url: "/Menu/RecordMoveUpAndDown",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        id: recordId,
+                        siteId: $("#SiteID").val(),
+                        isUpOrDown: isUpClicked,
+                    }),
+                    async: false,
+                    success: function (data) {
+                        $("#MenuListTableBody").html(data.Result);
+                    },
+                    failure: function (data) {
+                        alert("Fail");
+                    },
+                });
+            }
+
             $(document).ready(function () {
 
                 $('#Submit').unbind('click');
