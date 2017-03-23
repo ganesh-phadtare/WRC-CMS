@@ -30,5 +30,18 @@ namespace WRC_CMS.Controllers
 
             return "Problem occured while saving record, kindly contact our support team.";
         }
+
+        public string BaseDeleteRecord(ICommon CommonmodelObject,ModelStateDictionary ModelState,WebApiProxy proxy)
+        {
+            int Count = 0;
+            if (ModelState.IsValid)
+            {
+                Count = BORepository.Delete<ICommon>(proxy, CommonmodelObject);
+
+                if (Count >0)
+                    return "Record Saved successfully.";
+            }
+            return "Problem occured while saving record, kindly contact our support team.";
+        }
     }
 }

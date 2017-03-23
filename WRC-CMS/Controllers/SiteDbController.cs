@@ -175,5 +175,16 @@ namespace WRC_CMS.Controllers
            });
             return View("GetAllSiteDb", com);
         }
+
+        public ActionResult DeleteRecord(int id, int SiteID)
+        {
+            string Status = string.Empty;
+            SiteDbModel modeldata = new SiteDbModel();
+            modeldata.Id = id;
+
+            Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+
+            return RedirectToAction("GetAllSiteDb", new { SiteId = SiteID });
+        }
     }
 }

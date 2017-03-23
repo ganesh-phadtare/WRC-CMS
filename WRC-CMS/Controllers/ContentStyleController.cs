@@ -244,5 +244,19 @@ namespace WRC_CMS.Controllers
             );
             return Json(new { status = Status });
         }
+
+        public ActionResult DeleteRecord(int id, bool IsDefault, int Siteid)
+        {
+            string Status = string.Empty;
+            ContentStyleModel modeldata = new ContentStyleModel();
+            modeldata.Id = id;
+            modeldata.SiteID = Siteid;
+
+            if (!IsDefault)
+            {
+                Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+            }
+            return RedirectToAction("GetContentPage", new { SiteId = Siteid });
+        }
     }
 }

@@ -270,5 +270,16 @@ namespace WRC_CMS.Controllers
             });
             return Json(new { status = Status });
         }
+
+        public ActionResult DeleteRecord(int id, int SiteID)
+        {
+            string Status = string.Empty;
+            MenuModel modeldata = new MenuModel();
+            modeldata.Id = id;
+           
+            Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+
+            return RedirectToAction("GetAllMenu", new { SiteId = SiteID });
+        }
     }
 }
