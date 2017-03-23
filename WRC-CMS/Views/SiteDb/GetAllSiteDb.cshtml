@@ -643,11 +643,12 @@
                                                                                 @Html.DisplayFor(modelItem => item.UserID)
                                                                             </td>
                                                                             @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                @Html.DisplayFor(modelItem => item.Password)
-                                                                            </td>*@
+                                                                                    @Html.DisplayFor(modelItem => item.Password)
+                                                                                </td>*@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditSiteDB", new { SiteDBID = item.Id, SiteID = item.SiteId }) |
-                                                                                @Html.ActionLink("Delete", "DeleteSiteDB", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @*@Html.ActionLink("Delete", "DeleteSiteDB", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { id = item.Id, SiteID = item.SiteId }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -822,24 +823,25 @@
                 });
 
                 $('#Submit').on('click', function () {
+                    var ModelObject = {
+                        Name: $("#DetailView_Name").val(),
+                        Server: $("#DetailView_Server").val(),
+                        Database: $('#DetailView_Database').val(),
+                        UserID: $('#DetailView_UserID').val(),
+                        Password: $('#DetailView_Password').val(),
+                        Description: $('#DetailView_Description').val(),
+                        Id: $("#Oid").val(),
+                        SiteID: $("#SiteID").val(),
+                    }
                     $.ajax({
-                        url: "/SiteDb/AddSiteDB",
+                        url: "/SiteDb/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#DetailView_Name").val(),
-                            Server: $("#DetailView_Server").val(),
-                            Database: $('#DetailView_Database').val(),
-                            UserID: $('#DetailView_UserID').val(),
-                            Password: $('#DetailView_Password').val(),
-                            Description: $('#DetailView_Description').val(),
-                            Oid: $("#Oid").val(),
-                            SiteID: $("#SiteID").val(),
-                        }),
+                        data: JSON.stringify(ModelObject),
                         async: false,
                         success: function (data) {
-                            alert("Success");
+                            alert(data.Status);
                         },
                         failure: function (data) {
                             alert("Fail");

@@ -297,14 +297,6 @@
     <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
         <!--style="height: 106px;"-->
         <div _ngcontent-xlf-78="" class="navigation-div">
-            <div _ngcontent-xlf-78="" id="top-div-msg">
-                <!--<div _ngcontent-xlf-78="" class="row m-bottom0 card-heading">
-                    <div _ngcontent-xlf-78="" class="col s11 card-title">To reset Domain &amp; Office 365 password, <a _ngcontent-xlf-78="" class="waves-effect waves-light btn action-btn" href="https://passwordreset.microsoftonline.com/" target="_blank"> <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-external-link"></i> Click here</a> Ensure your Mobile &amp; alternate Email ID verification details are updated <a _ngcontent-xlf-78="" class="waves-effect waves-light btn action-btn" href="http://aka.ms/ssprsetup" target="_blank"><i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-external-link"></i> Click here</a></div>
-                    <div _ngcontent-xlf-78="" class="col s1 card-activity center-align padding-zero">
-                        <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-times icon-btn add-skill-btn cancel close-div" title="Cancel"></i>
-                    </div>
-                </div>-->
-            </div>
             <nav _ngcontent-xlf-78="" class="dark-gray">
                 <sidenav-panel _ngcontent-xlf-78="">
                     <ul class="collapsible collapsible-accordion side-nav" id="slide-out">
@@ -314,9 +306,7 @@
                             <a class="collapsible-header" routerlinkactive="active" title="Dashboard" href="@Url.Action("Index", "Dashboard")">
                                 <i title="Dashboard"><img class="circle" style="width:32px; height:32px" src="/images/Dashboard1.png"></i> Dashboard
                             </a>
-
                             <div class="collapsible-body" id="childNav" style="display: block;">
-
                             </div>
                         </li>
                         <li routerlinkactive="active" class="no-padding second">
@@ -355,7 +345,7 @@
                         </li>
                         <li routerlinkactive="active" class="no-padding sixth">
                             <a class="collapsible-header" routerlinkactive="active" title="Menu" href="@Url.Action("GetAllMenu", "Menu", new { SiteId = @Model.SiteID })">
-                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i></i> Menu
+                                <i><img style="width:32px; height:32px" src="/images/Menu.png"></i> Menu
                             </a>
 
                             <div class="collapsible-body" id="childNav" style="display: none;">
@@ -375,21 +365,11 @@
                 </sidenav-panel>
 
                 <ul _ngcontent-xlf-78="" class="right right-nav">
-                    <!--<li _ngcontent-xlf-78="" class="date-time-text">27 Feb 2017</li>-->
-                    <!--<li _ngcontent-xlf-78="" class="hide-on-small-and-down"><span _ngcontent-xlf-78="">Lad, Virendra (4378)</span></li>-->
-                    <!--<li _ngcontent-xlf-78=""><a _ngcontent-xlf-78=""><i _ngcontent-xlf-78="" class="fa fa-power-off"></i></a></li>-->
-
-                </ul>
-                @*<sidenav-button _ngcontent-xlf-78="">
-                        <a class="button-collapse menu-icon show-on-large" data-activates="slide-out" href="http://localhost:49791/dashboard">
-                            <i aria-hidden="true" class="fa fa-bars"></i>
+                    <h5 class="header-title">
+                        <a href="http://localhost:49791/dashboard">
+                            <img class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName </span>
                         </a>
-                    </sidenav-button>*@
-                <h5 class="header-title">
-                    <a href="http://localhost:49791/dashboard">
-                        <img class="header-logo responsive-img" src="/images/logo-img.png"><span> @Model.SiteName </span>
-                    </a>
-                </h5>
+                    </h5>
             </nav>
         </div>
     </div>
@@ -436,29 +416,12 @@
 
                                                                                 <div class="view-form-info ui-input">
                                                                                     <div class="col s12">
-                                                                                        @*<input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
-                                                                                            <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
-                                                                                            <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
-                                                                                            <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
-                                                                                            <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">
-                                                                                            <input style="position:relative" class="invalidControl ng-untouched ng-pristine ng-valid" type="text" placeholder="">*@
-                                                                                        @*@Html.Partial("AddView", new WRC_CMS.Models.ViewModel());*@
-
-
                                                                                         @Html.AntiForgeryToken()
 
                                                                                         <div class="form-horizontal">
                                                                                             @*<h4>Add View</h4>
                                                                                                 <hr />*@
                                                                                             @Html.ValidationSummary(true)
-
-                                                                                            @*<div class="form-group">
-                                                                                                    @Html.LabelFor(model => model.ContentView.SelectView, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.DropDownList("DDLList", new SelectList(Model.ViewList, "Id", "Name", Model.SelectView))
-                                                                                                    </div>
-                                                                                                </div>*@
-
                                                                                             <div class="form-group" hidden="hidden">
                                                                                                 @Html.LabelFor(model => model.ContentView.Id, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
@@ -466,14 +429,6 @@
                                                                                                     @Html.ValidationMessageFor(model => model.ContentView.Id)
                                                                                                 </div>
                                                                                             </div>
-
-                                                                                            @*<div class="form-group" hidden="hidden">
-                                                                                                    @Html.LabelFor(model => model.ContentView.ViewID, new { @class = "control-label col-md-2" })
-                                                                                                    <div class="col-md-10">
-                                                                                                        @Html.EditorFor(model => model.ContentView.ViewID)
-                                                                                                        @Html.ValidationMessageFor(model => model.ContentView.ViewID)
-                                                                                                    </div>
-                                                                                                </div>*@
 
                                                                                             <div class="form-group" hidden="hidden">
                                                                                                 <div class="col-md-10">
@@ -621,7 +576,8 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.ContentView.IsActive, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    @Html.EditorFor(model => model.ContentView.IsActive)
+                                                                                                    @*@Html.EditorFor(model => model.ContentView.IsActive)*@
+                                                                                                    @Html.CheckBox("IsActive1", Model.ContentView.IsActive)
                                                                                                     @Html.ValidationMessageFor(model => model.ContentView.IsActive)
                                                                                                 </div>
                                                                                             </div>
@@ -643,7 +599,6 @@
                                                                                             <div class="form-group">
                                                                                                 <div class="col-md-offset-2 col-md-10" style="color:green">
                                                                                                     @*@ViewBag.Message*@
-
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
@@ -681,16 +636,6 @@
                                                             <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
                                                                 <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
                                                                     <tr _ngcontent-xlf-80="">
-                                                                        @*@if (Model.SiteList != null)
-                                                                            {
-                                                                                foreach (var item in Model.SiteList)
-                                                                                {*@
-                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => item.Name)</th>
-                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => item.URL)</th>
-                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.Title)</th>
-                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => item.IsActive)</th>
-                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Action</th>*@
-                                                                        @*<th _ngcontent-xlf-80="" class="col-width-20" data-field="date">@Html.DisplayNameFor(model => model.ContentView.SelectView)</th>*@
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="amount">@Html.DisplayNameFor(model => model.ContentView.Name)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Description)</th>
                                                                         <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">@Html.DisplayNameFor(model => model.ContentView.Type)</th>
@@ -729,16 +674,13 @@
                                                                                     }
                                                                                 </div>
                                                                             </td>
-                                                                            @*<td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                    @Html.DisplayFor(modelItem => item.Description)
-                                                                                </td>*@
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "GetEdiContentPage", new { Contentid = item.Id, SiteId = item.SiteID }) |
                                                                                 @*@Html.ActionLink("Show Content", "ShowContent", new { Description = item.Description }) |*@
-                                                                                @Html.ActionLink("Delete", "DeleteContent", new { id = item.Id, IsDefault = item.IsDefault, Siteid = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { id = item.Id, IsDefault = item.IsDefault, Siteid = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -748,11 +690,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div _ngcontent-xlf-80="" class="row">
-                                            <!--<div _ngcontent-xlf-80="" class="col s12 table-note">
-                                                <span _ngcontent-xlf-80=""><i _ngcontent-xlf-80="" class="pending-msg fa fa-pencil"></i>Only future date pending entries will be editable.</span>
-                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -779,26 +716,11 @@
                 © 2016 V2Solutions, Inc.
             </div>
             <div _ngcontent-xlf-78="" class="col s6 m6 l6 right-align" id="browsers">
-                <ul _ngcontent-xlf-78="" class="right">
-                    <!--<li _ngcontent-xlf-78="">
-                        <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-chrome"></i>
-                        <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 50+</h6>
-                    </li>-->
-                    <!--<li _ngcontent-xlf-78="">
-                        <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-firefox"></i>
-                        <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 46+ (64-bit)</h6>
-                    </li>-->
-                    <!--<li _ngcontent-xlf-78="">
-                        <i _ngcontent-xlf-78="" aria-hidden="true" class="fa fa-safari"></i>
-                        <h6 _ngcontent-xlf-78="" class="margin-zero">Ver 10+</h6>
-                    </li>-->
-                </ul>
+                <ul _ngcontent-xlf-78="" class="right"></ul>
             </div>
         </div>
     </footer>
     <loader-component _ngcontent-xlf-78="" _nghost-xlf-11="">
-
-
     </loader-component>
     <script type="text/javascript" src="./VW-Refresh_files/inline.bundle.js.download"></script>
     <script type="text/javascript" src="./VW-Refresh_files/styles.bundle.js.download"></script>
@@ -817,6 +739,7 @@
                     $('#StaticContentPanel').hide();
                     $('#SearchPanel').hide();
                     $('#ContentOfPagePanel').hide();
+                    $('input[name=IsActive1]').attr('checked', false);
                     document.getElementById("ViewList1").value = -1;
                     document.getElementById("Exemple").value = -1;
                     document.getElementById("ContentView_Name").value = "";
@@ -824,15 +747,16 @@
                     document.getElementById("ContentView_Orientation").value = "";
                     document.getElementById("ContentView_Order").value = "";
                     document.getElementById("ContentView_Id").value = "";
+                    document.getElementById("ContentView.Data").value = "";                    
                     document.getElementById("ContentView_SearchType").value = -1;
                     document.getElementById("ContentView_Type").value = -1;
-                    document.getElementById("ContentView_IsActive").value = false;
+
 
                 });
 
                 $('#Submit').on('click', function () {
                     //var content = tinyMCE.activeEditor.getContent({ format: 'html' });
-                    var selected = $("#ViewList option:selected");
+                    var selected = $("#ViewList1 option:selected");
                     var ST = $("#SearchType option:selected");
                     //var selected = $("#ContentView_Data").val();
                     var message = "";
@@ -840,7 +764,7 @@
                     selected.each(function () {
                         //message += $(this).text() + "\n";
                         message += $(this).val() + ",";
-                        alert(message);
+                        //alert(message);
                     });
 
                     ST.each(function () {
@@ -848,27 +772,44 @@
                         message1 += $(this).val() + ",";
                     });
 
+                    //alert($("#IsActive1").prop("checked"));
+                    alert(message1);
+                    var modeldata={
+                        Name: $("#ContentView_Name").val(),
+                        Type: $("select#Exemple option:selected").val(),
+                        Orientation: $("#ContentView_Orientation").val(),
+                        Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
+                        Description: $("#ContentView_Description").val(),
+                        IsActive: $("#IsActive1").prop("checked"),
+                        searchty: message1,
+                        SiteID: $("#SiteID").val(),
+                        views: message,
+                        Id: $("#ContentView_Id").val()
+                    }
                     $.ajax({
-                        url: "/ContentStyle/CreateUpdContent",
+                        url: "/ContentStyle/AddUpdateRecord",
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
-                        data: JSON.stringify({
-                            Name: $("#ContentView_Name").val(),
-                            CType: $("select#Exemple option:selected").val(),
-                            Orientation: $("#ContentView_Orientation").val(),
-                            Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
-                            Description: $("#ContentView_Description").val(),
-                            //Order: $("#ContentView_Order").val(),
-                            IsActive: $("#ContentView_IsActive").prop("checked"),
-                            SearchType:message1,//$("select#SearchType option:selected").val(),
-                            Siteid: $("#SiteID").val(),
-                            //ViewList:  $("#ViewList option:selected").val(),
-                            ViewList: message,
-                            Id: $("#ContentView_Id").val()
-                            //ViewID: $("#ContentView_ViewID").val(),
-                            //ViewID: $("#DDLList option:selected").val(),
-                        }),
+                        data: JSON.stringify(
+                            modeldata
+                            //{
+                            //Name: $("#ContentView_Name").val(),
+                            //CType: $("select#Exemple option:selected").val(),
+                            //Orientation: $("#ContentView_Orientation").val(),
+                            //Data: tinyMCE.activeEditor.getContent({ format: 'html' }),
+                            //Description: $("#ContentView_Description").val(),
+                            ////Order: $("#ContentView_Order").val(),
+                            //IsActive: $("#ContentView_IsActive").prop("checked"),
+                            //SearchType:message1,//$("select#SearchType option:selected").val(),
+                            //Siteid: $("#SiteID").val(),
+                            ////ViewList:  $("#ViewList option:selected").val(),
+                            //ViewList: message,
+                            //Id: $("#ContentView_Id").val()
+                            ////ViewID: $("#ContentView_ViewID").val(),
+                            ////ViewID: $("#DDLList option:selected").val(),
+                            //}
+                        ),
                         async: false,
                         success: function (data) {
                             alert("Success");

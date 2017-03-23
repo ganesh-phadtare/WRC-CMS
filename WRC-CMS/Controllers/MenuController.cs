@@ -10,7 +10,7 @@ using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
 {
-    public class MenuController : Controller
+    public class MenuController : BaseController
     {
         WebApiProxy proxy = new WebApiProxy();
         ////
@@ -107,14 +107,14 @@ namespace WRC_CMS.Controllers
         //    }
         //}
 
-        public async Task<ActionResult> AddMenu(string Name, string URL, bool IsExternal, int Order, int Oid, int ViewId, int SiteID)
+        public async Task<ActionResult> AddMenu(string Name, string URL, bool IsExternal, int Order, int Id, int ViewId, int SiteID)
         {
             if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(URL))
                 return RedirectToAction("GetAllMenu ");
 
             MenuModel menuobj = new MenuModel();
-            if (Oid > 0)
-                menuobj.Oid = Oid;
+            if (Id > 0)
+                menuobj.Id = Id;
             menuobj.Name = Name;
             menuobj.URL = URL;
             menuobj.IsExternal = IsExternal;
@@ -129,7 +129,7 @@ namespace WRC_CMS.Controllers
 
                     await Task.Run(() =>
                     {
-                        if (Oid == 0)
+                        if (Id == 0)
                             MenuId = BORepository.AddMenu(proxy, menuobj, true).Result;
                         else
                             MenuId = BORepository.AddMenu(proxy, menuobj, false).Result;
@@ -171,7 +171,7 @@ namespace WRC_CMS.Controllers
                     Menus.AddRange(BORepository.GetAllMenu(proxy).Result.Where(item => item.SiteId == SiteID));
                 });
                 MenuModelLD com = new MenuModelLD();
-                com.DetailView = Menus.FirstOrDefault(menu => menu.Oid == MenuID);
+                com.DetailView = Menus.FirstOrDefault(menu => menu.Id == MenuID);
                 await Task.Run(() =>
                 {
                     com.DetailView.View = BORepository.GetAllViews(proxy).Result.Where(item => item.SiteID == SiteID).ToList();
@@ -257,6 +257,29 @@ namespace WRC_CMS.Controllers
                 }
             });
             return View("GetAllMenu", com);
+        }
+
+        public async Task<JsonResult> AddUpdateRecord(MenuModel modeldata)
+        {
+            Dictionary<string, object> ContentData = new Dictionary<string, object>();
+
+            string Status = string.Empty;
+            await Task.Run(() =>
+            {
+                Status = base.BaseAddUpdateRecord(modeldata, ModelState, proxy).Result;
+            });
+            return Json(new { status = Status });
+        }
+
+        public ActionResult DeleteRecord(int id, int SiteID)
+        {
+            string Status = string.Empty;
+            MenuModel modeldata = new MenuModel();
+            modeldata.Id = id;
+           
+            Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+
+            return RedirectToAction("GetAllMenu", new { SiteId = SiteID });
         }
     }
 }

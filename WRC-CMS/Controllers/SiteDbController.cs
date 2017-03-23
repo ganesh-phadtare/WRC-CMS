@@ -10,7 +10,7 @@ using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
 {
-    public class SiteDbController : Controller
+    public class SiteDbController : BaseController
     {
         WebApiProxy proxy = new WebApiProxy();
 
@@ -19,62 +19,73 @@ namespace WRC_CMS.Controllers
             return View();
         }
 
-
-        public async Task<ActionResult> AddSiteDB(string Name, string Server, string Database, string UserID, string Password, string Description, int Oid, int SiteID)
+        public async Task<JsonResult> AddUpdateRecord(SiteDbModel ModelObject)
         {
-            if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Server) || string.IsNullOrEmpty(Database) || string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Description))
-                return RedirectToAction("GetAllSiteDb");
-
-            SiteDbModel SiteDbObject = new SiteDbModel();
-            if (Oid > 0)
-                SiteDbObject.Id = Oid;
-            SiteDbObject.Name = Name;
-            SiteDbObject.Server = Server;
-            SiteDbObject.Database = Database;
-            SiteDbObject.UserID = UserID;
-            SiteDbObject.Password = Password;
-            SiteDbObject.Description = Description;
-            SiteDbObject.SiteId = SiteID;
-            try
+            string Status = string.Empty;
+            await Task.Run(() =>
             {
-                if (ModelState.IsValid)
-                {
-                    int SiteDBID = 0;
-
-                    await Task.Run(() =>
-                    {
-                        if (Oid == 0)
-                            SiteDBID = BORepository.AddSiteDB(proxy, SiteDbObject, true).Result;
-                        else
-                            SiteDBID = BORepository.AddSiteDB(proxy, SiteDbObject, false).Result;
-                    });
-                    if (SiteDBID > 0)
-                        ViewBag.Message = "Site DB added successfully.";
-                    else
-                        ViewBag.Message = "Problem occured while adding Site DB, kindly contact our support team.";
-
-                    List<SiteDbModel> views = new List<SiteDbModel>();
-                    await Task.Run(() =>
-                    {
-                        views.AddRange(BORepository.GetAllSiteDb(proxy).Result.Where(item => item.SiteId == SiteID));
-                    });
-
-                    ActionResult MainView = null;
-                    await Task.Run(() =>
-                    {
-                        MainView = ReturnToMainView(SiteID).Result;
-                    });
-                    return MainView;
-
-                }
-
-                return View();
+                Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
             }
-            catch
-            {
-                return View();
-            }
+            );
+            return Json(new { status = Status });
         }
+
+
+        //public async Task<ActionResult> AddSiteDB(string Name, string Server, string Database, string UserID, string Password, string Description, int Oid, int SiteID)
+        //{
+        //    if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Server) || string.IsNullOrEmpty(Database) || string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Description))
+        //        return RedirectToAction("GetAllSiteDb");
+
+        //    SiteDbModel SiteDbObject = new SiteDbModel();
+        //    if (Oid > 0)
+        //        SiteDbObject.Id = Oid;
+        //    SiteDbObject.Name = Name;
+        //    SiteDbObject.Server = Server;
+        //    SiteDbObject.Database = Database;
+        //    SiteDbObject.UserID = UserID;
+        //    SiteDbObject.Password = Password;
+        //    SiteDbObject.Description = Description;
+        //    SiteDbObject.SiteId = SiteID;
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            int SiteDBID = 0;
+
+        //            await Task.Run(() =>
+        //            {
+        //                if (Oid == 0)
+        //                    SiteDBID = BORepository.AddSiteDB(proxy, SiteDbObject, true).Result;
+        //                else
+        //                    SiteDBID = BORepository.AddSiteDB(proxy, SiteDbObject, false).Result;
+        //            });
+        //            if (SiteDBID > 0)
+        //                ViewBag.Message = "Site DB added successfully.";
+        //            else
+        //                ViewBag.Message = "Problem occured while adding Site DB, kindly contact our support team.";
+
+        //            List<SiteDbModel> views = new List<SiteDbModel>();
+        //            await Task.Run(() =>
+        //            {
+        //                views.AddRange(BORepository.GetAllSiteDb(proxy).Result.Where(item => item.SiteId == SiteID));
+        //            });
+
+        //            ActionResult MainView = null;
+        //            await Task.Run(() =>
+        //            {
+        //                MainView = ReturnToMainView(SiteID).Result;
+        //            });
+        //            return MainView;
+
+        //        }
+
+        //        return View();
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         public async Task<ActionResult> EditSiteDB(int SiteDBID = 0, int SiteID = 0)
         {
@@ -163,6 +174,17 @@ namespace WRC_CMS.Controllers
                }
            });
             return View("GetAllSiteDb", com);
+        }
+
+        public ActionResult DeleteRecord(int id, int SiteID)
+        {
+            string Status = string.Empty;
+            SiteDbModel modeldata = new SiteDbModel();
+            modeldata.Id = id;
+
+            Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+
+            return RedirectToAction("GetAllSiteDb", new { SiteId = SiteID });
         }
     }
 }
