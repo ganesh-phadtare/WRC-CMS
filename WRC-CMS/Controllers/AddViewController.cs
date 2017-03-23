@@ -19,9 +19,9 @@ namespace WRC_CMS.Controllers
         {
             string Status = string.Empty;
             await Task.Run(() =>
-                {
-                    Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
-                }
+            {
+                Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
+            }
             );
             return Json(new { status = Status });
         }
@@ -53,12 +53,12 @@ namespace WRC_CMS.Controllers
 
                 await Task.Run(() =>
                 {
-                    com.NewView.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID).Result.ToList());
+                    com.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID).Result.ToList());
                 });
 
                 await Task.Run(() =>
                 {
-                    com.NewView.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
+                    com.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
                 });
 
                 return View("ViewsLV", com);
@@ -86,11 +86,19 @@ namespace WRC_CMS.Controllers
             return View;
         }
 
-        public ActionResult AddViewContent(int contentId, int siteId)
+        public ActionResult AddViewContent(int contentId, int viewId, int siteId)
         {
             try
             {
-                return RedirectToAction("GetAllViewDetails", new { id = siteId });
+                Dictionary<string, object> dicParams = new Dictionary<string, object>();
+                dicParams.Add("@Id", -1);
+                dicParams.Add("@Order", 0);
+                dicParams.Add("@ContentId", contentId);
+                dicParams.Add("@ViewId", viewId);
+                dicParams.Add("@SiteId", siteId);
+
+                proxy.ExecuteNonQuery("SP_ContentOfViewAddUp", dicParams);
+                return RedirectToAction("EditViewDetails", new { ViewID = viewId, SiteId = siteId });
             }
             catch
             {
@@ -141,12 +149,12 @@ namespace WRC_CMS.Controllers
 
             await Task.Run(() =>
             {
-                com.NewView.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, true).Result.ToList());
+                com.ViewAllContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, true).Result.ToList());
             });
 
             await Task.Run(() =>
                 {
-                    com.NewView.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
+                    com.ViewContents.AddRange(BORepository.GetAllContents(proxy, com.SiteID, com.NewView.Oid).Result.ToList());
                 });
             return View("ViewsLV", com);
         }

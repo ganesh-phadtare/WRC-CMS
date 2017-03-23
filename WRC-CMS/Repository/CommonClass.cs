@@ -33,7 +33,7 @@ namespace WRC_CMS.Repository
             }
         }
 
-        public static object GetImage(string fileName)
+        public static byte[] GetImage(string fileName)
         {
             using (var ms = new MemoryStream())
             {

@@ -10,12 +10,6 @@ namespace WRC_CMS.Models
 {
     public class ViewModel : BaseModel, ICommon
     {
-        public ViewModel()
-        {
-            ViewAllContents = new List<ContentStyleModel>();
-            ViewContents = new List<ViewContentModel>();
-        }
-
         public bool IsDefault { get; set; }
         public bool Authorized { get; set; }
         [Display(Name = "Menu")]
@@ -32,11 +26,6 @@ namespace WRC_CMS.Models
         [StringLength(100, ErrorMessage = "Orientation cannot be longer than 100 characters.")]
 
         public string Orientation { get; set; }
-
-        public List<ViewContentModel> ViewContents { get; set; }
-
-        public List<ContentStyleModel> ViewAllContents { get; set; }        
-
         public int CurrentObjectId
         {
             get { return Oid; }
@@ -45,9 +34,29 @@ namespace WRC_CMS.Models
 
     public class CombineModel
     {
+        public CombineModel()
+        {
+            ViewAllContents = new List<ContentStyleModel>();
+            ViewContents = new List<ViewContentModel>();
+        }
+
         public List<ViewModel> views { get; set; }
         public ViewModel NewView { get; set; }
         public string SiteName { get; set; }
         public int SiteID { get; set; }
+        
+        public List<ViewContentModel> ViewContents { get; set; }
+
+        public List<ContentStyleModel> ViewAllContents { get; set; }
+
+        public bool UpdownEnabled
+        {
+            get
+            {
+                if (NewView != null && (NewView.Oid != 0 && NewView.Oid != -1))
+                    return true;
+                return false;
+            }
+        }
     }
 }
