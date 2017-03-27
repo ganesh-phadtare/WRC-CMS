@@ -23,7 +23,7 @@ namespace WRC_CMS.Controllers
             }
             );
             return Json(new { status = Status });
-        }        
+        }
 
         public async Task<ActionResult> EditSiteMisc(int SiteMISCID = 0, int SiteID = 0)
         {
@@ -32,7 +32,7 @@ namespace WRC_CMS.Controllers
                 List<SiteMiscModel> SiteMICs = new List<SiteMiscModel>();
                 await Task.Run(() =>
                 {
-                    SiteMICs.AddRange(BORepository.GetAllSiteMISC(proxy).Result.Where(item => item.SiteId == SiteID));
+                    SiteMICs.AddRange(BORepository.GetAllSiteMISC(proxy, SiteID).Result);
                 });
                 SiteMiscModelLD com = new SiteMiscModelLD();
                 com.DetailView = SiteMICs.FirstOrDefault(view => view.Id == SiteMISCID);
@@ -63,7 +63,7 @@ namespace WRC_CMS.Controllers
                 List<SiteMiscModel> views = new List<SiteMiscModel>();
                 await Task.Run(() =>
                 {
-                    views.AddRange(BORepository.GetAllSiteMISC(proxy).Result.Where(item => item.SiteId == SiteID));
+                    views.AddRange(BORepository.GetAllSiteMISC(proxy, SiteID).Result);
                 });
                 ActionResult View = null;
                 await Task.Run(() =>
@@ -96,7 +96,7 @@ namespace WRC_CMS.Controllers
             List<SiteMiscModel> SiteMISC = new List<SiteMiscModel>();
             await Task.Run(() =>
             {
-                SiteMISC.AddRange(BORepository.GetAllSiteMISC(proxy).Result.Where(item => item.SiteId == SiteId));
+                SiteMISC.AddRange(BORepository.GetAllSiteMISC(proxy, SiteId).Result);
             });
             SiteMiscModelLD com = new SiteMiscModelLD();
             com.DetailView = new SiteMiscModel();
@@ -112,5 +112,16 @@ namespace WRC_CMS.Controllers
             });
             return View("GetAllSiteMisc", com);
         }
+
+        public ActionResult DeleteRecord(int id, int SiteID)
+        {
+            string Status = string.Empty;
+            SiteMiscModel modeldata = new SiteMiscModel();
+            modeldata.Id = id;
+           
+            Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+
+            return RedirectToAction("GetAllSiteMisc", new { SiteId = SiteID });
+        }    
     }
 }

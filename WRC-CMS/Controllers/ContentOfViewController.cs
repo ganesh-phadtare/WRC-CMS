@@ -11,11 +11,12 @@ using WRC_CMS.Repository;
 
 namespace WRC_CMS.Controllers
 {
-    public class ContentOfViewController : Controller
+    public class ContentOfViewController : BaseController
     {
         WebApiProxy proxy = new WebApiProxy();
         //
         // GET: /ContentOfView/
+      
         public ActionResult Index()
         {
             return View();
@@ -32,10 +33,10 @@ namespace WRC_CMS.Controllers
             ContentOfViewModel obj = new ContentOfViewModel();
             await Task.Run(() =>
             {
-                ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result.Where(item => item.SiteId == SiteId));
-                ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
+                ContentView.AddRange(BORepository.GetContentViews(proxy, SiteId).Result);
+                ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteId).Result);
                 ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteId).Result);
-                Sites = BORepository.GetAllSites(proxy).Result;
+                Sites = BORepository.GetAllSites(proxy, SiteId).Result;
             });
             CombineContentViewModel combineContentModel = new CombineContentViewModel();
             combineContentModel.ContentViewDetails = new ContentOfViewModel();
@@ -47,7 +48,7 @@ namespace WRC_CMS.Controllers
             if (ObjContentList.Count > 0)
             {
                 combineContentModel.SiteId = ObjContentList[0].SiteID;
-                combineContentModel.SiteName = ObjContentList[0].SiteName;                
+                combineContentModel.SiteName = ObjContentList[0].SiteName;
             }
             combineContentModel.SiteId = SiteId;
             combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
@@ -122,28 +123,28 @@ namespace WRC_CMS.Controllers
             }
         }
 
-        public async Task<ActionResult> EditContentOfView(int id, int SiteID)
+        public async Task<ActionResult> EditContentOfView(int SiteID, int Eid = 0)
         {
-            if (id != 0)
+            if (Eid != 0)
             {
                 List<ContentOfViewModel> ContentView = new List<ContentOfViewModel>();
                 List<ContentStyleModel> ObjContentList = new List<ContentStyleModel>();
                 List<ViewModel> ObjViewList = new List<ViewModel>();
                 await Task.Run(() =>
                 {
-                    ContentView.AddRange(BORepository.GetContentViews(proxy, SiteID).Result.Where(item => item.SiteId == SiteID));
-                    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteID));
+                    ContentView.AddRange(BORepository.GetContentViews(proxy, SiteID).Result);
+                    ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteID).Result);
                     ObjContentList.AddRange(BORepository.GetAllContents(proxy, SiteID).Result);
                 });
                 CombineContentViewModel combineContentModel = new CombineContentViewModel();
                 combineContentModel.ContentViewList = ContentView;
                 combineContentModel.ViewList = ObjViewList;
                 combineContentModel.ContentList = ObjContentList;
-                combineContentModel.ContentViewDetails = ContentView.FirstOrDefault(item => item.Id == id);
+                combineContentModel.ContentViewDetails = ContentView.FirstOrDefault(item => item.Id == Eid);
 
                 foreach (var item in ContentView)
                 {
-                    if (item.Id == id)
+                    if (item.Id == Eid)
                     {
                         combineContentModel.ContentId = item.ContentId;
                         combineContentModel.ViewId = item.ViewId;
@@ -168,5 +169,16 @@ namespace WRC_CMS.Controllers
             }
         }
 
+        public async Task<JsonResult> AddUpdateRecord(ContentOfViewModel modeldata)
+        {
+            Dictionary<string, object> ContentData = new Dictionary<string, object>();
+
+            string Status = string.Empty;
+            await Task.Run(() =>
+            {
+                Status = base.BaseAddUpdateRecord(modeldata, ModelState, proxy).Result;
+            });
+            return Json(new { status = Status });
+        }
     }
 }

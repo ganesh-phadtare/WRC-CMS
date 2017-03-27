@@ -13,155 +13,10 @@ using Newtonsoft.Json;
 
 namespace WRC_CMS.Controllers
 {
-    public class ContentStyleController : Controller
+    public class ContentStyleController : BaseController
     {
         WebApiProxy proxy = new WebApiProxy();
         public int PubSiteID = 0;
-        #region OldCode
-        //public async Task<ActionResult> AddContentStyle()
-        //{
-        //    ContentStyleModel StyleObject = new ContentStyleModel();
-        //    if (StyleObject != null)
-        //    {
-        //        await Task.Run(() =>
-        //        {
-        //            StyleObject.View = BORepository.GetAllViews(proxy).Result;
-        //        });
-        //    }
-        //    return View(StyleObject);
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> AddContentStyle(ContentStyleModel ContentStyleModelObject)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
-        //                ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
-
-        //            ContentStyleModelObject.Description = RepairLinks(ContentStyleModelObject.Description);
-
-        //            int ContentStyleID = 0;
-        //            await Task.Run(() =>
-        //            {
-        //                ContentStyleID = BORepository.AddContentStyle(proxy, ContentStyleModelObject).Result;
-        //            });
-        //            if (ContentStyleID > 0)
-        //                ViewBag.Message = "Content Style added successfully.";
-        //            else
-        //                ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
-        //            return RedirectToAction("GetAllContentsDetails");
-        //        }
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        //public ActionResult ShowContent(ContentStyleModel ContentStyleModelObject)
-        //{
-        //    ViewBag.Message = ContentStyleModelObject.Description;
-        //    return View("ShowContent");
-        //}
-
-        //public async Task<ActionResult> EditContentDetails(int id)
-        //{
-        //    //List<ContentStyleModel> contents = new List<ContentStyleModel>();
-        //    //await Task.Run(() =>
-        //    //{
-        //    //    contents.AddRange(GetAllContents(SiteID).Result);
-        //    //});
-        //    //if (contents != null && contents.Count > 0)
-        //    //{
-        //    //    ContentStyleModel objetc = contents.FirstOrDefault(item => item.Oid == id);
-        //    //    await Task.Run(() =>
-        //    //    {
-        //    //        objetc.View = BORepository.GetAllViews(proxy).Result;
-        //    //    });
-        //    //    objetc.SelectView = objetc.ViewID.ToString();
-        //    //    return View(objetc);
-        //    //}             
-        //    //return View();
-        //    ModelState.Clear();
-        //    List<ContentStyleModel> contents = new List<ContentStyleModel>();
-        //    await Task.Run(() =>
-        //    {
-        //        contents.AddRange(GetAllContents(SiteID).Result.Where(item => item.Oid == id));
-        //    });
-
-        //    CombineContentModel combineContentModel = new CombineContentModel();
-        //    combineContentModel.ContentView = new ContentStyleModel();
-        //    combineContentModel = contents;
-
-        //    if (contents.Count > 0)
-        //        combineContentModel.SelectView = contents[0].SelectView;
-
-        //    return View("ContentPanel", combineContentModel);  
-        //}      
-
-        //[HttpPost]
-        //public ActionResult EditContentDetails(ContentStyleModel ContentStyleModelObject)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            if (!string.IsNullOrEmpty(ContentStyleModelObject.SelectView))
-        //                ContentStyleModelObject.ViewID = Convert.ToInt32(ContentStyleModelObject.SelectView.ToString());
-        //            Dictionary<string, object> dicParams = new Dictionary<string, object>();
-        //            dicParams.Add("@Id", ContentStyleModelObject.Oid);
-        //            dicParams.Add("@Name", ContentStyleModelObject.Name);
-        //            dicParams.Add("@Descr", RepairLinks(ContentStyleModelObject.Description));
-        //            dicParams.Add("@View", ContentStyleModelObject.ViewID);
-        //            if (ContentStyleModelObject.IsActive)
-        //                dicParams.Add("@IsActive", "1");
-        //            else
-        //                dicParams.Add("@IsActive", "0");
-        //            proxy.ExecuteNonQuery("SP_ContentsAddUp", dicParams);
-        //            return RedirectToAction("GetAllContentsDetails");
-        //        }
-
-        //        return View();
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-        //string RepairLinks(string value)
-        //{
-        //    HtmlDocument doc = new HtmlDocument();
-        //    doc.LoadHtml(value);
-
-        //    int i = doc.DocumentNode.SelectNodes("//a[@href]").Count;
-        //    foreach (HtmlNode link in doc.DocumentNode.SelectNodes("//a[@href]"))
-        //    {
-        //        HtmlAttribute att = link.Attributes["href"];
-        //        att.Value = FixLink(att);
-        //    }
-
-        //    System.IO.StringWriter srw = new System.IO.StringWriter();
-        //    doc.Save(srw as System.IO.TextWriter);
-
-        //    if (srw != null)
-        //        return srw.ToString();
-
-        //    return value;
-        //}
-
-        //public string FixLink(HtmlAttribute att)
-        //{
-        //    if (!string.IsNullOrEmpty(att.Value) && !att.Value.StartsWith(AppKeys.DefaultRespondURL))
-        //    {
-        //        return string.Concat(AppKeys.DefaultRespondURL, att.Value);
-        //    }
-        //    return att.Value;
-        //}
-        #endregion
 
         public ActionResult DeleteContent(int id, bool IsDefault, int Siteid)
         {
@@ -185,36 +40,23 @@ namespace WRC_CMS.Controllers
             }
         }
 
-
-        //public async Task<ActionResult> GetAllContentsDetails()
-        //{
-        //    ModelState.Clear();
-        //    List<ContentStyleModel> views = new List<ContentStyleModel>();
-        //    await Task.Run(() =>
-        //    {
-        //        views.AddRange(GetAllContents(0).Result);
-        //    });
-        //    return View("GetContentsDetails", views);
-        //}
-
         public async Task<List<ContentStyleModel>> GetAllContents(int SiteId, int ContentId)
         {
             if (ContentId == 0)
                 ContentId = -1;
 
             List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
+
             //List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;
-            List<SiteModel> Sites = BORepository.GetAllSites(proxy).Result;
+            List<SiteModel> Sites = BORepository.GetAllSites(proxy, SiteId).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
-           
+
 
             dict.Add("@Id", ContentId);
             dict.Add("@LoadOnlyActive", 0);
             dict.Add("@SiteId", SiteId);
-            //dict.Add("@ViewId", ViewId);
 
             var dataSet = await proxy.ExecuteDataset("SP_ContentsSelect", dict);
-            //ViewBag.ViewList = dataSet.Tables[1].ToString();
             return (from DataRow row in dataSet.Tables[0].Rows
                     select new ContentStyleModel
                     {
@@ -222,15 +64,10 @@ namespace WRC_CMS.Controllers
                         Name = row["Name"].ToString(),
                         Description = row["Description"].ToString(),
                         IsActive = bool.Parse(row["IsActive"].ToString()),
-                        //ViewID = Convert.ToInt32(row["Views"].ToString()),
-                        //SelectView = Sites.FirstOrDefault(sit => sit.Oid == Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).SiteID).Name + " - " + Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name,
-                        //SelectView = Views.FirstOrDefault(VId => VId.Oid == Convert.ToInt32(row["Views"].ToString())).Title,
-                        //SelectView = Views.FirstOrDefault(VId => VId.Oid == (ViewId==0?Convert.ToInt32(row["Views"].ToString()):ViewId) ).Title,
                         SiteID = Convert.ToInt32(row["SiteId"].ToString()),
                         Type = Convert.ToInt32(row["Type"].ToString()),
                         Orientation = row["Orientation"].ToString(),
                         Data = (row["Data"].ToString() == "") ? "" : JsonConvert.DeserializeObject(row["Data"].ToString()).ToString(),
-                        //Order = Convert.ToInt32(row["Order"].ToString()),
                         SiteName = Sites.FirstOrDefault(sit => sit.Oid == SiteId).Name,
                     }).ToList();
         }
@@ -248,8 +85,8 @@ namespace WRC_CMS.Controllers
             await Task.Run(() =>
             {
                 contents.AddRange(GetAllContents(SiteId, 0).Result);
-                ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
-                Sites = BORepository.GetAllSites(proxy).Result;
+                ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteId).Result);
+                Sites = BORepository.GetAllSites(proxy, SiteId).Result;
             });
 
             combineContentModel.ContentView = new ContentStyleModel();
@@ -260,10 +97,8 @@ namespace WRC_CMS.Controllers
             combineContentModel.ContentView.Orientation = "1";
 
             if (contents.Count > 0)
-            {
-                // combineContentModel.SelectView = contents[0].SelectView; //View Name
                 combineContentModel.SiteName = contents[0].SiteName;
-            }
+
             combineContentModel.SiteID = SiteId;
             combineContentModel.SiteName = Sites.FirstOrDefault(it => it.Oid == SiteId).Title;
             PubSiteID = SiteId;
@@ -293,17 +128,13 @@ namespace WRC_CMS.Controllers
                         ContentData.Add("st", SearchType.ToString().Substring(0, SearchType.Length - 1));
 
                     dicParams.Add("@Id", Id);
-                    //dicParams.Add("@View", ViewID);
                     dicParams.Add("@Name", Name);
                     dicParams.Add("@Type", CType);
                     dicParams.Add("@Orientation", Orientation);
                     dicParams.Add("@Data", JsonConvert.SerializeObject(ContentData));
                     dicParams.Add("@Description", Description);
-                    //dicParams.Add("@Order", Order);
                     dicParams.Add("@IsActive", Convert.ToBoolean(IsActive));
-                    //dicParams.Add("@Search", SearchType);
                     dicParams.Add("@Siteid", Siteid);
-                    //DataSet dataSet = null;
                     //await Task.Run(() =>
                     //{
                     DataSet dataSet = await proxy.ExecuteDataset("SP_ContentsAddUp", dicParams);
@@ -320,24 +151,6 @@ namespace WRC_CMS.Controllers
                     else
                         ViewBag.Message = "Problem occured while adding content, kindly contact our support team.";
 
-                    //ModelState.Clear();
-                    //List<ContentStyleModel> contents = new List<ContentStyleModel>();
-                    //await Task.Run(() =>
-                    //{
-                    //    contents.AddRange(GetAllContents(0).Result);
-                    //});
-                    //CombineContentModel combineContentModel = new CombineContentModel();
-                    //combineContentModel.ContentView = new ContentStyleModel();
-                    //combineContentModel.ContentList = contents;
-
-                    //if (contents.Count > 0)
-                    //{
-                    //    combineContentModel.SelectView = contents[0].SelectView; //View Name
-                    //    combineContentModel.SiteName = contents[0].SiteName;
-                    //}
-
-                    //return View("ContentPanel", combineContentModel);
-                    //return RedirectToAction("GetContentPage", new { SiteId = SiteId });
                     ActionResult MainView = null;
                     await Task.Run(() =>
                     {
@@ -369,35 +182,25 @@ namespace WRC_CMS.Controllers
                 await Task.Run(() =>
                 {
                     contents.AddRange(GetAllContents(SiteId, 0).Result);
-                    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == SiteId));
-                    //contents.AddRange(GetSelectedContent(Contentid).Result.Where(item => item.Oid == Contentid));                    
+                    ObjViewList.AddRange(BORepository.GetAllViews(proxy, SiteId).Result);
                 });
 
                 if (contents.Count > 0)
                 {
-                    //combineContentModel.SelectView = contents[Contentid].SelectView;  //View Name
                     combineContentModel.SiteName = contents[0].SiteName;
                     combineContentModel.SiteID = contents[0].SiteID;
-                    //PubSiteID = (from cont in contents
-                    //             where cont.Id == Contentid
-                    //             select cont.SiteID).First();
                 }
 
                 combineContentModel.SiteID = SiteId;
                 PubSiteID = SiteId;
-                //await Task.Run(() =>
-                //{
-                //    ObjViewList.AddRange(BORepository.GetAllViews(proxy).Result.Where(i => i.SiteID == PubSiteID));
-                //});
                 combineContentModel.ContentView = contents.FirstOrDefault(item => item.Id == Contentid);
                 combineContentModel.ContentList = contents;
-                combineContentModel.ViewList = ObjViewList;                
+                combineContentModel.ViewList = ObjViewList;
                 //ViewBag.Site = PubSiteID;
                 foreach (var item in contents)
                 {
                     if (item.Id == Contentid)
                     {
-                        //combineContentModel.Order = item.Order;
                         combineContentModel.ContentView.Orientation = item.Orientation;
                         combineContentModel.ContentView.Type = item.Type;
                         dictData = JsonConvert.DeserializeObject<Dictionary<string, object>>(item.Data.ToString());
@@ -406,13 +209,9 @@ namespace WRC_CMS.Controllers
                             if (_item.Key == "sd")
                                 combineContentModel.ContentView.Data = _item.Value.ToString();
                             else if (_item.Key == "st")
-                                //combineContentModel.ContentView.SearchType = Convert.ToInt32(_item.Value.ToString());                                
                                 combineContentModel.ContentView.STyList = new List<int>(Array.ConvertAll(_item.Value.ToString().Split(','), int.Parse));
                             else if (_item.Key == "v")
                                 combineContentModel.ContentView.VTyList = new List<int>(Array.ConvertAll((string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : _item.Value).ToString().Split(','), int.Parse));
-                            //(string.IsNullOrEmpty(_item.Value.ToString()) ? -1 : Convert.ToInt32(_item.Value.ToString()));// Convert.ToInt32(_item.Value.ToString());
-
-                               
                             else
                             { }
                         }
@@ -424,30 +223,43 @@ namespace WRC_CMS.Controllers
             else
             {
                 return RedirectToAction("GetContentPage", new { SiteId = SiteId });
-                //return RedirectToAction("GetContentPage", new { SiteId = PubSiteID });  
             }
         }
 
-        //public async Task<List<ContentStyleModel>> GetSelectedContent(int Contentid)
-        //{
+        public async Task<JsonResult> AddUpdateRecord(ContentStyleModel modeldata)
+        {
+            Dictionary<string, object> ContentData = new Dictionary<string, object>();
 
-        //    List<ContentStyleModel> ContentList = new List<ContentStyleModel>();
-        //    List<ViewModel> Views = BORepository.GetAllViews(proxy).Result;            
-        //    Dictionary<string, object> dict = new Dictionary<string, object>();
-        //    dict.Add("@ContentId", Contentid);
+            if (modeldata.Type == 0)
+                ContentData.Add("sd", modeldata.Data);
+            else if (modeldata.Type == 1)
+                ContentData.Add("v", modeldata.views.ToString().Substring(0, modeldata.views.Length - 1));
+            else if (modeldata.Type == 2)
+                ContentData.Add("st", modeldata.searchty.ToString().Substring(0, modeldata.searchty.Length - 1));
 
-        //    var dataSet = await proxy.ExecuteDataset("SP_GetSelectedContent", dict);            
-        //    return (from DataRow row in dataSet.Tables[0].Rows
-        //            select new ContentStyleModel
-        //            {
-        //                Oid = Convert.ToInt32(row["Id"].ToString()),
-        //                Name = row["Name"].ToString(),
-        //                Description = row["Descr"].ToString(),
-        //                IsActive = bool.Parse(row["IsActive"].ToString()),
-        //                ViewID = Convert.ToInt32(row["Views"].ToString()),
-        //                //SelectView = Sites.FirstOrDefault(sit => sit.Oid == Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).SiteID).Name + " - " + Views.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["Views"].ToString())).Name,
-        //                SelectView = Views.FirstOrDefault(VId => VId.Oid == Convert.ToInt32(row["Views"].ToString())).Title,
-        //            }).ToList();
-        //}
+            modeldata.Data = JsonConvert.SerializeObject(ContentData);
+
+            string Status = string.Empty;
+            await Task.Run(() =>
+            {
+                Status = base.BaseAddUpdateRecord(modeldata, ModelState, proxy).Result;
+            }
+            );
+            return Json(new { status = Status });
+        }
+
+        public ActionResult DeleteRecord(int id, bool IsDefault, int Siteid)
+        {
+            string Status = string.Empty;
+            ContentStyleModel modeldata = new ContentStyleModel();
+            modeldata.Id = id;
+            modeldata.SiteID = Siteid;
+
+            if (!IsDefault)
+            {
+                Status = base.BaseDeleteRecord(modeldata, ModelState, proxy);
+            }
+            return RedirectToAction("GetContentPage", new { SiteId = Siteid });
+        }
     }
 }

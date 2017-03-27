@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,10 +15,40 @@ namespace WRC_CMS.Repository
 {
     public class BORepository
     {
-        public static Dictionary<string, string> GetProcedureInfo(object ModelObject)
+        public static Dictionary<string, string> GetProcedureInfo(object ModelObject, bool IsDelete = false)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
-            if (ModelObject is ViewModel)
+            if (ModelObject is ContentStyleModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_ContentsDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is ViewModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_ViewDel");
+                dic.Add("Oid", "@Id");
+                return dic;
+            }
+            else if (ModelObject is MenuModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_MenuDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is SiteDbModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_SiteDBDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is SiteMiscModel && IsDelete == true)
+            {
+                dic.Add("ProcedureName", "SP_SiteMiscDel");
+                dic.Add("Id", "@Id");
+                return dic;
+            }
+            else if (ModelObject is ViewModel)
             {
                 dic.Add("ProcedureName", "SP_ViewAddUp");
                 dic.Add("Oid", "@Id");
@@ -41,7 +72,7 @@ namespace WRC_CMS.Repository
                 dic.Add("UserID", "@UserID");
                 dic.Add("Password", "@Password");
                 dic.Add("Description", "@Description");
-                dic.Add("@SiteId", "@SiteId");
+                dic.Add("SiteId", "@SiteId");
                 return dic;
             }
             else if (ModelObject is SiteMiscModel)
@@ -53,6 +84,42 @@ namespace WRC_CMS.Repository
                 dic.Add("SiteId", "@SiteId");
                 return dic;
             }
+            else if (ModelObject is ContentStyleModel)
+            {
+                dic.Add("ProcedureName", "SP_ContentsAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("Type", "@Type");
+                dic.Add("Orientation", "@Orientation");
+                dic.Add("Data", "@Data");
+                dic.Add("Description", "@Description");
+                dic.Add("IsActive", "@IsActive");
+                dic.Add("SiteID", "@SiteID");
+                return dic;
+            }
+            else if (ModelObject is ContentOfViewModel)
+            {
+                dic.Add("ProcedureName", "SP_ContentOfViewAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("ContentId", "@ContentId");
+                dic.Add("ViewId", "@ViewId");
+                dic.Add("SiteId", "@SiteId");
+                dic.Add("Order", "@Order");
+                return dic;
+            }
+            else if (ModelObject is MenuModel)
+            {
+                dic.Add("ProcedureName", "SP_MenuAddUp");
+                dic.Add("Id", "@Id");
+                dic.Add("Name", "@Name");
+                dic.Add("URL", "@URL");
+                dic.Add("IsExternal", "@IsExternal");
+                dic.Add("Order", "@Order");
+                dic.Add("ViewId", "@ViewId");
+                dic.Add("SiteId", "@SiteId");
+                return dic;
+            }
+
             return null;
         }
 
@@ -227,7 +294,7 @@ namespace WRC_CMS.Repository
             if (IsNewObject)
                 dicParams.Add("@Id", -1);
             else
-                dicParams.Add("@Id", MenuObject.Oid);
+                dicParams.Add("@Id", MenuObject.Id);
             dicParams.Add("@Name", MenuObject.Name);
             dicParams.Add("@URL", MenuObject.URL);
             dicParams.Add("@IsExternal", MenuObject.IsExternal);
@@ -282,12 +349,13 @@ namespace WRC_CMS.Repository
             return -1;
         }
 
-        public static async Task<List<ViewModel>> GetAllViews(WebApiProxy proxy, int Id = -1)
+        public static async Task<List<ViewModel>> GetAllViews(WebApiProxy proxy, int SiteId, int Id = -1)
         {
-            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            List<SiteModel> Sites = GetAllSites(proxy, SiteId).Result;
             List<ViewModel> ViewList = new List<ViewModel>();
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", Id);
+            dict.Add("@SiteId", SiteId);
             dict.Add("@LoadOnlyActive", 0);
             dict.Add("@ViewName", "");
             var dataSet = await proxy.ExecuteDataset("SP_ViewSelect", dict);
@@ -303,7 +371,7 @@ namespace WRC_CMS.Repository
                             IsDefault = bool.Parse(row["IsDefault"].ToString()),
                             Authorized = bool.Parse(row["Authorized"].ToString()),
                             Orientation = row["Orientation"].ToString(),
-                            CreateMenu = CheckMenuExistOrNot(proxy, Convert.ToInt32(row["Id"].ToString())).Result,
+                            CreateMenu = CheckMenuExistOrNot(proxy, SiteId, Convert.ToInt32(row["Id"].ToString())).Result,
                             SiteID = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SelectSite = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
                         }).ToList();
@@ -311,13 +379,14 @@ namespace WRC_CMS.Repository
             return ViewList;
         }
 
-        public static async Task<List<SiteDbModel>> GetAllSiteDb(WebApiProxy proxy)
+        public static async Task<List<SiteDbModel>> GetAllSiteDb(WebApiProxy proxy, int SiteId)
         {
-            List<SiteModel> Sites = GetAllSites(proxy).Result;
+            List<SiteModel> Sites = GetAllSites(proxy, SiteId).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@SiteId", SiteId);
             var dataSet = await proxy.ExecuteDataset("SP_SiteDBSelect", dict);
-            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0 && Sites.Count > 0)
             {
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new SiteDbModel
@@ -330,17 +399,18 @@ namespace WRC_CMS.Repository
                             Password = row["Password"].ToString(),
                             Description = row["Description"].ToString(),
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
-                            SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title
+                            SiteName = Sites.FirstOrDefault().Title
                         }).ToList();
             }
             return new List<SiteDbModel>();
         }
 
-        public static async Task<List<SiteMiscModel>> GetAllSiteMISC(WebApiProxy proxy)
+        public static async Task<List<SiteMiscModel>> GetAllSiteMISC(WebApiProxy proxy, int siteId)
         {
             List<SiteModel> Sites = GetAllSites(proxy).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@SiteId", siteId);
             var dataSet = await proxy.ExecuteDataset("SP_SiteMiscSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
             {
@@ -357,10 +427,11 @@ namespace WRC_CMS.Repository
             return new List<SiteMiscModel>();
         }
 
-        public static async Task<bool> CheckMenuExistOrNot(WebApiProxy proxy, int ViewID)
+        public static async Task<bool> CheckMenuExistOrNot(WebApiProxy proxy, int siteId, int ViewID)
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@SiteId", siteId);
             dict.Add("@ViewId", ViewID);
             var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
             if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
@@ -371,24 +442,26 @@ namespace WRC_CMS.Repository
             return false;
         }
 
-        public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy)
+        public static async Task<List<MenuModel>> GetAllMenu(WebApiProxy proxy, int SiteId)
         {
-            List<SiteModel> Sites = GetAllSites(proxy).Result;
-            List<ViewModel> Views = GetAllViews(proxy).Result;
+            List<SiteModel> Sites = GetAllSites(proxy, SiteId).Result;
+            List<ViewModel> Views = GetAllViews(proxy, SiteId).Result;
             Dictionary<string, object> dict = new Dictionary<string, object>();
             dict.Add("@Id", -1);
+            dict.Add("@SiteId", SiteId);
             dict.Add("@ViewId", -1);
             var dataSet = await proxy.ExecuteDataset("SP_MenuSelect", dict);
-            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0)
+            if (!ReferenceEquals(dataSet, null) && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0)
             {
                 return (from DataRow row in dataSet.Tables[0].Rows
                         select new MenuModel
                         {
-                            Oid = Convert.ToInt32(row["Id"].ToString()),
+                            Id = Convert.ToInt32(row["Id"].ToString()),
                             Name = row["Name"].ToString(),
                             URL = row["URL"].ToString(),
                             IsExternal = Convert.ToBoolean(row["IsExternal"].ToString()),
                             Order = Convert.ToInt32(row["Order"].ToString()),
+                            MaxOrder = Convert.ToInt32(row["MaxOrder"].ToString()),
                             ViewId = Convert.ToInt32(row["ViewId"].ToString()),
                             SiteId = row["SiteId"].ToString() == string.Empty ? 0 : Convert.ToInt32(row["SiteId"].ToString()),
                             SiteName = Sites.FirstOrDefault(it => it.Oid == Convert.ToInt32(row["SiteId"].ToString())).Title,
@@ -498,8 +571,8 @@ namespace WRC_CMS.Repository
 
         public static async Task<List<ContentOfViewModel>> GetContentViews(WebApiProxy proxy, int SiteId)
         {
-            List<SiteModel> Sites = GetAllSites(proxy).Result;
-            List<ViewModel> Views = GetAllViews(proxy).Result;
+            List<SiteModel> Sites = GetAllSites(proxy, SiteId).Result;
+            List<ViewModel> Views = GetAllViews(proxy, SiteId).Result;
             List<ContentStyleModel> Contents = GetAllContents(proxy, SiteId).Result;
 
             Dictionary<string, object> dict = new Dictionary<string, object>();
@@ -524,6 +597,23 @@ namespace WRC_CMS.Repository
                         }).ToList();
             }
             return new List<ContentOfViewModel>();
+        }
+
+        public static int Delete<T>(WebApiProxy proxy, T ModelObject) where T : class
+        {
+            try
+            {
+                Dictionary<string, string> ProcedureInfo = GetProcedureInfo(ModelObject, true);
+                System.ComponentModel.PropertyDescriptorCollection pdc = System.ComponentModel.TypeDescriptor.GetProperties(ModelObject);
+                Dictionary<string, object> dicParams = pdc.Cast<PropertyDescriptor>().Where(item => ProcedureInfo.ContainsKey(item.Name)).ToDictionary(key => ProcedureInfo[key.Name], value => value.GetValue(ModelObject));
+
+                proxy.ExecuteNonQuery(ProcedureInfo["ProcedureName"], dicParams);
+                return 1;
+            }
+            catch (SqlException ex)
+            {
+                throw new HttpException(500, ex.ToString());
+            }
         }
     }
 }

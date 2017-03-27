@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WRC_CMS.Repository;
 
 namespace WRC_CMS.Models
 {
-    public class ContentOfViewModel
+    public class ContentOfViewModel : ICommon
     {
         public int Id { get; set; }
         public int ContentId { get; set; }
@@ -15,6 +16,11 @@ namespace WRC_CMS.Models
         public int Order { get; set; }
         public string ContentName { get; set; }
         public string ViewName { get; set; }
+
+        public int CurrentObjectId
+        {
+            get { return Id; }
+        } 
     }
     public class CombineContentViewModel
     {

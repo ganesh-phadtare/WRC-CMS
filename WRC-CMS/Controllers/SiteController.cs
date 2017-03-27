@@ -33,11 +33,11 @@ namespace WRC_CMS.Controllers
             List<ViewModel> views = new List<ViewModel>();
             await Task.Run(() =>
             {
-                sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                sites.AddRange(BORepository.GetAllSites(proxy, id).Result);
             });
             await Task.Run(() =>
             {
-                views.AddRange(BORepository.GetAllViews(proxy).Result);
+                views.AddRange(BORepository.GetAllViews(proxy, id).Result);
             });
             if (sites != null && sites.Count > 0)
             {
@@ -59,11 +59,11 @@ namespace WRC_CMS.Controllers
             List<ContentStyleModel> contents = new List<ContentStyleModel>();
             await Task.Run(() =>
             {
-                sites.AddRange(BORepository.GetAllSites(proxy).Result);
+                sites.AddRange(BORepository.GetAllSites(proxy, SiteID).Result);
             });
             await Task.Run(() =>
             {
-                views.AddRange(BORepository.GetAllViews(proxy).Result);
+                views.AddRange(BORepository.GetAllViews(proxy, SiteID).Result);
             });
             if (sites != null && sites.Count > 0)
             {
@@ -323,7 +323,7 @@ namespace WRC_CMS.Controllers
                                 ViewModel DefaultView = new ViewModel();
                                 DefaultView.Name = "Home";
                                 DefaultView.Title = "Home";
-                                DefaultView.Logo = (byte[])CommonClass.GetImage(Server.MapPath(@"..\images\V2ViewLogo.png"));
+                                DefaultView.Logo = CommonClass.GetImage(Server.MapPath(@"..\images\V2ViewLogo.png"));
                                 DefaultView.Orientation = "0";
                                 DefaultView.IsActive = true;
                                 DefaultView.Authorized = true;

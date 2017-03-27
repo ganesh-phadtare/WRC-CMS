@@ -294,7 +294,7 @@
     </style>
 </head>
 
-<body>
+<body id="MainBody">
     <div class="navbar navbar-inverse navbar-fixed-top" style="height: 50px;">
         <div _ngcontent-xlf-78="" class="navigation-div">
             <div _ngcontent-xlf-78="" id="top-div-msg">
@@ -544,7 +544,7 @@
                                                                                             <div class="form-group">
                                                                                                 @Html.LabelFor(model => model.NewView.Logo, new { @class = "control-label col-md-2" })
                                                                                                 <div class="col-md-10">
-                                                                                                    <input type="file" name="file" class="text-box single-line" />
+                                                                                                    @Html.TextBoxFor(model => model.NewView.Logo, new { type = "file" })
                                                                                                     @Html.ValidationMessageFor(model => model.NewView.Logo)
                                                                                                 </div>
                                                                                             </div>
@@ -576,50 +576,7 @@
                                                                                                     @Html.EditorFor(model => model.NewView.CreateMenu)
                                                                                                 </div>
                                                                                             </div>
-                                                                                            <div class="form-group" id="AddContentDiv">
-                                                                                            </div>
 
-                                                                                            <div _ngcontent-xlf-80="" class="table-responsive">
-                                                                                                @Html.Label("Create Content", new { @class = "control-label col-md-2" })
-                                                                                                <div class="col-md-10">
-                                                                                                    @Html.DropDownList("Contents", new SelectList(@Model.NewView.ViewContents, "Id", "Name"), "--Select Contents--")
-                                                                                                    <input type="submit" value="Add" class="btn btn-default" id="btAdd" />
-                                                                                                </div>
-                                                                                                <table _ngcontent-xlf-80="" class="striped responsive-table scroll">
-                                                                                                    <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
-                                                                                                        <tr _ngcontent-xlf-80="">
-                                                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">Order</th>
-                                                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Name</th>
-                                                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Orientation</th>
-                                                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Delete</th>
-                                                                                                            <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Move Up-Down</th>
-                                                                                                        </tr>
-                                                                                                    </thead>
-                                                                                                    <tbody _ngcontent-xlf-80="" class="leave-tbody">
-                                                                                                        @foreach (var item in Model.NewView.ViewContents)
-                                                                                                        {
-                                                                                                            <tr _ngcontent-xlf-80="">
-                                                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                                                    @Html.DisplayFor(modelItem => item.Order)
-                                                                                                                </td>
-                                                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                                                    @Html.DisplayFor(modelItem => item.Name)
-                                                                                                                </td>
-                                                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                                                    @Html.DisplayFor(modelItem => item.Orientation)
-                                                                                                                </td>
-                                                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                                                    @Html.ActionLink("Delete", "DeleteViewContent", new { id = item.Id, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
-                                                                                                                </td>
-                                                                                                                <td _ngcontent-xlf-80="" class="col-width-20">
-                                                                                                                    <input type="submit" value="Λ" class="" id="btUp" disabled="@item.IsUp" /> |
-                                                                                                                    <input type="submit" value="V" class="" id="btDown" disabled="@item.IsDown" />
-                                                                                                                </td>
-                                                                                                            </tr>
-                                                                                                        }
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
                                                                                             <div _ngcontent-xlf-80="" class="row m-bottom0">
                                                                                                 <div _ngcontent-xlf-80="" class="col s12 m6 leave-action table-note left-align">
                                                                                                     <!--<h6 _ngcontent-xlf-80="">To apply Long Leave/Paternity Leave contact HR.</h6>-->
@@ -640,6 +597,54 @@
 
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="form-group">
+                                                                                            </div>
+                                                                                            @if (Model.UpdownEnabled)
+                                                                                            {
+                                                                                                <div _ngcontent-xlf-80="" class="table-responsive" id="AddContentDiv">
+                                                                                                    @Html.Label("View Contents", new { @class = "control-label col-md-2" })
+                                                                                                    <div class="col-md-10">
+                                                                                                        @Html.DropDownList("Contents", new SelectList(@Model.ViewAllContents, "Id", "Name"), "--Select Contents--")
+                                                                                                        <input type="button" value="Add" class="btn btn-default" id="btAdd" />
+                                                                                                    </div>
+                                                                                                    <table _ngcontent-xlf-80="" class="striped responsive-table scroll" id="ViewContentTableBody">
+                                                                                                        <thead _ngcontent-xlf-80="" class="thead-custom-style approvals-card">
+                                                                                                            <tr _ngcontent-xlf-80="">
+                                                                                                                <th _ngcontent-xlf-80="" class="col-width-20" data-field="date">Order</th>
+                                                                                                                <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Name</th>
+                                                                                                                <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Orientation</th>
+                                                                                                                <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Delete</th>
+                                                                                                                <th _ngcontent-xlf-80="" class="col-width-20" data-field="comments">Move Up-Down</th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody _ngcontent-xlf-80="" class="leave-tbody">
+                                                                                                            @foreach (var item in Model.ViewContents)
+                                                                                                            {
+                                                                                                                <tr _ngcontent-xlf-80="" class="requiredRow">
+                                                                                                                    <td _ngcontent-xlf-80="" class="col-width-20 orderNo">
+                                                                                                                        @Html.DisplayFor(modelItem => item.Order)
+                                                                                                                    </td>
+                                                                                                                    <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                                                        @Html.DisplayFor(modelItem => item.Name)
+                                                                                                                    </td>
+                                                                                                                    <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                                                        @Html.DisplayFor(modelItem => item.Orientation)
+                                                                                                                    </td>
+                                                                                                                    <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                                                        @Html.ActionLink("Delete", "DeleteViewContent", new { id = item.Id, siteId = item.SiteID, viewId = item.ViewID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                                                    </td>
+                                                                                                                    <td _ngcontent-xlf-80="" class="col-width-20">
+                                                                                                                        <input type="button" value="Λ" class="" id="btUp" onclick="OnBtnUpClick(@item.Id, true);" disabled="@item.IsUp" title="Click to move record up."/> |
+                                                                                                                        <input type="button" value="V" class="" id="btDown" onclick="OnBtnUpClick(@item.Id, false);" disabled="@item.IsDown" title="Click to move record down." />
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                            }
+                                                                                                        </tbody>
+                                                                                                    </table>
+                                                                                                </div>
+                                                                                            }
+
+
                                                                                         </div>
 
 
@@ -710,7 +715,8 @@
                                                                             </td>
                                                                             <td _ngcontent-xlf-80="" class="col-width-20">
                                                                                 @Html.ActionLink("Edit", "EditViewDetails", new { ViewID = item.Oid, SiteID = item.SiteID }) |
-                                                                                @Html.ActionLink("Delete", "DeleteView", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                                                                                @*@Html.ActionLink("Delete", "DeleteView", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })*@
+                                                                                @Html.ActionLink("Delete", "DeleteRecord", new { ViewID = item.Oid, IsDefault = item.IsDefault, SiteID = item.SiteID }, new { onclick = "return confirm('Are sure wants to delete?');" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -870,8 +876,29 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script type="text/javascript">
-            $(document).ready(function () {
 
+            function OnBtnUpClick(recordId, isUpClicked) {
+                $.ajax({
+                    url: "/AddView/RecordMoveUpAndDown",
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        id: recordId,
+                        viewId: '@Model.NewView.Oid',
+                        siteId: $("#SiteID").val(),
+                        isUpOrDown: isUpClicked,
+                    }),
+                    async: false,
+                    success: function (data) {
+                        $("#ViewContentTableBody").html(data.Result);
+                    },
+                    failure: function (data) {
+                        alert("Fail");
+                    },
+                });
+            }
+            $(document).ready(function () {
                 if ('@ViewData["DeletionError"]' != null && '@ViewData["DeletionError"]' != "")
                     alert('@ViewData["DeletionError"]');
 
@@ -882,12 +909,37 @@
                     document.getElementById("NewView_Name").value = "";
                     document.getElementById("NewView_Title").value = "";
                     document.getElementById("NewView_Orientation").value = "";
-                    document.getElementById("file").value = null;
+                    document.getElementById("NewView_Logo").value = null;
                     document.getElementById("NewView_IsActive").value = false;
                     document.getElementById("NewView_IsDefault").value = false;
                     document.getElementById("NewView_Authorized").value = false;
                     document.getElementById("NewView_CreateMenu").value = false;
                 });
+
+
+                //$(document).on('click', '#btUp', function () {
+                //    //debugger;
+                //    var Rowdata = $(this).parentsUntil(".requiredRow").find('.orderNo').html();
+                //    alert(Rowdata);
+
+                //    $.ajax({
+                //        url: "/AddView/BtnUpClicked",
+                //        type: 'POST',
+                //        contentType: "application/json; charset=utf-8",
+                //        dataType: 'json',
+                //        data: JSON.stringify({
+                //            contentId: $("#Contents").val(),
+                //            siteId: $("#SiteID").val(),
+                //        }),
+                //        async: false,
+                //        success: function (data) {
+                //            alert("Success");
+                //        },
+                //        failure: function (data) {
+                //            alert("Fail");
+                //        },
+                //    });
+                //});
 
                 $('#btAdd').on('click', function () {
                     $.ajax({
@@ -897,11 +949,12 @@
                         dataType: 'json',
                         data: JSON.stringify({
                             contentId: $("#Contents").val(),
+                            viewId: '@Model.NewView.Oid',
                             siteId: $("#SiteID").val(),
                         }),
                         async: false,
                         success: function (data) {
-                            alert("Success");
+                            $("#ViewContentTableBody").html(data.Result);
                         },
                         failure: function (data) {
                             alert("Fail");
@@ -927,6 +980,7 @@
                         type: 'POST',
                         contentType: "application/json; charset=utf-8",
                         dataType: 'json',
+                        async: false,
                         data: JSON.stringify(ModelObject),
                         success: function (data) {
                             alert(data.status);
