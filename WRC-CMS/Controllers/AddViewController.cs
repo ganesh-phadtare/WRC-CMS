@@ -19,22 +19,33 @@ namespace WRC_CMS.Controllers
         public async Task<JsonResult> AddUpdateRecord(ViewModel ModelObject)
         {
             string Status = string.Empty;
+            List<ViewModel> views = new List<ViewModel>();
             await Task.Run(() =>
-            {
-                Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
-            }
+                {
+                    Status = base.BaseAddUpdateRecord(ModelObject, ModelState, proxy).Result;
+                    views.AddRange(BORepository.GetAllViews(proxy, ModelObject.SiteID).Result);
+                }
             );
-            return Json(new { status = Status });
+            return Json(new { status = views, JsonRequestBehavior.AllowGet });
         }
 
         public async Task<ActionResult> EditViewDetails(int ViewID = 0, int SiteID = 0)
         {
             if (ViewID != 0)
             {
-                CombineModel com;
-                com = await GetCombineModel(ViewID, SiteID);
+                CombineModel com = null;
+                string TableBody = string.Empty;
+                await Task.Run(() =>
+                 {
+                     com = GetCombineModel(ViewID, SiteID).Result;
+                 });
 
-                return View("ViewsLV", com);
+                await Task.Run(() =>
+                 {
+                     TableBody = DrawTableBody(ViewID, SiteID).Result;
+                 });
+                return Json(new { status = com, tablebody = TableBody });
+                //return View("ViewsLV", com);               
             }
             else
                 return RedirectToAction("GetAllViewDetails", new { id = SiteID });
